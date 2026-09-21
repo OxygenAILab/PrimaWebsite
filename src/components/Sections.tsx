@@ -57,16 +57,16 @@ const scenarios = [
 export function Hero() {
   return (
     <section className="hero" aria-labelledby="hero-title">
-      <div className="container hero-content reveal">
+      <div className="hero-inner reveal" style={{textAlign: "left"}}>
         <p className="eyebrow">{siteConfig.brandDisplayName}</p>
         <h1 id="hero-title">让 Agent 该快则快，该深则深，越用越懂你的工作。</h1>
-        <p className="hero-copy">
+        <p className="hero-sub">
           PrimaAgent / PrimalDE 是面向真实长任务的 AI Agent 方向，探索自适应推理、分层长期记忆与更可靠的持续协作。
         </p>
-        <div className="hero-actions">
+        <div className="hero-actions" style={{justifyContent: "flex-start"}}>
           <p className="stage-pill">{siteConfig.betaStatus}</p>
         </div>
-        <div className="hero-actions">
+        <div className="hero-actions" style={{justifyContent: "flex-start", marginTop: "20px"}}>
           <a className="button primary" href="./beta/">立即参与调研</a>
           <a className="button ghost" href="#product">了解产品方向</a>
         </div>
@@ -77,16 +77,16 @@ export function Hero() {
 
 export function Product() {
   return (
-    <section className="section" id="product" aria-labelledby="product-title">
+    <section className="section alt" id="product" aria-labelledby="product-title">
       <div className="container">
         <div className="section-head reveal">
           <p className="eyebrow">痛点</p>
           <h2 id="product-title">AI Agent 的问题，不只是不够聪明。</h2>
           <p className="section-copy">真实工作里，上下文持续存在，决策也会累积。一个好的 Agent 需要理解这些连续性。</p>
         </div>
-        <div className="three-grid reveal">
+        <div className="card-grid reveal">
           {painPoints.map((item) => (
-            <article className="feature-tile" key={item.title}>
+            <article className="card" key={item.title}>
               <h3>{item.title}</h3>
               <p>{item.copy}</p>
             </article>
@@ -99,15 +99,15 @@ export function Product() {
 
 export function Capabilities() {
   return (
-    <section className="section model-section" id="capabilities" aria-labelledby="capabilities-title">
+    <section className="section dark" id="capabilities" aria-labelledby="capabilities-title">
       <div className="container">
-        <div className="split-panel media-panel reveal">
-          <div className="media-copy">
+        <div className="split reveal">
+          <div className="split-copy">
             <p className="eyebrow">核心能力</p>
             <h2 id="capabilities-title">四条正在打磨的方向</h2>
             <p className="lead">这些不是已经完成的卖点，而是我们愿意和你一起验证的产品假设。</p>
           </div>
-          <figure className="media-figure">
+          <figure className="split-visual">
             <img
               src={detailImage}
               alt="冷白玻璃与薄荷蓝折射光，表达 Prima 的自适应推理与分层记忆"
@@ -117,10 +117,10 @@ export function Capabilities() {
             />
           </figure>
         </div>
-        <div className="two-grid reveal">
+        <div className="card-grid reveal">
           {capabilities.map((item) => (
-            <article className="product-tile" key={item.title}>
-              <p className="tag">{item.status}</p>
+            <article className="card" key={item.title}>
+              <p className="tag mint">{item.status}</p>
               <h3>{item.title}</h3>
               <p>{item.copy}</p>
             </article>
@@ -133,15 +133,15 @@ export function Capabilities() {
 
 export function Scenarios() {
   return (
-    <section className="section light-section" id="scenarios" aria-labelledby="scenarios-title">
+    <section className="section" id="scenarios" aria-labelledby="scenarios-title">
       <div className="container">
         <div className="section-head reveal">
           <p className="eyebrow">首发场景</p>
           <h2 id="scenarios-title">先服务长任务，而不是所有任务。</h2>
         </div>
-        <div className="three-grid reveal">
+        <div className="card-grid reveal">
           {scenarios.map((item) => (
-            <article className="feature-tile" key={item.title}>
+            <article className="card" key={item.title}>
               <h3>{item.title}</h3>
               <p>{item.copy}</p>
             </article>
@@ -154,7 +154,7 @@ export function Scenarios() {
 
 export function Stage() {
   return (
-    <section className="section stage-section" id="stage" aria-labelledby="stage-title">
+    <section className="section alt" id="stage" aria-labelledby="stage-title">
       <div className="container reveal">
         <p className="eyebrow">产品阶段</p>
         <h2 id="stage-title">我们正在打磨第一版，也想先听你说。</h2>
@@ -171,8 +171,8 @@ export function Stage() {
 
 export function Beta() {
   return (
-    <section className="section cta-section" id="beta" aria-labelledby="beta-title">
-      <div className="container reveal">
+    <section className="cta-section" id="beta" aria-labelledby="beta-title">
+      <div className="container reveal" style={{textAlign: "center"}}>
         <p className="eyebrow">Beta 调研</p>
         <h2 id="beta-title">参与调研，一起定义下一代 AI Agent</h2>
         <p className="section-copy">
