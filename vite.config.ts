@@ -11,6 +11,8 @@ export default defineConfig({
         main: resolve(__dirname, "index.html"),
         beta: resolve(__dirname, "beta/index.html"),
         about: resolve(__dirname, "about/index.html"),
+        "how-it-works": resolve(__dirname, "how-it-works/index.html"),
+        scenarios: resolve(__dirname, "scenarios/index.html"),
       },
     },
   },

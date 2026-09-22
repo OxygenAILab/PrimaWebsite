@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { siteConfig } from "../config";
 import logoImage from "../../assets/images/logo.png";
 
-export function Header({ active = "home" }: { active?: "home" | "beta" | "about" }) {
+type PageId = "home" | "beta" | "about" | "how-it-works" | "scenarios";
+
+export function Header({ active = "home" }: { active?: PageId }) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -21,8 +23,8 @@ export function Header({ active = "home" }: { active?: "home" | "beta" | "about"
         </a>
         <nav className="site-nav" aria-label="主导航">
           <a href={active === "home" ? "#product" : "../#product"}>产品理念</a>
-          <a href={active === "home" ? "#capabilities" : "../#capabilities"}>核心能力</a>
-          <a href={active === "home" ? "#scenarios" : "../#scenarios"}>使用场景</a>
+          <a href={active === "home" ? "./how-it-works/" : active === "how-it-works" ? "#top" : "../how-it-works/"}>工作方式</a>
+          <a href={active === "home" ? "./scenarios/" : active === "scenarios" ? "#top" : "../scenarios/"}>使用场景</a>
           <a href={active === "home" ? "./beta/" : "../beta/"}>Beta 调研</a>
           <a href={active === "home" ? "./about/" : active === "about" ? "#top" : "../about/"}>关于项目</a>
         </nav>
@@ -39,7 +41,7 @@ export function Header({ active = "home" }: { active?: "home" | "beta" | "about"
   );
 }
 
-export function Footer({ active = "home" }: { active?: "home" | "beta" | "about" }) {
+export function Footer({ active = "home" }: { active?: PageId }) {
   return (
     <footer className="site-footer">
       <div className="container footer-grid">
@@ -53,7 +55,7 @@ export function Footer({ active = "home" }: { active?: "home" | "beta" | "about"
         <nav aria-label="项目导航">
           {active === "home" ? <a href="./about/">关于项目</a> : <a href="../">返回首页</a>}
           <a href={active === "home" ? "#capabilities" : "../#capabilities"}>核心能力</a>
-          <a href={active === "home" ? "#scenarios" : "../#scenarios"}>使用场景</a>
+          <a href={active === "home" ? "./scenarios/" : "../scenarios/"}>使用场景</a>
           <a href={active === "home" ? "./beta/" : "../beta/"}>Beta 调研</a>
         </nav>
         <nav aria-label="参与入口">
