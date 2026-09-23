@@ -1,10 +1,14 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
-import BetaApp from "./BetaApp";
-import AboutApp from "./AboutApp";
-import HowItWorksApp from "./HowItWorksApp";
-import ScenariosApp from "./ScenariosApp";
+import PageApp, { type PrimaPage } from "./PageApp";
+import BetaSection from "./components/Beta";
+import About from "./components/About";
+import HowItWorks from "./components/HowItWorks";
+import Scenarios from "./components/Scenarios";
+import Roadmap from "./components/Roadmap";
+import Faq from "./components/Faq";
+import Security from "./components/Security";
 import "./site.css";
 
 const rootElement = document.getElementById("root");
@@ -13,21 +17,20 @@ if (!rootElement) {
   throw new Error("Missing #root element");
 }
 
-const pageId = document.body.dataset.page ?? "";
-const pathEnds = (suffix: string) => window.location.pathname.replace(/\/+$/, "").endsWith(suffix);
+const pageId = (document.body.dataset.page ?? "home") as PrimaPage;
 
-const isBetaPage =
-  document.body.dataset.page === "beta" ||
-  pathEnds("/beta");
-
-const isAboutPage =
-  pageId === "about" || pathEnds("/about");
-
-const isHowItWorks = pageId === "how-it-works" || pathEnds("/how-it-works");
-const isScenarios = pageId === "scenarios" || pathEnds("/scenarios");
+const pageMap: Partial<Record<PrimaPage, React.ReactNode>> = {
+  beta: <BetaSection />,
+  about: <About />,
+  "how-it-works": <HowItWorks />,
+  scenarios: <Scenarios />,
+  roadmap: <Roadmap />,
+  faq: <Faq />,
+  security: <Security />,
+};
 
 createRoot(rootElement).render(
   <StrictMode>
-    {isBetaPage ? <BetaApp /> : isAboutPage ? <AboutApp /> : isHowItWorks ? <HowItWorksApp /> : isScenarios ? <ScenariosApp /> : <App />}
+    {pageId === "home" ? <App /> : <PageApp active={pageId}>{pageMap[pageId] ?? <App />}</PageApp>}
   </StrictMode>,
 );

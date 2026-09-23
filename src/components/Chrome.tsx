@@ -1,7 +1,15 @@
 import { siteConfig } from "../config";
 import logoImage from "../../assets/images/logo.png";
 
-type PageId = "home" | "beta" | "about" | "how-it-works" | "scenarios";
+type PageId =
+  | "home"
+  | "beta"
+  | "about"
+  | "how-it-works"
+  | "scenarios"
+  | "roadmap"
+  | "faq"
+  | "security";
 
 function Announce() {
   return (
@@ -27,6 +35,8 @@ export function Header({ active = "home" }: { active?: PageId }) {
             <a href={active === "home" ? "#product" : "../#product"}>产品理念</a>
             <a href={active === "home" ? "./how-it-works/" : active === "how-it-works" ? "#top" : "../how-it-works/"}>工作方式</a>
             <a href={active === "home" ? "./scenarios/" : active === "scenarios" ? "#top" : "../scenarios/"}>使用场景</a>
+            <a href={active === "home" ? "./roadmap/" : active === "roadmap" ? "#top" : "../roadmap/"}>路线图</a>
+            <a href={active === "home" ? "./faq/" : active === "faq" ? "#top" : "../faq/"}>常见问题</a>
             <a href={active === "home" ? "./beta/" : "../beta/"}>Beta 调研</a>
             <a href={active === "home" ? "./about/" : active === "about" ? "#top" : "../about/"}>关于项目</a>
           </nav>
@@ -59,6 +69,8 @@ export function Footer({ active = "home" }: { active?: PageId }) {
           {active === "home" ? <a href="./about/">关于项目</a> : <a href="../">返回首页</a>}
           <a href={active === "home" ? "#capabilities" : "../#capabilities"}>核心能力</a>
           <a href={active === "home" ? "./scenarios/" : "../scenarios/"}>使用场景</a>
+          <a href={active === "home" ? "./roadmap/" : "../roadmap/"}>路线图</a>
+          <a href={active === "home" ? "./security/" : "../security/"}>数据边界</a>
           <a href={active === "home" ? "./beta/" : "../beta/"}>Beta 调研</a>
         </nav>
         <nav aria-label="参与入口">

@@ -506,6 +506,34 @@ a:focus-visible {
   gap: 20px;
 }
 
+.stack-cards {
+  display: grid;
+  gap: 20px;
+  align-content: start;
+}
+
+.phase-list {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 8px;
+  color: var(--ink-2);
+  font-size: .95rem;
+  line-height: 1.65;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .fact-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
