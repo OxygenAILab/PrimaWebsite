@@ -171,6 +171,36 @@ export function Stage() {
   );
 }
 
+export function Models() {
+  return (
+    <section className="section" id="models" aria-labelledby="models-title">
+      <div className="container">
+        <div className="split">
+          <div className="split-copy">
+            <p className="eyebrow">模型矩阵</p>
+            <h2 id="models-title">Prima 背后的模型研究。</h2>
+            <p>
+              Oxygen AI 正在构建两条正交的模型路线：序列生成路线的 OxygenTBM Avenues 与 Terrace，以及隐状态动力学的 OxygenDCM N1 和校准决策的 OxygenCDM T1 / V1。Prima 的产品验证会直接反哺这些架构的设计。
+            </p>
+            <a className="text-link" href="https://oxygenai.top/model/" target="_blank" rel="noopener noreferrer">
+              查看模型矩阵&nbsp;&rarr;
+            </a>
+          </div>
+          <figure className="split-visual">
+            <img
+              src={detailImage}
+              alt="日光折射的抽象视觉，代表 Oxygen AI 的模型研究"
+              width={1280}
+              height={800}
+              loading="lazy"
+            />
+          </figure>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function Beta() {
   return (
     <section className="cta-section" id="beta" aria-labelledby="beta-title">
