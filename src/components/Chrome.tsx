@@ -1,43 +1,46 @@
-import { useEffect, useState } from "react";
 import { siteConfig } from "../config";
 import logoImage from "../../assets/images/logo.png";
 
 type PageId = "home" | "beta" | "about" | "how-it-works" | "scenarios";
 
-export function Header({ active = "home" }: { active?: PageId }) {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const updateHeader = () => setScrolled(window.scrollY > 24);
-    updateHeader();
-    window.addEventListener("scroll", updateHeader, { passive: true });
-    return () => window.removeEventListener("scroll", updateHeader);
-  }, []);
-
+function Announce() {
   return (
-    <header className={scrolled ? "site-header scrolled" : "site-header"} id="top">
-      <div className="container header-inner">
-        <a className="brand" href={active === "beta" ? "../" : "#top"} aria-label={`${siteConfig.brandShortName} 首页`}>
-          <img className="brand-mark" src={logoImage} alt="" width={30} height={30} />
-          <span>{siteConfig.brandShortName}</span>
-        </a>
-        <nav className="site-nav" aria-label="主导航">
-          <a href={active === "home" ? "#product" : "../#product"}>产品理念</a>
-          <a href={active === "home" ? "./how-it-works/" : active === "how-it-works" ? "#top" : "../how-it-works/"}>工作方式</a>
-          <a href={active === "home" ? "./scenarios/" : active === "scenarios" ? "#top" : "../scenarios/"}>使用场景</a>
-          <a href={active === "home" ? "./beta/" : "../beta/"}>Beta 调研</a>
-          <a href={active === "home" ? "./about/" : active === "about" ? "#top" : "../about/"}>关于项目</a>
-        </nav>
-        <a
-          className="button primary compact"
-          href={active === "beta" ? siteConfig.surveyUrl : "./beta/"}
-          target={active === "beta" ? "_blank" : undefined}
-          rel="noopener noreferrer"
-        >
-          立即参与调研
-        </a>
-      </div>
-    </header>
+    <div className="announce">
+      <a href={siteConfig.surveyUrl} target="_blank" rel="noopener noreferrer">
+        Prima Beta 调研进行中，约 5 分钟 →
+      </a>
+    </div>
+  );
+}
+
+export function Header({ active = "home" }: { active?: PageId }) {
+  return (
+    <>
+      <Announce />
+      <header className="site-header" id="top">
+        <div className="container header-inner">
+          <a className="brand" href={active === "beta" ? "../" : "#top"} aria-label={`${siteConfig.brandShortName} 首页`}>
+            <img className="brand-mark" src={logoImage} alt="" width={30} height={30} />
+            <span>{siteConfig.brandShortName}</span>
+          </a>
+          <nav className="site-nav" aria-label="主导航">
+            <a href={active === "home" ? "#product" : "../#product"}>产品理念</a>
+            <a href={active === "home" ? "./how-it-works/" : active === "how-it-works" ? "#top" : "../how-it-works/"}>工作方式</a>
+            <a href={active === "home" ? "./scenarios/" : active === "scenarios" ? "#top" : "../scenarios/"}>使用场景</a>
+            <a href={active === "home" ? "./beta/" : "../beta/"}>Beta 调研</a>
+            <a href={active === "home" ? "./about/" : active === "about" ? "#top" : "../about/"}>关于项目</a>
+          </nav>
+          <a
+            className="button primary compact"
+            href={active === "beta" ? siteConfig.surveyUrl : "./beta/"}
+            target={active === "beta" ? "_blank" : undefined}
+            rel="noopener noreferrer"
+          >
+            立即参与调研
+          </a>
+        </div>
+      </header>
+    </>
   );
 }
 

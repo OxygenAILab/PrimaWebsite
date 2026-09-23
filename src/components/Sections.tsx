@@ -57,18 +57,20 @@ const scenarios = [
 export function Hero() {
   return (
     <section className="hero" aria-labelledby="hero-title">
-      <div className="hero-inner reveal" style={{textAlign: "left"}}>
-        <p className="eyebrow">{siteConfig.brandDisplayName}</p>
-        <h1 id="hero-title">让 Agent 该快则快，该深则深，越用越懂你的工作。</h1>
-        <p className="hero-sub">
-          PrimaAgent / PrimalDE 是面向真实长任务的 AI Agent 方向，探索自适应推理、分层长期记忆与更可靠的持续协作。
-        </p>
-        <div className="hero-actions" style={{justifyContent: "flex-start"}}>
-          <p className="stage-pill">{siteConfig.betaStatus}</p>
-        </div>
-        <div className="hero-actions" style={{justifyContent: "flex-start", marginTop: "20px"}}>
-          <a className="button primary" href="./beta/">立即参与调研</a>
-          <a className="button ghost" href="#product">了解产品方向</a>
+      <div className="container">
+        <div className="hero-inner reveal">
+          <p className="eyebrow">{siteConfig.brandDisplayName}</p>
+          <h1 id="hero-title">让 Agent 该快则快，该深则深，越用越懂你的工作。</h1>
+          <p className="hero-sub">
+            PrimaAgent / PrimalDE 是面向真实长任务的 AI Agent 方向，探索自适应推理、分层长期记忆与更可靠的持续协作。
+          </p>
+          <div className="hero-actions" style={{justifyContent: "flex-start"}}>
+            <p className="stage-pill">{siteConfig.betaStatus}</p>
+          </div>
+          <div className="hero-actions" style={{justifyContent: "flex-start", marginTop: "20px"}}>
+            <a className="button primary" href="./beta/">立即参与调研</a>
+            <a className="button ghost" href="#product">了解产品方向</a>
+          </div>
         </div>
       </div>
     </section>

@@ -2,7 +2,7 @@ import { siteConfig } from "../config";
 
 export default function BetaSection() {
   return (
-    <section className="beta-page" aria-labelledby="beta-page-title">
+    <main id="main" className="beta-page">
       <div className="container">
         <div className="section-head reveal">
           <p className="eyebrow">Prima Beta</p>
@@ -34,6 +34,6 @@ export default function BetaSection() {
           </p>
         </div>
       </div>
-    </section>
+    </main>
   );
 }
