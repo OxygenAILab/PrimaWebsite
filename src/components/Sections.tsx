@@ -65,9 +65,9 @@ export function Capabilities() {
           <figure className="split-visual" ref={visualRef}>
             <img
               src={artDetailImage}
-              alt="青色玻璃折射的抽象视觉，表达 Prima 的自适应推理与分层记忆"
-              width={1280}
-              height={720}
+              alt="针叶林航拍，表达 Prima 的自适应推理与分层记忆"
+              width={900}
+              height={754}
               loading="lazy"
             />
           </figure>
@@ -163,9 +163,9 @@ export function Models() {
           <figure className="split-visual" ref={bandRef}>
             <img
               src={artBandImage}
-              alt="青色玻璃折射的宽幅抽象视觉，代表 Oxygen AI 的模型研究"
+              alt="针叶林航拍宽幅，代表 Oxygen AI 的模型研究"
               width={1400}
-              height={933}
+              height={634}
               loading="lazy"
             />
           </figure>
