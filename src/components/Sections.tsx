@@ -62,7 +62,7 @@ export function Hero() {
           <p className="eyebrow">{siteConfig.brandDisplayName}</p>
           <h1 id="hero-title">让 Agent 该快则快，该深则深，越用越懂你的工作。</h1>
           <p className="hero-sub">
-            PrimaAgent / PrimalDE 是面向真实长任务的 AI Agent 方向，探索自适应推理、分层长期记忆与更可靠的持续协作。
+            Prima 是面向真实长任务的 AI Agent 方向，探索自适应推理、分层长期记忆与更可靠的持续协作。
           </p>
           <div className="hero-actions" style={{justifyContent: "flex-start"}}>
             <p className="stage-pill">{siteConfig.betaStatus}</p>
@@ -208,7 +208,7 @@ export function Beta() {
         <p className="eyebrow">Beta 调研</p>
         <h2 id="beta-title">参与调研，一起定义下一代 AI Agent</h2>
         <p className="section-copy">
-          我们正在邀请 AI Agent 用户参与 PrimaAgent / PrimalDE 前期调研。问卷约需 5 分钟，用于了解你的使用习惯、真实痛点以及对未来服务形态的期待，同时作为 Beta 用户筛选参考。
+          我们正在邀请 AI Agent 用户参与 Prima 前期调研。问卷约需 5 分钟，用于了解你的使用习惯、真实痛点以及对未来服务形态的期待，同时作为 Beta 用户筛选参考。
         </p>
         <ul className="benefit-list">
           <li>入选用户有机会提前体验产品，预计体验周期为 1 至 3 个月。</li>

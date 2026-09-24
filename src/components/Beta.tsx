@@ -24,7 +24,7 @@ export default function BetaSection() {
           <div className="survey-frame">
             <iframe
               src={siteConfig.surveyUrl}
-              title="PrimaAgent / PrimalDE Beta 调研问卷"
+              title="Prima Beta 调研问卷"
               loading="lazy"
               allow="fullscreen"
             />
