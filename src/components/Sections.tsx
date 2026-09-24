@@ -1,5 +1,6 @@
 import { siteConfig } from "../config";
 import { painPoints, capabilities, scenarios } from "../data/content";
+import { useParallax } from "../hooks/useParallax";
 import artBandImage from "../../assets/images/art-band.jpg";
 import artDetailImage from "../../assets/images/art-detail.jpg";
 
@@ -52,6 +53,8 @@ export function Product() {
 }
 
 export function Capabilities() {
+  const visualRef = useParallax<HTMLElement>(16);
+
   return (
     <section className="section" id="capabilities" aria-labelledby="capabilities-title">
       <div className="container">
@@ -61,7 +64,7 @@ export function Capabilities() {
             <h2 id="capabilities-title">四条正在打磨的方向</h2>
             <p className="lead">四条方向都在打磨中，好不好用，由第一批用户说了算。</p>
           </div>
-          <figure className="split-visual">
+          <figure className="split-visual" ref={visualRef}>
             <img
               src={artDetailImage}
               alt="青色玻璃折射的抽象视觉，表达 Prima 的自适应推理与分层记忆"
@@ -143,6 +146,8 @@ export function StageAndBeta() {
 }
 
 export function Models() {
+  const bandRef = useParallax<HTMLElement>(12);
+
   return (
     <section className="section" id="models" aria-labelledby="models-title">
       <div className="container">
@@ -157,7 +162,7 @@ export function Models() {
               查看模型矩阵&nbsp;&rarr;
             </a>
           </div>
-          <figure className="split-visual">
+          <figure className="split-visual" ref={bandRef}>
             <img
               src={artBandImage}
               alt="青色玻璃折射的宽幅抽象视觉，代表 Oxygen AI 的模型研究"
