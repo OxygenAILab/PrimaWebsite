@@ -1,6 +1,7 @@
 import { siteConfig } from "../config";
 import { painPoints, capabilities, scenarios } from "../data/content";
-import detailImage from "../../assets/images/detail.jpg";
+import artBandImage from "../../assets/images/art-band.jpg";
+import artDetailImage from "../../assets/images/art-detail.jpg";
 
 export function Hero() {
   return (
@@ -62,8 +63,8 @@ export function Capabilities() {
           </div>
           <figure className="split-visual">
             <img
-              src={detailImage}
-              alt="冷白玻璃与青色折射光，表达 Prima 的自适应推理与分层记忆"
+              src={artDetailImage}
+              alt="青色玻璃折射的抽象视觉，表达 Prima 的自适应推理与分层记忆"
               width={1280}
               height={720}
               loading="lazy"
@@ -158,10 +159,10 @@ export function Models() {
           </div>
           <figure className="split-visual">
             <img
-              src={detailImage}
-              alt="日光折射的抽象视觉，代表 Oxygen AI 的模型研究"
-              width={1280}
-              height={800}
+              src={artBandImage}
+              alt="青色玻璃折射的宽幅抽象视觉，代表 Oxygen AI 的模型研究"
+              width={1400}
+              height={933}
               loading="lazy"
             />
           </figure>
