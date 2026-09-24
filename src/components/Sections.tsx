@@ -5,10 +5,13 @@ import detailImage from "../../assets/images/detail.jpg";
 export function Hero() {
   return (
     <section className="hero" aria-labelledby="hero-title">
+      <div className="hero-canvas" aria-hidden="true">
+        <span className="hero-grid" />
+        <span className="hero-spark" />
+      </div>
       <div className="container">
-        <div className="hero-inner reveal">
-          <p className="eyebrow">{siteConfig.brandDisplayName}</p>
-          <h1 id="hero-title">长任务不跑偏，少返工。</h1>
+        <div className="hero-inner">
+          <h1 id="hero-title">长任务不跑偏，<br />少返工。</h1>
           <p className="hero-sub">
             Prima 是面向真实长任务的 AI Agent：多文件编程、数据分析、长文档写作里，它记住你确认过的约束和决策，在长项目里保持前后一致。
           </p>
@@ -27,7 +30,7 @@ export function Hero() {
 
 export function Product() {
   return (
-    <section className="section alt" id="product" aria-labelledby="product-title">
+    <section className="section" id="product" aria-labelledby="product-title">
       <div className="container">
         <div className="section-head reveal">
           <p className="eyebrow">痛点</p>
@@ -49,7 +52,7 @@ export function Product() {
 
 export function Capabilities() {
   return (
-    <section className="section dark" id="capabilities" aria-labelledby="capabilities-title">
+    <section className="section" id="capabilities" aria-labelledby="capabilities-title">
       <div className="container">
         <div className="split reveal">
           <div className="split-copy">
@@ -105,7 +108,7 @@ export function Scenarios() {
 export function StageAndBeta() {
   return (
     <>
-      <section className="section alt" id="stage" aria-labelledby="stage-title">
+      <section className="section" id="stage" aria-labelledby="stage-title">
         <div className="container reveal">
           <p className="eyebrow">产品阶段与共创</p>
           <h2 id="stage-title">我们正在打磨第一版，也想先听你说。</h2>
