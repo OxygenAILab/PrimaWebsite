@@ -152,18 +152,18 @@ export function Models() {
         <div className="split">
           <div className="split-copy">
             <p className="eyebrow">模型研究</p>
-            <h2 id="models-title">Prima 背后的模型研究。</h2>
+            <h2 id="models-title">产品验证反哺模型研究。</h2>
             <p>
-              Prima 的产品验证由 Oxygen AI 的模型研究支撑：面向长任务的 OxygenDCM 系列在规划中，产品侧验证到的记忆与推理策略会沉淀进模型设计。
+              Oxygen AI 用 Prima 的真实工作流验证长任务连续性。哪些记忆、推理深度和执行检查值得进入模型层，先看产品证据，再进入架构研究。
             </p>
-            <a className="text-link" href="https://oxygenai.top/model/" target="_blank" rel="noopener noreferrer">
-              查看模型矩阵&nbsp;&rarr;
+            <a className="text-link" href="https://oxygenai.top/progress/" target="_blank" rel="noopener noreferrer">
+              查看模型进展与研究&nbsp;&rarr;
             </a>
           </div>
           <figure className="split-visual" ref={bandRef}>
             <img
               src={artBandImage}
-              alt="针叶林航拍宽幅，代表 Oxygen AI 的模型研究"
+              alt="针叶林航拍宽幅，代表长任务研究中的连续性与层次结构"
               width={1400}
               height={634}
               loading="lazy"
