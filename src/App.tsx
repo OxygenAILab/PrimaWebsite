@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Footer, Header } from "./components/Chrome";
-import { Beta, Capabilities, Hero, Models, Product, Scenarios, Stage } from "./components/Sections";
+import { Capabilities, Hero, Models, Product, Scenarios, StageAndBeta } from "./components/Sections";
 
 export default function App() {
   useEffect(() => {
@@ -36,9 +36,8 @@ export default function App() {
         <Product />
         <Capabilities />
         <Scenarios />
-        <Stage />
+        <StageAndBeta />
         <Models />
-        <Beta />
       </main>
       <Footer />
     </>

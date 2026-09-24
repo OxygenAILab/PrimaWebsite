@@ -54,7 +54,7 @@ export default function Scenarios() {
                 </ul>
               </div>
               <div>
-                <p style={{fontWeight: 600, marginBottom: "8px", color: "var(--blue)"}}>Prima 想做的事</p>
+                <p style={{fontWeight: 600, marginBottom: "8px", color: "var(--brand)"}}>Prima 想做的事</p>
                 <p style={{margin: 0}}>{item.prima}</p>
               </div>
             </article>
