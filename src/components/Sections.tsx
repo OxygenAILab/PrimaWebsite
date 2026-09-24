@@ -1,4 +1,5 @@
 import { siteConfig } from "../config";
+import HeroArtwork from "./HeroArtwork";
 import { painPoints, capabilities, scenarios } from "../data/content";
 import { useParallax } from "../hooks/useParallax";
 import artBandImage from "../../assets/images/art-band.jpg";
@@ -7,10 +8,7 @@ import artDetailImage from "../../assets/images/art-detail.jpg";
 export function Hero() {
   return (
     <section className="hero" aria-labelledby="hero-title">
-      <div className="hero-canvas" aria-hidden="true">
-        <span className="hero-grid" />
-        <span className="hero-spark" />
-      </div>
+      <HeroArtwork />
       <div className="container">
         <div className="hero-inner">
           <h1 id="hero-title">长任务不跑偏，<br />少返工。</h1>
