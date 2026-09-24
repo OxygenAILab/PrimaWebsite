@@ -6,9 +6,13 @@ export default function App() {
   useEffect(() => {
     const { hash } = window.location;
     if (hash) {
-      const target = document.querySelector(hash);
-      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      target?.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth" });
+      try {
+        const target = document.querySelector(hash);
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        target?.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth" });
+      } catch {
+        // 非法 hash 选择器（外链截断等）：忽略，不影响首屏 reveal 注册
+      }
     }
 
     const observer = new IntersectionObserver(
