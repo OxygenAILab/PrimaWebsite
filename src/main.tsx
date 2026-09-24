@@ -1,5 +1,9 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+// Lora 拉丁字面自托管（标题西文字符）；中文标题走系统衬线回退（思源宋体/宋体）
+import "@fontsource/lora/400.css";
+import "@fontsource/lora/500.css";
+import "@fontsource/lora/600.css";
 import App from "./App";
 import PageApp, { type PrimaPage } from "./PageApp";
 import BetaSection from "./components/Beta";

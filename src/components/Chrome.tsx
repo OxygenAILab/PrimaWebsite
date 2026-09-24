@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { siteConfig } from "../config";
 import logoImage from "../../assets/images/logo.png";
 
@@ -21,33 +22,92 @@ function Announce() {
   );
 }
 
+const navItems: Array<{ id: PageId; label: string }> = [
+  { id: "home", label: "产品理念" },
+  { id: "how-it-works", label: "工作方式" },
+  { id: "scenarios", label: "使用场景" },
+  { id: "roadmap", label: "路线图" },
+  { id: "faq", label: "常见问题" },
+  { id: "beta", label: "Beta 调研" },
+  { id: "about", label: "关于项目" },
+];
+
+function navHref(id: PageId, active: PageId): string {
+  if (id === "home") return active === "home" ? "#product" : "../#product";
+  if (id === active) return "#top";
+  return active === "home" ? `./${id}/` : `../${id}/`;
+}
+
 export function Header({ active = "home" }: { active?: PageId }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
   return (
     <>
       <Announce />
-      <header className="site-header" id="top">
+      <header className={menuOpen ? "site-header menu-open" : "site-header"} id="top">
         <div className="container header-inner">
           <a className="brand" href={active === "beta" ? "../" : "#top"} aria-label={`${siteConfig.brandShortName} 首页`}>
             <img className="brand-mark" src={logoImage} alt="" width={30} height={30} />
             <span>{siteConfig.brandShortName}</span>
           </a>
           <nav className="site-nav" aria-label="主导航">
-            <a href={active === "home" ? "#product" : "../#product"}>产品理念</a>
-            <a href={active === "home" ? "./how-it-works/" : active === "how-it-works" ? "#top" : "../how-it-works/"}>工作方式</a>
-            <a href={active === "home" ? "./scenarios/" : active === "scenarios" ? "#top" : "../scenarios/"}>使用场景</a>
-            <a href={active === "home" ? "./roadmap/" : active === "roadmap" ? "#top" : "../roadmap/"}>路线图</a>
-            <a href={active === "home" ? "./faq/" : active === "faq" ? "#top" : "../faq/"}>常见问题</a>
-            <a href={active === "home" ? "./beta/" : "../beta/"}>Beta 调研</a>
-            <a href={active === "home" ? "./about/" : active === "about" ? "#top" : "../about/"}>关于项目</a>
+            {navItems.map((item) => (
+              <a key={item.id} href={navHref(item.id, active)}>{item.label}</a>
+            ))}
           </nav>
           <a
-            className="button primary compact"
+            className="button primary compact header-cta"
             href={active === "beta" ? siteConfig.surveyUrl : "./beta/"}
             target={active === "beta" ? "_blank" : undefined}
             rel="noopener noreferrer"
           >
             立即参与调研
           </a>
+          <button
+            type="button"
+            className="nav-toggle"
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+            aria-label={menuOpen ? "关闭菜单" : "打开菜单"}
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            <span className="nav-toggle-bar" aria-hidden="true" />
+            <span className="nav-toggle-bar" aria-hidden="true" />
+          </button>
+        </div>
+        <div className={menuOpen ? "mobile-menu open" : "mobile-menu"} id="mobile-menu">
+          <nav className="container mobile-menu-nav" aria-label="移动端导航">
+            {navItems.map((item) => (
+              <a
+                key={item.id}
+                href={navHref(item.id, active)}
+                aria-current={item.id === active ? "page" : undefined}
+                onClick={() => setMenuOpen(false)}
+              >
+                {item.label}
+              </a>
+            ))}
+            <a
+              className="button primary mobile-menu-cta"
+              href={active === "beta" ? siteConfig.surveyUrl : "./beta/"}
+              onClick={() => setMenuOpen(false)}
+            >
+              立即参与调研
+            </a>
+          </nav>
         </div>
       </header>
     </>
