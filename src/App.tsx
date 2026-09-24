@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Footer, Header } from "./components/Chrome";
+import SectionRail from "./components/SectionRail";
 import { Capabilities, Hero, Models, Product, Scenarios, StageAndBeta } from "./components/Sections";
 
 export default function App() {
@@ -35,6 +36,7 @@ export default function App() {
     <>
       <a className="skip-link" href="#main">跳到主要内容</a>
       <Header />
+      <SectionRail />
       <main id="main">
         <Hero />
         <Product />
