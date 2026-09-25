@@ -12,6 +12,7 @@ import HowItWorks from "./components/HowItWorks";
 import Scenarios from "./components/Scenarios";
 import Roadmap from "./components/Roadmap";
 import Pricing from "./components/Pricing";
+import ModelList from "./components/ModelList";
 import Faq from "./components/Faq";
 import Security from "./components/Security";
 import "./site.css";
@@ -31,6 +32,7 @@ const pageMap: Partial<Record<PrimaPage, React.ReactNode>> = {
   scenarios: <Scenarios />,
   roadmap: <Roadmap />,
   pricing: <Pricing />,
+  "model-list": <ModelList />,
   faq: <Faq />,
   security: <Security />,
 };
