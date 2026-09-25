@@ -8,6 +8,7 @@ export type PrimaPage =
   | "how-it-works"
   | "scenarios"
   | "roadmap"
+  | "pricing"
   | "faq"
   | "security";
 

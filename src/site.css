@@ -358,7 +358,7 @@ a:focus-visible {
   text-underline-offset: 3px;
 }
 
-/* ---------- Hero (StepFun-scale editorial canvas) ---------- */
+/* ---------- Hero ---------- */
 .hero {
   min-height: 88svh;
   display: flex;
@@ -370,14 +370,7 @@ a:focus-visible {
   overflow: hidden;
   isolation: isolate;
 }
-/* 「星火／基元」首屏装饰：玻璃板拼贴 + 基元点阵 + 制图线稿 + 刻度环 + 光核 + 游走粒子
-   阶跃首屏是一组分层入场、随后持续缓动的拼贴动画（其 keyframes: home-content-enter 用
-   translate/scale/opacity，缓动 cubic-bezier(.22,1,.36,1)，duration .72~1.2s，delay 逐层 0~.4s 错开）。
-   这里做同构转译，三层运动叠加：
-     ① 入场：各层错时淡入微缩（art-enter）
-     ② 常态：玻璃板漂浮、光核呼吸、外环自转、线稿轨道旋转、刻度环慢转、粒子游走 —— 静止时也在动
-     ③ 响应：随指针做分层位移（组件写入 --art-mx / --art-my）
-   纯 CSS 绘制，无图片、无第三方依赖；prefers-reduced-motion 下只保留静态构图。 */
+/* Prima 首屏保留编辑式版式；星图装饰与 Oxygen 站共用品牌母题。 */
 .hero-artwork {
   position: absolute;
   inset: 0;
@@ -652,7 +645,7 @@ a:focus-visible {
 .section-head h2 { margin-bottom: 16px; }
 .section-head .section-copy { font-size: clamp(17px, 1.5vw, 19px); }
 
-/* ---------- Cards (StepFun-style: white surface + hairline border) ---------- */
+/* ---------- Cards: white surface + hairline border ---------- */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -991,11 +984,268 @@ a:focus-visible {
   transform: translateY(0);
 }
 
+/* ---------- Pricing ---------- */
+.pricing-note-line {
+  margin-top: 22px;
+  color: var(--ink-3);
+  font-size: .88rem;
+}
+.pricing-tabs {
+  display: inline-flex;
+  gap: 4px;
+  padding: 5px;
+  margin-bottom: 22px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+.pricing-tabs button {
+  min-height: 38px;
+  padding: 7px 22px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-2);
+  cursor: pointer;
+  font-size: .9rem;
+  font-weight: 600;
+  transition: color .18s var(--ease), background-color .18s var(--ease);
+}
+.pricing-tabs button:hover {
+  color: var(--ink);
+}
+.pricing-tabs button.active {
+  color: var(--white);
+  background: var(--ink);
+}
+.pricing-family-copy {
+  max-width: 62ch;
+  margin-bottom: 36px;
+  color: var(--ink-2);
+}
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+.pricing-card {
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  transition: border-color .25s var(--ease), box-shadow .25s var(--ease), transform .25s var(--ease);
+}
+.pricing-card:hover {
+  border-color: rgba(22, 24, 29, .2);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-2px);
+}
+.pricing-card.featured {
+  border-color: rgba(10, 107, 96, .22);
+}
+.pricing-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.pricing-card-head h3 {
+  margin-bottom: 0;
+  font-size: 1.35rem;
+}
+.pricing-price {
+  text-align: right;
+  white-space: nowrap;
+}
+.pricing-price strong {
+  display: block;
+  font-size: 1.45rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.pricing-price span,
+.pricing-credits span {
+  color: var(--ink-3);
+  font-size: .8rem;
+}
+.pricing-credits {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 16px 18px;
+  margin-bottom: 22px;
+  background: var(--bg);
+  border-radius: var(--r-btn);
+}
+.pricing-credits strong {
+  font-size: 1.15rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.pricing-specs {
+  display: grid;
+  margin: 0 0 20px;
+}
+.pricing-specs > div {
+  display: grid;
+  grid-template-columns: 104px minmax(0, 1fr);
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+}
+.pricing-specs dt {
+  color: var(--ink-3);
+  font-size: .86rem;
+}
+.pricing-specs dd {
+  margin: 0;
+  color: var(--ink);
+  font-size: .9rem;
+}
+.pricing-card-note {
+  margin-top: auto;
+  padding-top: 18px;
+  color: var(--ink-2);
+  font-size: .88rem;
+  line-height: 1.65;
+}
+.pricing-table-scroll {
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  background: var(--white);
+}
+.pricing-table {
+  width: 100%;
+  min-width: 1160px;
+  border-collapse: collapse;
+  font-size: .88rem;
+}
+.pricing-table th,
+.pricing-table td {
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+.pricing-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--bg);
+  color: var(--ink-2);
+  font-size: .82rem;
+  white-space: nowrap;
+}
+.pricing-table tbody th {
+  font-weight: 650;
+  white-space: nowrap;
+}
+.pricing-table td:nth-child(3) {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.pricing-table td:nth-child(3) span,
+.pricing-table td:nth-child(4) {
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+}
+.pricing-table td:last-child {
+  min-width: 300px;
+  color: var(--ink-2);
+  line-height: 1.6;
+}
+
+/* Shared spark graph, scoped to Prima's hero */
+.hero-art {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  --art-mx: 0;
+  --art-my: 0;
+}
+.hero-art > *,
+.hero-art .art-field > * { position: absolute; display: block; }
+.hero-art .art-field {
+  inset: 0;
+  translate: calc(var(--art-mx) * 14px) calc(var(--art-my) * 10px);
+  transition: translate .6s var(--ease);
+}
+.hero-art .art-grid {
+  right: 0;
+  top: 4%;
+  width: min(52vw, 660px);
+  height: min(64vh, 560px);
+  background-image: radial-gradient(rgba(22, 24, 29, .16) 1.2px, transparent 1.2px);
+  background-size: 38px 38px;
+  -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, #000 24%, transparent 74%);
+  mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, #000 24%, transparent 74%);
+  animation: art-enter 1.2s var(--ease) both, art-grid-breathe 9s ease-in-out 1.4s infinite;
+}
+.hero-art .art-graph {
+  right: 2%;
+  top: 6%;
+  width: min(50vw, 620px);
+  height: min(62vh, 540px);
+}
+.hero-art .art-edges,
+.hero-art .art-nodes { animation: art-enter 1.1s var(--ease) .16s both; }
+.hero-art .art-edge {
+  stroke: rgba(22, 24, 29, .16);
+  stroke-width: 1;
+  animation: art-shimmer 11s ease-in-out infinite;
+}
+.hero-art .art-node {
+  fill: none;
+  stroke: rgba(22, 24, 29, .32);
+  stroke-width: 1;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: art-twinkle 8s ease-in-out infinite;
+}
+.hero-art .art-stop-core { stop-color: var(--brand); stop-opacity: .26; }
+.hero-art .art-stop-mid { stop-color: var(--brand); stop-opacity: .08; }
+.hero-art .art-stop-edge { stop-color: var(--brand); stop-opacity: 0; }
+.hero-art .art-halo {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: art-halo 9s ease-in-out infinite;
+}
+.hero-art .art-core {
+  fill: var(--brand);
+  width: 20px;
+  height: 20px;
+  right: auto;
+  top: auto;
+  border-radius: 6px;
+  transform-box: fill-box;
+  transform-origin: center;
+  rotate: 45deg;
+  animation: art-enter .9s var(--ease) .4s both, art-spark 6s ease-in-out 1.2s infinite;
+}
+.hero-art .art-particle {
+  background: rgba(10, 107, 96, .45);
+  box-shadow: 0 0 10px 2px rgba(10, 107, 96, .18);
+}
+.hero-art .art-particle-a { right: 34%; top: 26%; animation: art-drift-a 17s ease-in-out infinite, art-twinkle 6s ease-in-out infinite; }
+.hero-art .art-particle-b { right: 19%; top: 38%; animation: art-drift-b 21s ease-in-out .7s infinite, art-twinkle 8s ease-in-out 1.1s infinite; }
+.hero-art .art-particle-c { right: 41%; top: 58%; animation: art-drift-c 15s ease-in-out 1.4s infinite, art-twinkle 7s ease-in-out .5s infinite; }
+.hero-art .art-particle-d { right: 26%; top: 68%; animation: art-drift-d 23s ease-in-out .3s infinite, art-twinkle 9s ease-in-out 1.9s infinite; }
+@keyframes art-grid-breathe { 50% { opacity: .62; } }
+@keyframes art-shimmer { 50% { stroke-opacity: .38; } }
+@keyframes art-halo { 50% { opacity: .68; scale: 1.1; } }
+@keyframes art-spark { 50% { opacity: .74; scale: 1.16; } }
+
 /* ---------- Responsive ---------- */
 @media (max-width: 960px) {
   .split,
   .card-grid,
-  .three-grid { grid-template-columns: 1fr; }
+  .three-grid,
+  .pricing-grid { grid-template-columns: 1fr; }
   .split { gap: 32px; }
   .timeline { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
@@ -1006,6 +1256,16 @@ a:focus-visible {
   .page-hero,
   .about-hero { margin-bottom: 64px; }
   .about-section { margin-bottom: 80px; }
+  .pricing-card { padding: 24px; }
+  .pricing-card-head { flex-direction: column; }
+  .pricing-price { text-align: left; }
+  .pricing-tabs { width: 100%; justify-content: space-between; }
+  .pricing-tabs button { flex: 1; padding-inline: 10px; }
+  .hero-art .art-grid { width: 82vw; height: 40vh; right: -12%; top: 1%; opacity: .6; }
+  .hero-art .art-graph { width: 78vw; height: 40vh; right: -10%; top: 2%; opacity: .85; }
+  .hero-art .art-halo { r: 116px; }
+  .hero-art .art-particle-b,
+  .hero-art .art-particle-d { display: none; }
 }
 @media (max-width: 520px) {
   :root { --container: calc(100vw - 32px); }
