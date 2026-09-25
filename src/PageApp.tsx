@@ -1,5 +1,6 @@
 import { useEffect, type ReactNode } from "react";
 import { Footer, Header } from "./components/Chrome";
+import PageMotion from "./components/Motion";
 
 export type PrimaPage =
   | "home"
@@ -13,13 +14,10 @@ export type PrimaPage =
   | "security";
 
 export default function PageApp({ active, children }: { active: PrimaPage; children: ReactNode }) {
-  useEffect(() => {
-    document.querySelectorAll(".reveal").forEach((element) => element.classList.add("visible"));
-  }, []);
-
   return (
     <>
       <a className="skip-link" href="#main">跳到主要内容</a>
+      <PageMotion />
       <Header active={active} />
       {children}
       <Footer active={active} />

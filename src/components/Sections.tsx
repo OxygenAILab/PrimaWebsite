@@ -9,9 +9,10 @@ export function Hero() {
       <HeroArtwork />
       <div className="container">
         <div className="hero-inner">
+          <p className="eyebrow">{siteConfig.slogan}</p>
           <h1 id="hero-title">长任务不跑偏，<br />少返工。</h1>
           <p className="hero-sub">
-            Prima 是面向真实长任务的 AI Agent：多文件编程、数据分析、长文档写作里，它记住你确认过的约束和决策，在长项目里保持前后一致。
+            Prima 把多文件编程、数据分析与长文档写作里的约束、决策和失败教训组织成连续的工作记忆，让复杂任务在前中后段都保持同一条主线。
           </p>
           <div className="hero-actions" style={{justifyContent: "flex-start"}}>
             <p className="stage-pill">{siteConfig.betaStatus}</p>
@@ -95,6 +96,64 @@ export function Scenarios() {
   );
 }
 
+const updates = [
+  {
+    date: "2026.09",
+    tag: "定价",
+    title: "三条产品线，十四个档位公开",
+    copy: "SparkPlan 覆盖个人验证，PrimaPlan 服务团队长任务，Credit+ 提供灵活加购。",
+    href: "./pricing/",
+    external: false,
+  },
+  {
+    date: "2026.09",
+    tag: "研究",
+    title: "模型研究边界更新",
+    copy: "Oxygen AI 公开三条基础路线的目标与阶段；完整机制仍留在论文与发布说明之后。",
+    href: "https://oxygenai.top/progress/",
+    external: true,
+  },
+  {
+    date: "2026.09",
+    tag: "共创",
+    title: "Beta 调研持续进行",
+    copy: "我们继续寻找真实长任务场景，尤其是多文件协作、数据链路和长文档工作中的断点。",
+    href: "./beta/",
+    external: false,
+  },
+];
+
+export function Updates() {
+  return (
+    <section className="section alt" id="updates" aria-labelledby="updates-title">
+      <div className="container">
+        <div className="section-head reveal">
+          <p className="eyebrow">最新动态</p>
+          <h2 id="updates-title">进展不靠形容词。</h2>
+          <p className="section-copy">每一轮更新都指向一个可检查的页面、阶段或调研入口。</p>
+        </div>
+        <div className="card-grid reveal">
+          {updates.map((item) => (
+            <article className="card update-card" key={item.title}>
+              <div className="news-meta">
+                <span className="news-date">{item.date}</span>
+                <span className="tag gray">{item.tag}</span>
+              </div>
+              <h3>{item.title}</h3>
+              <p>{item.copy}</p>
+              {item.external ? (
+                <a className="text-link" href={item.href} target="_blank" rel="noopener noreferrer">查看详情&nbsp;&rarr;</a>
+              ) : (
+                <a className="text-link" href={item.href}>查看详情&nbsp;&rarr;</a>
+              )}
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function StageAndBeta() {
   return (
     <>
@@ -103,7 +162,7 @@ export function StageAndBeta() {
           <p className="eyebrow">产品阶段与共创</p>
           <h2 id="stage-title">我们正在打磨第一版，也想先听你说。</h2>
           <p className="section-copy">
-            Prima 还没有开放注册。我们先从调研开始：了解你如何使用 Agent、哪里最容易返工，以及什么样的记忆和推理方式真正有价值。你的反馈会直接决定第一版的功能取舍。
+            Prima 还没有开放注册。我们先从真实现场开始：识别任务在哪里断裂、决策在哪里丢失，再决定第一版最该守住哪些秩序。
           </p>
         </div>
       </section>
@@ -140,7 +199,7 @@ export function Models() {
             <p className="eyebrow">模型研究</p>
             <h2 id="models-title">产品验证反哺模型研究。</h2>
             <p>
-              Oxygen AI 用 Prima 的真实工作流验证长任务连续性。哪些记忆、推理深度和执行检查值得进入模型层，先看产品证据，再进入架构研究。
+              Prima 在真实工作流里验证连续性；Oxygen AI 把验证出的秩序带回模型层。一边减少返工，一边让推理、记忆与执行逐渐长成同一套结构。
             </p>
             <a className="text-link" href="https://oxygenai.top/progress/" target="_blank" rel="noopener noreferrer">
               查看模型进展与研究&nbsp;&rarr;

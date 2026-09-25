@@ -126,6 +126,7 @@ export function Footer({ active = "home" }: { active?: PageId }) {
             {siteConfig.brandShortName}
           </p>
           <p>面向真实长任务的 AI Agent，现在处于早期共创阶段。</p>
+          <p className="footer-slogan">{siteConfig.slogan}</p>
         </div>
         <nav aria-label="项目导航">
           {active === "home" ? <a href="./about/">关于项目</a> : <a href="../">返回首页</a>}
@@ -138,6 +139,7 @@ export function Footer({ active = "home" }: { active?: PageId }) {
         </nav>
         <nav aria-label="参与入口">
           <a href={siteConfig.oxygenUrl} target="_blank" rel="noopener noreferrer">Oxygen AI</a>
+          <a href="https://oxygenai.top/progress/" target="_blank" rel="noopener noreferrer">模型研究</a>
           <a href={siteConfig.surveyUrl} target="_blank" rel="noopener noreferrer">立即参与调研</a>
           <a href="mailto:prima@oxygenai.top">prima@oxygenai.top</a>
         </nav>

@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { Footer, Header } from "./components/Chrome";
+import PageMotion from "./components/Motion";
 import SectionRail from "./components/SectionRail";
-import { Capabilities, Hero, Models, Product, Scenarios, StageAndBeta } from "./components/Sections";
+import { Capabilities, Hero, Models, Product, Scenarios, StageAndBeta, Updates } from "./components/Sections";
 
 export default function App() {
   useEffect(() => {
@@ -16,25 +17,13 @@ export default function App() {
       }
     }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.18, rootMargin: "0px 0px -8% 0px" },
-    );
-
-    document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
+    return () => {};
   }, []);
 
   return (
     <>
       <a className="skip-link" href="#main">跳到主要内容</a>
+      <PageMotion />
       <Header />
       <SectionRail />
       <main id="main">
@@ -42,6 +31,7 @@ export default function App() {
         <Product />
         <Capabilities />
         <Scenarios />
+        <Updates />
         <StageAndBeta />
         <Models />
       </main>
