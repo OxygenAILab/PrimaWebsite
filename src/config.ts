@@ -1,5 +1,5 @@
 export const siteConfig = {
-  brandDisplayName: "PrimaAgent / PrimalDE",
+  brandDisplayName: "Prima",
   brandShortName: "Prima",
   oxygenUrl: "https://oxygenai.top/",
   surveyUrl: "https://v.wjx.cn/vm/miVoicp.aspx#",

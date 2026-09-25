@@ -1,4 +1,4 @@
-import detailImage from "../../assets/images/detail.jpg";
+import { LayeredArtwork } from "./SectionArtwork";
 
 const layers = [
   {
@@ -39,7 +39,7 @@ export default function HowItWorks() {
     <main id="main" className="about-page">
       <section className="container about-hero" aria-labelledby="how-hero-title">
         <p className="eyebrow">工作方式</p>
-        <h1 id="how-hero-title">该快则快，该深则深。</h1>
+        <h1 id="how-hero-title">想多深，由任务说了算。</h1>
         <p className="lead" style={{maxWidth: "56ch"}}>
           Prima 不是把“多想几步”当作一个开关，而是在每次任务里判断：此刻需要多深的推理、多少上下文，以及哪些记忆值得被调用。
         </p>
@@ -54,15 +54,7 @@ export default function HowItWorks() {
               我们不想让简单问题被拖慢，也不想复杂问题被草率对待。Prima 的核心假设是：推理深度应该跟任务复杂度匹配，而不是跟着对话轮数增长。
             </p>
           </div>
-          <figure className="split-visual">
-            <img
-              src={detailImage}
-              alt="冷白玻璃与薄荷蓝折射光，表达 Prima 的分层推理结构"
-              width={1280}
-              height={800}
-              loading="lazy"
-            />
-          </figure>
+          <LayeredArtwork />
         </div>
         <div className="card-grid" style={{marginTop: "48px"}}>
           {layers.map((item) => (

@@ -37,7 +37,7 @@ export default function About() {
         <p className="eyebrow">关于项目</p>
         <h1 id="about-page-title">Prima 是一个正在与用户共同定义的产品。</h1>
         <p className="section-copy">
-          PrimaAgent / PrimalDE 面向真实长任务，探索自适应推理、分层长期记忆和更可靠的执行一致性。当前项目由 Oxygen AI 支持，仍处于早期共创阶段。
+          Prima 面向真实长任务，探索自适应推理、分层长期记忆和更可靠的执行一致性。当前项目由 Oxygen AI 支持，仍处于早期共创阶段。
         </p>
         <div className="hero-actions">
           <a className="button primary" href="../beta/">参与 Beta 调研</a>
