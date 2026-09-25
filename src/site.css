@@ -705,8 +705,19 @@ a:focus-visible {
 .split-copy .lead { margin-bottom: 24px; }
 .split-copy p { color: var(--ink-2); margin-bottom: 20px; }
 .split-visual {
+  border: 1px solid var(--border);
+  background: var(--white);
   border-radius: var(--r-panel);
   overflow: hidden;
+}
+.artwork-shell {
+  aspect-ratio: 16 / 10;
+  padding: clamp(16px, 2vw, 28px);
+}
+.section-art {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 .split-visual img {
   width: 100%;

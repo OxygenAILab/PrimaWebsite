@@ -1,4 +1,4 @@
-import detailImage from "../../assets/images/detail.jpg";
+import { LayeredArtwork } from "./SectionArtwork";
 
 const layers = [
   {
@@ -54,15 +54,7 @@ export default function HowItWorks() {
               我们不想让简单问题被拖慢，也不想复杂问题被草率对待。Prima 的核心假设是：推理深度应该跟任务复杂度匹配，而不是跟着对话轮数增长。
             </p>
           </div>
-          <figure className="split-visual">
-            <img
-              src={detailImage}
-              alt="冷白玻璃与薄荷蓝折射光，表达 Prima 的分层推理结构"
-              width={1280}
-              height={800}
-              loading="lazy"
-            />
-          </figure>
+          <LayeredArtwork />
         </div>
         <div className="card-grid" style={{marginTop: "48px"}}>
           {layers.map((item) => (

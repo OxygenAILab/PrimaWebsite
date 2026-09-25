@@ -7,7 +7,7 @@ import { useEffect, useRef } from "react";
  * （主题自拟，非素材级复制）。三层运动：
  *   1. 入场：各层按不同延迟淡入上移（cubic-bezier(.22,1,.36,1)，同阶跃 home-content-enter 手感）
  *   2. 常态：玻璃板错时漂浮、光核呼吸、外环自转、粒子游走 —— 页面静止时也在动
- *   3. 响应：随指针做小幅分层位移，随滚动做视差（由父级 useParallax 提供）
+ *   3. 响应：随指针做小幅分层位移
  * 全部 CSS 绘制与 transform/opacity 动画，无图片、无第三方依赖。
  * 无障碍：容器 aria-hidden；prefers-reduced-motion 下仅保留静态构图。
  */

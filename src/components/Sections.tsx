@@ -1,9 +1,7 @@
 import { siteConfig } from "../config";
 import HeroArtwork from "./HeroArtwork";
 import { painPoints, capabilities, scenarios } from "../data/content";
-import { useParallax } from "../hooks/useParallax";
-import artBandImage from "../../assets/images/art-band.jpg";
-import artDetailImage from "../../assets/images/art-detail.jpg";
+import { ContinuityArtwork, ResearchArtwork } from "./SectionArtwork";
 
 export function Hero() {
   return (
@@ -51,8 +49,6 @@ export function Product() {
 }
 
 export function Capabilities() {
-  const visualRef = useParallax<HTMLElement>(16);
-
   return (
     <section className="section" id="capabilities" aria-labelledby="capabilities-title">
       <div className="container">
@@ -62,15 +58,7 @@ export function Capabilities() {
             <h2 id="capabilities-title">四条正在打磨的方向</h2>
             <p className="lead">四条方向都在打磨中，好不好用，由第一批用户说了算。</p>
           </div>
-          <figure className="split-visual" ref={visualRef}>
-            <img
-              src={artDetailImage}
-              alt="针叶林航拍，表达 Prima 的自适应推理与分层记忆"
-              width={900}
-              height={754}
-              loading="lazy"
-            />
-          </figure>
+          <ContinuityArtwork />
         </div>
         <div className="card-grid reveal">
           {capabilities.map((item) => (
@@ -144,8 +132,6 @@ export function StageAndBeta() {
 }
 
 export function Models() {
-  const bandRef = useParallax<HTMLElement>(12);
-
   return (
     <section className="section" id="models" aria-labelledby="models-title">
       <div className="container">
@@ -160,15 +146,7 @@ export function Models() {
               查看模型进展与研究&nbsp;&rarr;
             </a>
           </div>
-          <figure className="split-visual" ref={bandRef}>
-            <img
-              src={artBandImage}
-              alt="针叶林航拍宽幅，代表长任务研究中的连续性与层次结构"
-              width={1400}
-              height={634}
-              loading="lazy"
-            />
-          </figure>
+          <ResearchArtwork />
         </div>
       </div>
     </section>
