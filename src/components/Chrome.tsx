@@ -9,6 +9,7 @@ type PageId =
   | "how-it-works"
   | "scenarios"
   | "roadmap"
+  | "pricing"
   | "faq"
   | "security";
 
@@ -27,6 +28,7 @@ const navItems: Array<{ id: PageId; label: string }> = [
   { id: "how-it-works", label: "工作方式" },
   { id: "scenarios", label: "使用场景" },
   { id: "roadmap", label: "路线图" },
+  { id: "pricing", label: "定价" },
   { id: "faq", label: "常见问题" },
   { id: "beta", label: "Beta 调研" },
   { id: "about", label: "关于项目" },
@@ -130,6 +132,7 @@ export function Footer({ active = "home" }: { active?: PageId }) {
           <a href={active === "home" ? "#capabilities" : "../#capabilities"}>核心能力</a>
           <a href={active === "home" ? "./scenarios/" : "../scenarios/"}>使用场景</a>
           <a href={active === "home" ? "./roadmap/" : "../roadmap/"}>路线图</a>
+          <a href={active === "home" ? "./pricing/" : "../pricing/"}>定价</a>
           <a href={active === "home" ? "./security/" : "../security/"}>数据边界</a>
           <a href={active === "home" ? "./beta/" : "../beta/"}>Beta 调研</a>
         </nav>

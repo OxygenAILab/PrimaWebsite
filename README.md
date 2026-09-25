@@ -12,3 +12,4 @@ npm run preview
 ```
 
 The survey URL is centralized in `src/config.ts`. `/beta/` embeds the questionnaire and always offers a new-window fallback.
+`/pricing/` contains the SparkPlan, PrimaPlan, and Credit+ tiers.

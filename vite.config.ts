@@ -14,6 +14,7 @@ export default defineConfig({
         "how-it-works": resolve(__dirname, "how-it-works/index.html"),
         scenarios: resolve(__dirname, "scenarios/index.html"),
         roadmap: resolve(__dirname, "roadmap/index.html"),
+        pricing: resolve(__dirname, "pricing/index.html"),
         faq: resolve(__dirname, "faq/index.html"),
         security: resolve(__dirname, "security/index.html"),
       },
