@@ -15,6 +15,7 @@ import Pricing from "./components/Pricing";
 import ModelList from "./components/ModelList";
 import Faq from "./components/Faq";
 import Security from "./components/Security";
+import { I18nProvider } from "./i18n";
 import "./site.css";
 
 const rootElement = document.getElementById("root");
@@ -39,6 +40,8 @@ const pageMap: Partial<Record<PrimaPage, React.ReactNode>> = {
 
 createRoot(rootElement).render(
   <StrictMode>
-    {pageId === "home" ? <App /> : <PageApp active={pageId}>{pageMap[pageId] ?? <App />}</PageApp>}
+    <I18nProvider>
+      {pageId === "home" ? <App /> : <PageApp active={pageId}>{pageMap[pageId] ?? <App />}</PageApp>}
+    </I18nProvider>
   </StrictMode>,
 );

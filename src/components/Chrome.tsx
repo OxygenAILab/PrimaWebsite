@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { siteConfig } from "../config";
 import logoImage from "../../assets/images/logo.png";
+import { LanguageSwitch, useI18n } from "../i18n";
 
 type PageId =
   | "home"
@@ -15,10 +16,16 @@ type PageId =
   | "security";
 
 function Announce() {
+  const { locale, t } = useI18n();
+  const copy = {
+    zh: "Prima Beta 调研进行中，约 5 分钟 →",
+    en: "Prima Beta research is open; about 5 minutes →",
+  };
+
   return (
     <div className="announce">
       <a href={siteConfig.surveyUrl} target="_blank" rel="noopener noreferrer">
-        Prima Beta 调研进行中，约 5 分钟 →
+        {locale === "zh" ? copy.zh : copy.en}
       </a>
     </div>
   );
@@ -44,6 +51,19 @@ function navHref(id: PageId, active: PageId): string {
 
 export function Header({ active = "home" }: { active?: PageId }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { locale } = useI18n();
+  const navLabels: Record<PageId, { zh: string; en: string }> = {
+    home: { zh: "产品理念", en: "Product" },
+    beta: { zh: "Beta 调研", en: "Beta research" },
+    about: { zh: "关于项目", en: "About" },
+    "how-it-works": { zh: "工作方式", en: "How it works" },
+    scenarios: { zh: "使用场景", en: "Scenarios" },
+    roadmap: { zh: "路线图", en: "Roadmap" },
+    pricing: { zh: "定价", en: "Pricing" },
+    "model-list": { zh: "模型列表", en: "Model list" },
+    faq: { zh: "常见问题", en: "FAQ" },
+    security: { zh: "数据边界", en: "Data boundaries" },
+  };
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -63,13 +83,13 @@ export function Header({ active = "home" }: { active?: PageId }) {
       <Announce />
       <header className={menuOpen ? "site-header menu-open" : "site-header"} id="top">
         <div className="container header-inner">
-          <a className="brand" href={active === "beta" ? "../" : "#top"} aria-label={`${siteConfig.brandShortName} 首页`}>
+          <a className="brand" href={active === "beta" ? "../" : "#top"} aria-label={locale === "zh" ? `${siteConfig.brandShortName} 首页` : `${siteConfig.brandShortName} home`}>
             <img className="brand-mark" src={logoImage} alt="" width={30} height={30} />
             <span>{siteConfig.brandShortName}</span>
           </a>
-          <nav className="site-nav" aria-label="主导航">
+          <nav className="site-nav" aria-label={locale === "zh" ? "主导航" : "Main navigation"}>
             {navItems.map((item) => (
-              <a key={item.id} href={navHref(item.id, active)}>{item.label}</a>
+              <a key={item.id} href={navHref(item.id, active)}>{navLabels[item.id][locale]}</a>
             ))}
           </nav>
           <a
@@ -78,14 +98,15 @@ export function Header({ active = "home" }: { active?: PageId }) {
             target={active === "beta" ? "_blank" : undefined}
             rel="noopener noreferrer"
           >
-            立即参与调研
+            {locale === "zh" ? "立即参与调研" : "Join research"}
           </a>
+          <LanguageSwitch />
           <button
             type="button"
             className="nav-toggle"
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
-            aria-label={menuOpen ? "关闭菜单" : "打开菜单"}
+            aria-label={menuOpen ? (locale === "zh" ? "关闭菜单" : "Close menu") : (locale === "zh" ? "打开菜单" : "Open menu")}
             onClick={() => setMenuOpen((open) => !open)}
           >
             <span className="nav-toggle-bar" aria-hidden="true" />
@@ -93,7 +114,7 @@ export function Header({ active = "home" }: { active?: PageId }) {
           </button>
         </div>
         <div className={menuOpen ? "mobile-menu open" : "mobile-menu"} id="mobile-menu">
-          <nav className="container mobile-menu-nav" aria-label="移动端导航">
+          <nav className="container mobile-menu-nav" aria-label={locale === "zh" ? "移动端导航" : "Mobile navigation"}>
             {navItems.map((item) => (
               <a
                 key={item.id}
@@ -101,7 +122,7 @@ export function Header({ active = "home" }: { active?: PageId }) {
                 aria-current={item.id === active ? "page" : undefined}
                 onClick={() => setMenuOpen(false)}
               >
-                {item.label}
+                {navLabels[item.id][locale]}
               </a>
             ))}
             <a
@@ -109,7 +130,7 @@ export function Header({ active = "home" }: { active?: PageId }) {
               href={active === "beta" ? siteConfig.surveyUrl : "./beta/"}
               onClick={() => setMenuOpen(false)}
             >
-              立即参与调研
+              {locale === "zh" ? "立即参与调研" : "Join research"}
             </a>
           </nav>
         </div>
@@ -119,6 +140,8 @@ export function Header({ active = "home" }: { active?: PageId }) {
 }
 
 export function Footer({ active = "home" }: { active?: PageId }) {
+  const { locale, t } = useI18n();
+
   return (
     <footer className="site-footer">
       <div className="container footer-grid">
@@ -127,29 +150,29 @@ export function Footer({ active = "home" }: { active?: PageId }) {
             <img className="footer-logo" src={logoImage} alt="" width={28} height={28} />
             {siteConfig.brandShortName}
           </p>
-          <p>面向真实长任务的 AI Agent，现在处于早期共创阶段。</p>
-          <p className="footer-slogan">{siteConfig.slogan}</p>
+          <p>{locale === "zh" ? "面向真实长任务的 AI Agent，现在处于早期共创阶段。" : "An AI Agent for real long tasks, currently in early co-creation."}</p>
+          <p className="footer-slogan">{t("prima.slogan")}</p>
         </div>
-        <nav aria-label="项目导航">
-          {active === "home" ? <a href="./about/">关于项目</a> : <a href="../">返回首页</a>}
-          <a href={active === "home" ? "#capabilities" : "../#capabilities"}>核心能力</a>
-          <a href={active === "home" ? "./scenarios/" : "../scenarios/"}>使用场景</a>
-          <a href={active === "home" ? "./roadmap/" : "../roadmap/"}>路线图</a>
-          <a href={active === "home" ? "./pricing/" : "../pricing/"}>定价</a>
-          <a href={active === "home" ? "./model-list/" : "../model-list/"}>模型列表</a>
-          <a href={active === "home" ? "./security/" : "../security/"}>数据边界</a>
-          <a href={active === "home" ? "./beta/" : "../beta/"}>Beta 调研</a>
+        <nav aria-label={locale === "zh" ? "项目导航" : "Project navigation"}>
+          {active === "home" ? <a href="./about/">{locale === "zh" ? "关于项目" : "About"}</a> : <a href="../">{locale === "zh" ? "返回首页" : "Back home"}</a>}
+          <a href={active === "home" ? "#capabilities" : "../#capabilities"}>{locale === "zh" ? "核心能力" : "Capabilities"}</a>
+          <a href={active === "home" ? "./scenarios/" : "../scenarios/"}>{locale === "zh" ? "使用场景" : "Scenarios"}</a>
+          <a href={active === "home" ? "./roadmap/" : "../roadmap/"}>{locale === "zh" ? "路线图" : "Roadmap"}</a>
+          <a href={active === "home" ? "./pricing/" : "../pricing/"}>{locale === "zh" ? "定价" : "Pricing"}</a>
+          <a href={active === "home" ? "./model-list/" : "../model-list/"}>{locale === "zh" ? "模型列表" : "Model list"}</a>
+          <a href={active === "home" ? "./security/" : "../security/"}>{locale === "zh" ? "数据边界" : "Data boundaries"}</a>
+          <a href={active === "home" ? "./beta/" : "../beta/"}>{locale === "zh" ? "Beta 调研" : "Beta research"}</a>
         </nav>
-        <nav aria-label="参与入口">
+        <nav aria-label={locale === "zh" ? "参与入口" : "Participation links"}>
           <a href={siteConfig.oxygenUrl} target="_blank" rel="noopener noreferrer">Oxygen AI</a>
-          <a href="https://oxygenai.top/progress/" target="_blank" rel="noopener noreferrer">模型研究</a>
-          <a href={siteConfig.surveyUrl} target="_blank" rel="noopener noreferrer">立即参与调研</a>
+          <a href="https://oxygenai.top/progress/" target="_blank" rel="noopener noreferrer">{locale === "zh" ? "模型研究" : "Model research"}</a>
+          <a href={siteConfig.surveyUrl} target="_blank" rel="noopener noreferrer">{locale === "zh" ? "立即参与调研" : "Join research"}</a>
           <a href="mailto:prima@oxygenai.top">prima@oxygenai.top</a>
         </nav>
       </div>
       <div className="container footer-bottom">
         <p>&copy; 2026 Oxygen AI</p>
-        <p>产品仍在打磨，能力描述不代表已经可用；反馈仅用于产品研究与 Beta 招募。</p>
+        <p>{locale === "zh" ? "产品仍在打磨，能力描述不代表已经可用；反馈仅用于产品研究与 Beta 招募。" : "The product is still being refined; descriptions do not imply availability. Feedback is used only for product research and Beta recruitment."}</p>
       </div>
     </footer>
   );

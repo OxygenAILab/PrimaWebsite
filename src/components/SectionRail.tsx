@@ -1,16 +1,19 @@
 import { useEffect, useState, type MouseEvent } from "react";
+import { useI18n } from "../i18n";
+import type { Localized } from "../data/content";
 
-type RailItem = { id: string; label: string };
+type RailItem = { id: string };
 
-const railItems: RailItem[] = [
-  { id: "product", label: "痛点" },
-  { id: "capabilities", label: "能力" },
-  { id: "scenarios", label: "场景" },
-  { id: "stage", label: "阶段" },
-  { id: "models", label: "模型" },
+const railItems: Array<RailItem & { label: Localized }> = [
+  { id: "product", label: { zh: "痛点", en: "Pain points" } },
+  { id: "capabilities", label: { zh: "能力", en: "Capabilities" } },
+  { id: "scenarios", label: { zh: "场景", en: "Scenarios" } },
+  { id: "stage", label: { zh: "阶段", en: "Stage" } },
+  { id: "models", label: { zh: "模型", en: "Models" } },
 ];
 
 export default function SectionRail() {
+  const { locale } = useI18n();
   const [activeId, setActiveId] = useState<string>("");
 
   useEffect(() => {
@@ -44,7 +47,7 @@ export default function SectionRail() {
   };
 
   return (
-    <nav className="section-rail" aria-label="页面段落导航">
+    <nav className="section-rail" aria-label={locale === "zh" ? "页面段落导航" : "Section navigation"}>
       <ul className="section-rail-list">
         {railItems.map((item) => (
           <li key={item.id}>
@@ -54,7 +57,7 @@ export default function SectionRail() {
               aria-current={activeId === item.id ? "true" : undefined}
               onClick={(event) => handleClick(event, item.id)}
             >
-              <span className="section-rail-label">{item.label}</span>
+              <span className="section-rail-label">{item.label[locale]}</span>
             </a>
           </li>
         ))}
