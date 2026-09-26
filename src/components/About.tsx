@@ -4,30 +4,6 @@ import SplitTitle from "./SplitTitle";
 import { useI18n } from "../i18n";
 import type { Localized } from "../data/content";
 
-const principles: Array<{ title: Localized; copy: Localized }> = [
-  {
-    title: { zh: "真实长任务优先", en: "Real long tasks first" },
-    copy: {
-      zh: "我们不把“能聊天”当作终点，而是关注多文件工程、长文档、数据分析和研究汇总里能否稳定完成。",
-      en: "We do not stop at chat; we test stable completion in multi-file engineering, long documents, data analysis, and research synthesis.",
-    },
-  },
-  {
-    title: { zh: "阶段透明", en: "Transparent stages" },
-    copy: {
-      zh: "Prima 仍在早期共创阶段。我们没有把探索中的能力包装成已上线功能。",
-      en: "Prima is still in early co-creation. We do not present exploratory capabilities as shipped features.",
-    },
-  },
-  {
-    title: { zh: "反馈驱动", en: "Feedback driven" },
-    copy: {
-      zh: "问卷、访谈和 Beta 反馈会直接影响推理、记忆、数据边界和界面优先级。",
-      en: "Surveys, interviews, and Beta feedback directly shape reasoning, memory, data boundaries, and interface priorities.",
-    },
-  },
-];
-
 const boundaries: Array<{ title: Localized; copy: Localized }> = [
   {
     title: { zh: "自适应推理", en: "Adaptive reasoning" },
@@ -52,8 +28,62 @@ const boundaries: Array<{ title: Localized; copy: Localized }> = [
   },
 ];
 
+/* 常见问题原先单开一页，与本页重叠度高；合并后同类问题并成一条，用折叠列表收起 */
+const faqGroups: Array<{ title: Localized; items: Array<{ q: Localized; a: Localized }> }> = [
+  {
+    title: { zh: "产品与阶段", en: "Product and stage" },
+    items: [
+      {
+        q: { zh: "Prima 现在可以用了吗？收费吗？", en: "Can I use Prima now? Is it free?" },
+        a: {
+          zh: "还没有开放注册。我们正在通过 Beta 调研筛选早期用户，入选后会单独安排体验。早期体验阶段不收费，正式阶段的收费形态会结合产品完成度再公布。",
+          en: "Registration is not open yet. Beta research is selecting early users, and selected users receive separate access arrangements. Early access is free; commercial terms will be published later based on product maturity.",
+        },
+      },
+      {
+        q: { zh: "和一般的聊天助手有什么区别？", en: "How is it different from a chat assistant?" },
+        a: {
+          zh: "Prima 聚焦长任务：多文件工程、长文档、数据分析。推理深度跟任务复杂度匹配，而不是固定速度。",
+          en: "Prima targets long tasks across multi-file engineering, long documents, and data analysis. Reasoning depth matches task complexity rather than a fixed speed.",
+        },
+      },
+    ],
+  },
+  {
+    title: { zh: "记忆与数据", en: "Memory and data" },
+    items: [
+      {
+        q: { zh: "会记住我的所有对话吗？", en: "Will it remember every conversation?" },
+        a: {
+          zh: "分层记忆会区分「该记住什么」和「该在什么时候想起什么」。偏好、项目状态和关键决策会被分层组织，你会有查看与控制方式。",
+          en: "Layered memory distinguishes what to remember from when to recall it. Preferences, project state, and decisions are layered, with review and control methods.",
+        },
+      },
+      {
+        q: { zh: "我的数据用来训练模型吗？", en: "Will my data train models?" },
+        a: {
+          zh: "不会。共创阶段的数据仅用于服务与产品研究，边界会写入协议。",
+          en: "No. Co-creation data is used only for service and product research; boundaries are written into agreements.",
+        },
+      },
+    ],
+  },
+  {
+    title: { zh: "参与方式", en: "How to participate" },
+    items: [
+      {
+        q: { zh: "调研要多久？多久能得到回复？", en: "How long is the survey, and when will I hear back?" },
+        a: {
+          zh: "约 5 分钟，问题围绕使用习惯、真实痛点、部署偏好和服务期待。我们会结合反馈安排体验资格，节奏以邮件通知为准。",
+          en: "About five minutes, covering usage habits, real pain points, deployment preferences, and service expectations. Access arrangements follow the feedback; email notices define the timing.",
+        },
+      },
+    ],
+  },
+];
+
 export default function About() {
-  const { locale, pick, t } = useI18n();
+  const { locale, pick } = useI18n();
 
   return (
     <main id="main" className="about-page">
@@ -65,24 +95,14 @@ export default function About() {
           stress={{ zh: "正在与用户共同定义的产品。", en: "being defined with its users." }}
         />
         <p className="section-copy">
-          {pick({ zh: "Prima 面向真实长任务，探索自适应推理、分层长期记忆和更可靠的执行一致性。当前项目由 Oxygen AI 支持，仍处于早期共创阶段。", en: "Prima targets real long tasks and explores adaptive reasoning, layered long-term memory, and reliable execution consistency. Oxygen AI supports the project, which remains in early co-creation." })}
+          {pick({
+            zh: "Prima 面向真实长任务，探索自适应推理、分层长期记忆和更可靠的执行一致性。当前项目由 Oxygen AI 支持，仍处于早期共创阶段。阶段、数据边界和参与方式，我们在这一页直接回答。",
+            en: "Prima targets real long tasks and explores adaptive reasoning, layered long-term memory, and reliable execution consistency. Oxygen AI supports the project, which remains in early co-creation. This page answers stage, data-boundary, and participation questions directly.",
+          })}
         </p>
-        <div className="hero-actions">
-          <a className="button primary" href="../beta/">{t("cta.joinBeta")}</a>
-          <a className="button ghost" href={siteConfig.oxygenUrl} target="_blank" rel="noopener noreferrer">{pick({ zh: "了解 Oxygen AI", en: "Explore Oxygen AI" })}</a>
-        </div>
-      </section>
-
-      <section className="container about-section" aria-labelledby="principles-title">
-        <h2 id="principles-title">{pick({ zh: "我们关心的三件事", en: "Three things we care about" })}</h2>
-        <div className="three-grid">
-          {principles.map((item) => (
-            <article className="feature-tile" key={item.title.en}>
-              <h3>{item.title[locale]}</h3>
-              <p>{item.copy[locale]}</p>
-            </article>
-          ))}
-        </div>
+        <a className="text-link" href={siteConfig.oxygenUrl} target="_blank" rel="noopener noreferrer">
+          {pick({ zh: "了解 Oxygen AI", en: "Explore Oxygen AI" })}&nbsp;&rarr;
+        </a>
       </section>
 
       <section className="container about-section" aria-labelledby="boundary-title">
@@ -100,10 +120,33 @@ export default function About() {
         </div>
       </section>
 
+      <section className="container about-section" aria-labelledby="about-faq-title">
+        <div className="section-head">
+          <p className="eyebrow">{pick({ zh: "常见问题", en: "FAQ" })}</p>
+          <h2 id="about-faq-title">{pick({ zh: "把话说清楚。", en: "Clear answers, directly stated." })}</h2>
+        </div>
+        {faqGroups.map((group) => (
+          <div className="faq-group" key={group.title.en}>
+            <p className="faq-group-title">{group.title[locale]}</p>
+            <div className="faq-list">
+              {group.items.map((item) => (
+                <details className="faq-item" key={item.q.en}>
+                  <summary>{item.q[locale]}</summary>
+                  <p>{item.a[locale]}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        ))}
+      </section>
+
       <BetaCta
         id="contact-title"
         title={{ zh: "想影响产品方向？", en: "Want to influence the product?" }}
-        copy={{ zh: "填写约 5 分钟的问卷，告诉我们你的真实场景、痛点和部署期待。入选用户有机会进入 Beta。", en: "Complete a five-minute survey to share your real scenarios, pain points, and deployment expectations. Selected users may enter Beta." }}
+        copy={{
+          zh: "填写约 5 分钟的问卷，告诉我们你的真实场景、痛点和部署期待。入选用户有机会进入 Beta。",
+          en: "Complete a five-minute survey to share your real scenarios, pain points, and deployment expectations. Selected users may enter Beta.",
+        }}
       />
     </main>
   );

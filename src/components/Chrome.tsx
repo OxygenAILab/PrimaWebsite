@@ -5,31 +5,25 @@ import { useI18n } from "../i18n";
 import type { Localized } from "../data/content";
 import type { PrimaPage } from "../PageApp";
 
-const navItems: PrimaPage[] = [
-  "home",
-  "how-it-works",
-  "scenarios",
-  "roadmap",
-  "pricing",
-  "model-list",
-  "faq",
-  "beta",
-  "about",
-];
+type NavEntry = { page: PrimaPage; label: Localized; children?: Array<{ page: PrimaPage; label: Localized }> };
 
-const navLabels: Record<PrimaPage, Localized> = {
-  home: { zh: "产品理念", en: "Product" },
-  beta: { zh: "Beta 调研", en: "Beta research" },
-  about: { zh: "关于项目", en: "About" },
-  "how-it-works": { zh: "工作方式", en: "How it works" },
-  scenarios: { zh: "使用场景", en: "Scenarios" },
-  roadmap: { zh: "路线图", en: "Roadmap" },
-  pricing: { zh: "定价", en: "Pricing" },
-  "model-list": { zh: "模型列表", en: "Model list" },
-  faq: { zh: "常见问题", en: "FAQ" },
-  security: { zh: "数据边界", en: "Data boundaries" },
-  download: { zh: "下载", en: "Download" },
-};
+/* 顶栏只留六个入口；三个研究页收进「产品研究」下拉 */
+const navEntries: NavEntry[] = [
+  { page: "home", label: { zh: "首页", en: "Home" } },
+  {
+    page: "how-it-works",
+    label: { zh: "产品研究", en: "Research" },
+    children: [
+      { page: "how-it-works", label: { zh: "工作方式", en: "How it works" } },
+      { page: "scenarios", label: { zh: "使用场景", en: "Scenarios" } },
+      { page: "roadmap", label: { zh: "路线图", en: "Roadmap" } },
+    ],
+  },
+  { page: "pricing", label: { zh: "定价", en: "Pricing" } },
+  { page: "model-list", label: { zh: "模型列表", en: "Model list" } },
+  { page: "about", label: { zh: "关于项目", en: "About" } },
+  { page: "beta", label: { zh: "Beta 调研", en: "Beta research" } },
+];
 
 function Announce() {
   const { t } = useI18n();
@@ -44,7 +38,7 @@ function Announce() {
 }
 
 function navHref(id: PrimaPage, active: PrimaPage): string {
-  if (id === "home") return active === "home" ? "#product" : "../#product";
+  if (id === "home") return active === "home" ? "#top" : "../";
   if (id === active) return "#top";
   return active === "home" ? `./${id}/` : `../${id}/`;
 }
@@ -56,6 +50,7 @@ function fromPage(active: PrimaPage, path: string): string {
 
 export function Header({ active = "home" }: { active?: PrimaPage }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [openGroup, setOpenGroup] = useState<PrimaPage | null>(null);
   const { locale, pick, t } = useI18n();
 
   useEffect(() => {
@@ -71,6 +66,15 @@ export function Header({ active = "home" }: { active?: PrimaPage }) {
     };
   }, [menuOpen]);
 
+  useEffect(() => {
+    if (!openGroup) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpenGroup(null);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [openGroup]);
+
   return (
     <>
       <Announce />
@@ -81,9 +85,49 @@ export function Header({ active = "home" }: { active?: PrimaPage }) {
             <span>{siteConfig.brandShortName}</span>
           </a>
           <nav className="site-nav" aria-label={pick({ zh: "主导航", en: "Main navigation" })}>
-            {navItems.map((id) => (
-              <a key={id} href={navHref(id, active)}>{navLabels[id][locale]}</a>
-            ))}
+            {navEntries.map((entry) => {
+              if (!entry.children) {
+                return (
+                  <a key={entry.page} href={navHref(entry.page, active)} aria-current={entry.page === active ? "page" : undefined}>
+                    {entry.label[locale]}
+                  </a>
+                );
+              }
+              const inGroup = entry.children.some((child) => child.page === active);
+              const opened = openGroup === entry.page;
+              return (
+                <div
+                  className={inGroup ? "nav-group is-current" : "nav-group"}
+                  key={entry.page}
+                  onMouseEnter={() => setOpenGroup(entry.page)}
+                  onMouseLeave={() => setOpenGroup(null)}
+                >
+                  <button
+                    type="button"
+                    aria-expanded={opened}
+                    aria-haspopup="true"
+                    onClick={() => setOpenGroup(opened ? null : entry.page)}
+                  >
+                    {entry.label[locale]}
+                    <span className="nav-caret" aria-hidden="true" />
+                  </button>
+                  <div className="nav-panel">
+                    <div className="nav-card">
+                      {entry.children.map((child) => (
+                        <a
+                          key={child.page}
+                          href={navHref(child.page, active)}
+                          aria-current={child.page === active ? "page" : undefined}
+                          onClick={() => setOpenGroup(null)}
+                        >
+                          {child.label[locale]}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </nav>
           <a
             className="button primary compact header-cta"
@@ -107,16 +151,32 @@ export function Header({ active = "home" }: { active?: PrimaPage }) {
         </div>
         <div className={menuOpen ? "mobile-menu open" : "mobile-menu"} id="mobile-menu">
           <nav className="container mobile-menu-nav" aria-label={pick({ zh: "移动端导航", en: "Mobile navigation" })}>
-            {navItems.map((id) => (
-              <a
-                key={id}
-                href={navHref(id, active)}
-                aria-current={id === active ? "page" : undefined}
-                onClick={() => setMenuOpen(false)}
-              >
-                {navLabels[id][locale]}
-              </a>
-            ))}
+            {navEntries.map((entry) =>
+              entry.children ? (
+                <div className="mobile-menu-group" key={entry.page}>
+                  <p className="mobile-menu-heading">{entry.label[locale]}</p>
+                  {entry.children.map((child) => (
+                    <a
+                      key={child.page}
+                      href={navHref(child.page, active)}
+                      aria-current={child.page === active ? "page" : undefined}
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      {child.label[locale]}
+                    </a>
+                  ))}
+                </div>
+              ) : (
+                <a
+                  key={entry.page}
+                  href={navHref(entry.page, active)}
+                  aria-current={entry.page === active ? "page" : undefined}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {entry.label[locale]}
+                </a>
+              ),
+            )}
             <a
               className="button primary mobile-menu-cta"
               href={active === "beta" ? siteConfig.surveyUrl : "./beta/"}
@@ -132,6 +192,7 @@ export function Header({ active = "home" }: { active?: PrimaPage }) {
 }
 
 const footerPages: Array<{ path: string; label: Localized }> = [
+  { path: "how-it-works/", label: { zh: "工作方式", en: "How it works" } },
   { path: "scenarios/", label: { zh: "使用场景", en: "Scenarios" } },
   { path: "roadmap/", label: { zh: "路线图", en: "Roadmap" } },
   { path: "pricing/", label: { zh: "定价", en: "Pricing" } },

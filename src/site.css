@@ -234,7 +234,7 @@ h3 {
   align-items: center;
   gap: 28px;
 }
-.site-nav a {
+.site-nav > a {
   min-height: 32px;
   display: inline-flex;
   align-items: center;
@@ -243,8 +243,80 @@ h3 {
   font-weight: 500;
   transition: color .15s var(--ease);
 }
-.site-nav a:hover { color: var(--ink); }
+.site-nav > a:hover { color: var(--ink); }
 .site-header .button { margin-left: auto; }
+
+/* ---------- Mega menu（悬停展开，键盘与触屏可点开） ---------- */
+.nav-group { position: relative; display: inline-flex; }
+.nav-group > button {
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink-2);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: .92rem;
+  font-weight: 500;
+  transition: color .15s var(--ease);
+}
+.nav-group > button:hover,
+.nav-group.is-current > button { color: var(--ink); }
+.nav-caret {
+  width: 5px;
+  height: 5px;
+  flex: none;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  rotate: 45deg;
+  translate: 0 -1px;
+  transition: rotate .2s var(--ease), translate .2s var(--ease);
+}
+.nav-group:has(button[aria-expanded="true"]) .nav-caret { rotate: -135deg; translate: 0 1px; }
+/* padding-top 充当悬停桥：指针从文字移向卡片途中不断开 */
+.nav-panel {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  translate: -50% 0;
+  padding-top: 14px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .18s var(--ease), visibility .18s var(--ease);
+}
+.nav-group:hover .nav-panel,
+.nav-group:focus-within .nav-panel,
+.nav-group:has(button[aria-expanded="true"]) .nav-panel {
+  opacity: 1;
+  visibility: visible;
+}
+.nav-card {
+  display: grid;
+  gap: 2px;
+  min-width: 208px;
+  padding: 8px;
+  background: rgba(255, 255, 255, .94);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+}
+.nav-card a {
+  display: block;
+  padding: 9px 14px;
+  border-radius: var(--r-btn);
+  color: var(--ink-2);
+  font-size: .9rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: color .15s var(--ease), background-color .15s var(--ease);
+}
+.nav-card a:hover { color: var(--brand-dark); background: var(--brand-soft); }
+.nav-card a[aria-current="page"] { color: var(--brand-dark); font-weight: 600; }
 
 /* ---------- Section rail (left scrollspy index, wide screens only) ---------- */
 .section-rail {
@@ -371,6 +443,14 @@ h3 {
 }
 .mobile-menu-nav a:not(.button):hover { background: rgba(22, 24, 29, .05); }
 .mobile-menu-nav a[aria-current="page"] { color: var(--brand); font-weight: 600; }
+.mobile-menu-group { display: grid; gap: 2px; }
+.mobile-menu-heading {
+  padding: 12px 8px 2px;
+  color: var(--ink-3);
+  font-size: .78rem;
+  font-weight: 600;
+}
+.mobile-menu-group a:not(.button) { padding-left: 22px; }
 .mobile-menu-cta { margin-top: 12px; justify-content: center; }
 
 @media (max-width: 960px) {
@@ -656,6 +736,42 @@ a:focus-visible {
   background: var(--brand);
 }
 
+/* ---------- Sub page head（页序线 + 基元点阵角标） ---------- */
+.page-head { position: relative; padding-top: 44px; }
+.page-head-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  letter-spacing: .1em;
+  color: var(--ink-3);
+}
+.page-rule { flex: 1; height: 1px; background: var(--border); }
+.page-mark-row { position: relative; }
+.page-mark {
+  position: absolute;
+  right: 0;
+  top: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, 13px);
+  gap: 10px;
+}
+.mark-dot {
+  width: 4px;
+  height: 4px;
+  justify-self: center;
+  border-radius: 50%;
+  background: rgba(22, 24, 29, .18);
+}
+.mark-dot.is-lit {
+  width: 6px;
+  height: 6px;
+  background: var(--brand);
+  box-shadow: 0 0 0 4px var(--brand-soft);
+}
+.page-head + main { padding-top: 34px; }
+
 /* ---------- Sub pages (About / Model / How / Scenarios) ---------- */
 .about-page,
 .beta-page {
@@ -724,6 +840,47 @@ a:focus-visible {
   color: var(--ink-2);
   font-size: .95rem;
   line-height: 1.65;
+}
+
+/* 折叠问答：并页之后用「一行一问」代替整屏卡片 */
+.faq-group { margin-bottom: 32px; }
+.faq-group:last-child { margin-bottom: 0; }
+.faq-group-title { margin-bottom: 6px; color: var(--ink-3); font-size: .8rem; font-weight: 600; }
+.faq-list { border-top: 1px solid var(--border); }
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 4px;
+  cursor: pointer;
+  list-style: none;
+  font-size: 1.02rem;
+  font-weight: 500;
+  color: var(--ink);
+  transition: color .15s var(--ease);
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary:hover { color: var(--brand-dark); }
+.faq-item summary::after {
+  content: "";
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-right: 1.5px solid var(--ink-3);
+  border-bottom: 1.5px solid var(--ink-3);
+  rotate: 45deg;
+  translate: 0 -3px;
+  transition: rotate .2s var(--ease), translate .2s var(--ease);
+}
+.faq-item[open] summary::after { rotate: -135deg; translate: 0 2px; }
+.faq-item p {
+  max-width: 74ch;
+  padding: 0 4px 20px;
+  color: var(--ink-2);
+  font-size: .95rem;
+  line-height: 1.7;
 }
 
 /* ---------- Contact panel ---------- */
@@ -1464,6 +1621,9 @@ a:focus-visible {
   .footer-bottom { flex-direction: column; gap: 8px; }
   .contact-panel { grid-template-columns: 1fr; padding: 32px; }
   .section { padding: 88px 0; }
+  .page-head { padding-top: 26px; }
+  .page-mark { display: none; }
+  .page-head + main { padding-top: 40px; }
   .about-page { padding: 72px 0 96px; }
   .about-hero { margin-bottom: 64px; }
   .about-section { margin-bottom: 80px; }

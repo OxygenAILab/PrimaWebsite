@@ -12,7 +12,6 @@ import Scenarios from "./components/Scenarios";
 import Roadmap from "./components/Roadmap";
 import Pricing from "./components/Pricing";
 import ModelList from "./components/ModelList";
-import Faq from "./components/Faq";
 import Security from "./components/Security";
 import Download from "./components/Download";
 import { I18nProvider } from "./i18n";
@@ -35,7 +34,6 @@ const pageMap: Partial<Record<PrimaPage, React.ReactNode>> = {
   roadmap: <Roadmap />,
   pricing: <Pricing />,
   "model-list": <ModelList />,
-  faq: <Faq />,
   security: <Security />,
   download: <Download />,
 };
