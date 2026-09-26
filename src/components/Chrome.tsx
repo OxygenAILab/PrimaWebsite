@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { siteConfig } from "../config";
 import logoImage from "../../assets/images/logo.png";
-import { LanguageSwitch, useI18n } from "../i18n";
+import { useI18n } from "../i18n";
 
 type PageId =
   | "home"
@@ -13,7 +13,8 @@ type PageId =
   | "pricing"
   | "model-list"
   | "faq"
-  | "security";
+  | "security"
+  | "download";
 
 function Announce() {
   const { locale, t } = useI18n();
@@ -63,6 +64,7 @@ export function Header({ active = "home" }: { active?: PageId }) {
     "model-list": { zh: "模型列表", en: "Model list" },
     faq: { zh: "常见问题", en: "FAQ" },
     security: { zh: "数据边界", en: "Data boundaries" },
+    download: { zh: "下载", en: "Download" },
   };
 
   useEffect(() => {
@@ -100,7 +102,6 @@ export function Header({ active = "home" }: { active?: PageId }) {
           >
             {locale === "zh" ? "立即参与调研" : "Join research"}
           </a>
-          <LanguageSwitch />
           <button
             type="button"
             className="nav-toggle"
@@ -162,6 +163,7 @@ export function Footer({ active = "home" }: { active?: PageId }) {
           <a href={active === "home" ? "./model-list/" : "../model-list/"}>{locale === "zh" ? "模型列表" : "Model list"}</a>
           <a href={active === "home" ? "./security/" : "../security/"}>{locale === "zh" ? "数据边界" : "Data boundaries"}</a>
           <a href={active === "home" ? "./beta/" : "../beta/"}>{locale === "zh" ? "Beta 调研" : "Beta research"}</a>
+          <a href={active === "home" ? "./download/" : "../download/"}>{locale === "zh" ? "下载" : "Download"}</a>
         </nav>
         <nav aria-label={locale === "zh" ? "参与入口" : "Participation links"}>
           <a href={siteConfig.oxygenUrl} target="_blank" rel="noopener noreferrer">Oxygen AI</a>

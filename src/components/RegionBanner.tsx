@@ -41,14 +41,19 @@ function detectWithIpApi() {
 export default function RegionBanner() {
   const { setLocale, t } = useI18n();
   const [region, setRegion] = useState<RegionState>(() => {
+    if (window.sessionStorage.getItem(`${STORAGE_KEY}-seen`)) {
+      return { status: "hidden", country: "" };
+    }
     const cached = window.sessionStorage.getItem(`${STORAGE_KEY}-state`);
     if (cached === "china" || cached === "other") return { status: cached, country: "" };
     return { status: "detecting", country: "" };
   });
   useEffect(() => {
     const stored = window.localStorage.getItem(STORAGE_KEY);
-    if (stored === "china" || stored === "other") {
-      setRegion({ status: stored, country: "" });
+    const seen = window.sessionStorage.getItem(`${STORAGE_KEY}-seen`);
+    const language = window.localStorage.getItem("site-language");
+    if (seen || stored === "china" || stored === "other" || language) {
+      setRegion({ status: "hidden", country: "" });
       return;
     }
 
@@ -60,6 +65,7 @@ export default function RegionBanner() {
         if (!active) return;
         const code = result.code.toUpperCase();
         if (!window.localStorage.getItem("site-language")) setLocale(code === "CN" ? "zh" : "en");
+        window.sessionStorage.setItem(`${STORAGE_KEY}-seen`, "1");
         window.sessionStorage.setItem(`${STORAGE_KEY}-state`, result.code.toUpperCase() === "CN" ? "china" : "other");
         setRegion({
           status: code === "CN" ? "china" : "other",
@@ -77,15 +83,12 @@ export default function RegionBanner() {
 
   useEffect(() => {
     if (!["china", "other", "unknown"].includes(region.status)) return;
-    const timer = window.setTimeout(() => setRegion((state) => ({ ...state, status: "hidden" })), 8000);
+    const timer = window.setTimeout(() => {
+      window.sessionStorage.setItem(`${STORAGE_KEY}-seen`, "1");
+      setRegion((state) => ({ ...state, status: "hidden" }));
+    }, 8000);
     return () => window.clearTimeout(timer);
   }, [region.status]);
-
-  const setPreference = (preference: "china" | "other") => {
-    window.localStorage.setItem(STORAGE_KEY, preference);
-    window.sessionStorage.setItem(`${STORAGE_KEY}-state`, preference);
-    setRegion({ status: preference, country: region.country });
-  };
 
   return (
     <div className={region.status === "hidden" ? "region-banner hidden" : "region-banner"} role="status" aria-live="polite">
@@ -103,7 +106,10 @@ export default function RegionBanner() {
       {region.status === "unknown" && (
         <span>{t("region.unknown")}</span>
       )}
-      <span className="region-actions">
+      <span
+        className="region-actions"
+        onClickCapture={() => window.sessionStorage.setItem(`${STORAGE_KEY}-seen`, "1")}
+      >
         <LanguageSwitch />
       </span>
     </div>
