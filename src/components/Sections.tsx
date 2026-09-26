@@ -41,7 +41,7 @@ const updates: Array<{ date: string; tag: Localized; title: Localized; copy: Loc
 ];
 
 export function Hero() {
-  const { locale, t, pick } = useI18n();
+  const { locale, pick, t } = useI18n();
 
   return (
     <section className="hero" aria-labelledby="hero-title">
@@ -59,7 +59,7 @@ export function Hero() {
             <p className="stage-pill">{siteConfig.betaStatus[locale]}</p>
           </div>
           <div className="hero-actions">
-            <a className="button primary" href="./beta/">{pick({ zh: "参与调研", en: "Join research" })}</a>
+            <a className="button primary" href="./beta/">{t("cta.joinBeta")}</a>
             <a className="button ghost" href="#product">{pick({ zh: "了解产品方向", en: "Product direction" })}</a>
           </div>
         </div>
@@ -183,7 +183,7 @@ export function Updates() {
 }
 
 export function StageAndBeta() {
-  const { pick } = useI18n();
+  const { pick, t } = useI18n();
 
   return (
     <>
@@ -209,7 +209,7 @@ export function StageAndBeta() {
             <li>{pick({ zh: "用户信息严格保密，仅用于产品研究和 Beta 招募。", en: "User information is confidential and used only for product research and Beta recruitment." })}</li>
           </ul>
           <div className="hero-actions">
-            <a className="button primary" href="./beta/">{pick({ zh: "参与调研", en: "Join research" })}</a>
+            <a className="button primary" href="./beta/">{t("cta.joinBeta")}</a>
             <a className="button ghost" href={siteConfig.surveyUrl} target="_blank" rel="noopener noreferrer">
               {pick({ zh: "直接打开问卷", en: "Open survey" })}
             </a>

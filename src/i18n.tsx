@@ -5,6 +5,7 @@ export type Locale = "zh" | "en";
 type Entry = { zh: string; en: string };
 
 const dictionary = {
+  "cta.joinBeta": { zh: "参与 Beta 调研", en: "Join Beta research" },
   "announce.beta": {
     zh: "Prima Beta 调研进行中，约 5 分钟 →",
     en: "Prima Beta research is open; about 5 minutes →",

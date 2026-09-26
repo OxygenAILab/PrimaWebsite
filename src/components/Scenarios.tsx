@@ -106,7 +106,6 @@ export default function Scenarios() {
         id="scenario-cta-title"
         title={{ zh: "你的场景没有被覆盖？", en: "Scenario not covered?" }}
         copy={{ zh: "告诉我们你工作中最容易返工的环节。你的反馈会直接影响我们下一轮打磨的重点。", en: "Tell us where your work is easiest to redo. Your feedback directly sets the next refinement focus." }}
-        action={{ zh: "参与 Beta 调研", en: "Join Beta research" }}
       />
     </main>
   );

@@ -530,6 +530,7 @@ a:focus-visible {
 .tag.mint { color: var(--brand-dark); background: var(--brand-soft); }
 .tag.peri,
 .tag.gray { color: var(--ink-2); background: var(--bg-alt); }
+.tag.outline { color: var(--ink-3); background: transparent; border: 1px solid var(--border); }
 
 /* ---------- Split panel ---------- */
 .split {
@@ -946,9 +947,6 @@ a:focus-visible {
   box-shadow: var(--shadow-sm);
   transform: translateY(-2px);
 }
-.pricing-card.featured {
-  border-color: rgba(var(--brand-rgb), .22);
-}
 .pricing-card-head {
   display: flex;
   justify-content: space-between;
@@ -1185,7 +1183,7 @@ a:focus-visible {
   flex: 0 0 auto;
   width: 32px;
   height: 32px;
-  border-radius: 8px;
+  border-radius: var(--r-btn);
   background: var(--bg-alt);
   color: var(--ink-2);
   font-size: .7rem;
@@ -1196,19 +1194,6 @@ a:focus-visible {
   height: 17px;
   object-fit: contain;
 }
-.model-vendor-alibaba { background: #e6eef8; }
-.model-vendor-zai { background: #e6f2ee; }
-.model-vendor-bytedance { background: #e9ecf6; }
-.model-vendor-stepfun { background: #efece6; }
-.model-vendor-moonshotai { background: #edeaf5; }
-.model-vendor-deepseek { background: #e8eff3; }
-.model-vendor-tencent { background: #e7eef7; }
-.model-vendor-xiaomi { background: #f2ebe8; }
-.model-vendor-xai { background: #eceef0; }
-.model-vendor-anthropic { background: #eee8df; }
-.model-vendor-openai { background: #e8efe9; }
-.model-vendor-google { background: #e9eef8; }
-.model-vendor-yosee { background: #f0edf7; }
 .model-group-body {
   display: grid;
   align-content: center;
@@ -1262,11 +1247,8 @@ a:focus-visible {
   color: var(--ink-3);
   font-size: .72rem;
 }
-.model-name.is-overseas,
 .model-chip.is-overseas {
   color: var(--brand-dark);
-}
-.model-chip.is-overseas {
   background: var(--brand-soft);
   border-color: transparent;
 }

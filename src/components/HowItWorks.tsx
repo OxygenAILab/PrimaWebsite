@@ -111,7 +111,6 @@ export default function HowItWorks() {
         id="how-cta-title"
         title={{ zh: "想试试这套工作方式？", en: "Want to try this workflow?" }}
         copy={{ zh: "我们正在邀请真实用户参与 Beta，验证这套设计是否真的能减少返工。", en: "We are inviting real users into Beta to test whether this design actually reduces rework." }}
-        action={{ zh: "立即参与调研", en: "Join research" }}
       />
     </main>
   );

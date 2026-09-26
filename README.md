@@ -31,3 +31,8 @@ npm run preview
 - 定价档位数据在 `src/data/pricing.ts`，卡片与对照表共用；同族多档合并成一张卡，卡内切换。
 - 模型清单数据在 `src/data/models.ts`，厂商为源、图标只声明一次；`public/vendors/` 放厂商图标。
 - 颜色、圆角、字体一律走 `src/site.css` 顶部的 token，不要写死色值。
+
+## 第三方资源
+
+`public/vendors/` 下的厂商图标取自 [`@lobehub/icons`](https://github.com/lobehub/lobe-icons)（MIT License），
+部分为彩色版 `-color.svg`；替换或新增图标时请一并保留该来源说明。

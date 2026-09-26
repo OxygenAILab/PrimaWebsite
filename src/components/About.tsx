@@ -29,7 +29,7 @@ const principles: Array<{ title: Localized; copy: Localized }> = [
 
 const boundaries: Array<{ title: Localized; copy: Localized }> = [
   {
-    title: { zh: "自适应用推理", en: "Adaptive reasoning" },
+    title: { zh: "自适应推理", en: "Adaptive reasoning" },
     copy: {
       zh: "探索任务复杂度感知、快答与深想的切换，以及执行前的自我校验。",
       en: "We explore task complexity sensing, switching between quick and deep reasoning, and pre-execution self-checks.",
@@ -52,7 +52,7 @@ const boundaries: Array<{ title: Localized; copy: Localized }> = [
 ];
 
 export default function About() {
-  const { locale, pick } = useI18n();
+  const { locale, pick, t } = useI18n();
 
   return (
     <main id="main" className="about-page">
@@ -63,7 +63,7 @@ export default function About() {
           {pick({ zh: "Prima 面向真实长任务，探索自适应推理、分层长期记忆和更可靠的执行一致性。当前项目由 Oxygen AI 支持，仍处于早期共创阶段。", en: "Prima targets real long tasks and explores adaptive reasoning, layered long-term memory, and reliable execution consistency. Oxygen AI supports the project, which remains in early co-creation." })}
         </p>
         <div className="hero-actions">
-          <a className="button primary" href="../beta/">{pick({ zh: "参与 Beta 调研", en: "Join Beta research" })}</a>
+          <a className="button primary" href="../beta/">{t("cta.joinBeta")}</a>
           <a className="button ghost" href={siteConfig.oxygenUrl} target="_blank" rel="noopener noreferrer">{pick({ zh: "了解 Oxygen AI", en: "Explore Oxygen AI" })}</a>
         </div>
       </section>
@@ -99,7 +99,6 @@ export default function About() {
         id="contact-title"
         title={{ zh: "想影响产品方向？", en: "Want to influence the product?" }}
         copy={{ zh: "填写约 5 分钟的问卷，告诉我们你的真实场景、痛点和部署期待。入选用户有机会进入 Beta。", en: "Complete a five-minute survey to share your real scenarios, pain points, and deployment expectations. Selected users may enter Beta." }}
-        action={{ zh: "立即参与调研", en: "Join research" }}
       />
     </main>
   );

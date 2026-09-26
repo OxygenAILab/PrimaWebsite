@@ -76,10 +76,6 @@ function vendorToken(vendor: string) {
   return vendor.slice(0, 2).toUpperCase();
 }
 
-function vendorClass(vendor: string) {
-  return `model-vendor-${vendor.toLowerCase().replace(/[^a-z0-9]/g, "")}`;
-}
-
 export default function ModelList() {
   const { locale, pick } = useI18n();
   const [activeRegion, setActiveRegion] = useState<RegionKey>("china");
@@ -140,7 +136,7 @@ export default function ModelList() {
 
         {showRegion ? (
           <p className="model-legend">
-            <span className="model-name is-overseas">{localText("model-list.overseasOnly", locale)}</span>
+            <span className="model-chip is-overseas">{localText("model-list.overseasOnly", locale)}</span>
             <span>{localText("model-list.legend", locale)}</span>
           </p>
         ) : null}
@@ -157,7 +153,7 @@ export default function ModelList() {
             return (
               <section className="model-group" key={group.vendor} aria-labelledby={`vendor-${group.vendor}`}>
                 <header className="model-group-head">
-                  <span className={`model-mark ${vendorClass(group.vendor)}`} aria-hidden="true">
+                  <span className="model-mark" aria-hidden="true">
                     {group.icon ? (
                       <img src={group.icon} alt="" width={17} height={17} loading="lazy" />
                     ) : (

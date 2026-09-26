@@ -95,13 +95,13 @@ export default function Pricing() {
           role="tabpanel"
           aria-labelledby={`pricing-tab-${activeFamily}`}
         >
-          {groups.map((group, groupIndex) => {
+          {groups.map((group) => {
             const key = `${group.family}-${group.name}`;
             const activeIndex = variantIndex[key] ?? 0;
             const variant = group.variants[activeIndex];
 
             return (
-              <article className={`pricing-card ${groupIndex === 0 ? "featured" : ""}`} key={key}>
+              <article className="pricing-card" key={key}>
                 <div className="pricing-card-head">
                   <div className="pricing-card-title">
                     <p className={`tag ${familyTone(group.family)}`}>{group.family}</p>
@@ -206,7 +206,6 @@ export default function Pricing() {
         id="pricing-cta-title"
         title={{ zh: "还没确定选哪一档？", en: "Unsure which tier fits?" }}
         copy={{ zh: "参加 Beta 调研，告诉我们任务规模、并发需求和媒体用量，我们会帮你判断合适档位。", en: "Join Beta research and tell us task scale, concurrency, and media use; we can help you choose a tier." }}
-        action={{ zh: "参与调研", en: "Join research" }}
       />
     </main>
   );

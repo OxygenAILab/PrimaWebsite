@@ -33,7 +33,7 @@ const phases: Phase[] = [
   {
     title: { zh: "之后 · 公开 Beta", en: "Later · Public Beta" },
     status: { zh: "规划中", en: "Planned" },
-    tone: "gray",
+    tone: "outline",
     items: [
       { zh: "扩大测试范围并沉淀可量化的体验指标", en: "Expand testing and establish measurable experience metrics" },
       { zh: "探索本地与混合部署的适用场景", en: "Explore local and hybrid deployment fit" },
@@ -75,7 +75,6 @@ export default function Roadmap() {
         id="roadmap-cta-title"
         title={{ zh: "想影响这个路线图？", en: "Want to shape this roadmap?" }}
         copy={{ zh: "填写 Beta 调研，告诉我们你最需要的能力。调研反馈会直接决定优先级。", en: "Complete Beta research and tell us the capabilities you need most; feedback directly sets priorities." }}
-        action={{ zh: "参与 Beta 调研", en: "Join Beta research" }}
       />
     </main>
   );

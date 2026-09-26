@@ -56,7 +56,7 @@ function fromPage(active: PrimaPage, path: string): string {
 
 export function Header({ active = "home" }: { active?: PrimaPage }) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { locale, pick } = useI18n();
+  const { locale, pick, t } = useI18n();
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -91,7 +91,7 @@ export function Header({ active = "home" }: { active?: PrimaPage }) {
             target={active === "beta" ? "_blank" : undefined}
             rel="noopener noreferrer"
           >
-            {pick({ zh: "立即参与调研", en: "Join research" })}
+            {t("cta.joinBeta")}
           </a>
           <button
             type="button"
@@ -122,7 +122,7 @@ export function Header({ active = "home" }: { active?: PrimaPage }) {
               href={active === "beta" ? siteConfig.surveyUrl : "./beta/"}
               onClick={() => setMenuOpen(false)}
             >
-              {pick({ zh: "立即参与调研", en: "Join research" })}
+              {t("cta.joinBeta")}
             </a>
           </nav>
         </div>
@@ -142,7 +142,7 @@ const footerPages: Array<{ path: string; label: Localized }> = [
 ];
 
 export function Footer({ active = "home" }: { active?: PrimaPage }) {
-  const { locale, t, pick } = useI18n();
+  const { locale, pick, t } = useI18n();
 
   return (
     <footer className="site-footer">
@@ -167,7 +167,7 @@ export function Footer({ active = "home" }: { active?: PrimaPage }) {
         <nav aria-label={pick({ zh: "参与入口", en: "Participation links" })}>
           <a href={siteConfig.oxygenUrl} target="_blank" rel="noopener noreferrer">Oxygen AI</a>
           <a href="https://oxygenai.top/progress/" target="_blank" rel="noopener noreferrer">{pick({ zh: "模型研究", en: "Model research" })}</a>
-          <a href={siteConfig.surveyUrl} target="_blank" rel="noopener noreferrer">{pick({ zh: "立即参与调研", en: "Join research" })}</a>
+          <a href={siteConfig.surveyUrl} target="_blank" rel="noopener noreferrer">{t("cta.joinBeta")}</a>
           <a href="mailto:prima@oxygenai.top">prima@oxygenai.top</a>
         </nav>
       </div>
