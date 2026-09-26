@@ -1,5 +1,5 @@
 import { siteConfig } from "../config";
-import SplitTitle, { PhraseTitle } from "./SplitTitle";
+import { PhraseTitle } from "./SplitTitle";
 import { useI18n } from "../i18n";
 import HeroArtwork from "./HeroArtwork";
 import { capabilities, painPoints, scenarios, type Localized } from "../data/content";
@@ -53,11 +53,7 @@ export function Hero() {
             <p className="eyebrow">{t("prima.slogan")}</p>
             <p className="stage-pill">{siteConfig.betaStatus[locale]}</p>
           </div>
-          <SplitTitle
-            id="hero-title"
-            lead={{ zh: "长任务不跑偏，", en: "Long tasks stay aligned." }}
-            stress={{ zh: "少返工。", en: "Less rework." }}
-          />
+          <h1 id="hero-title">{pick({ zh: "长任务不跑偏，少返工。", en: "Long tasks stay aligned. Less rework." })}</h1>
           <p className="hero-sub">
             {pick({ zh: "Prima 把多文件编程、数据分析与长文档写作里的约束、决策和失败教训组织成连续的工作记忆。", en: "Prima organizes constraints, decisions, and lessons from multi-file coding, data analysis, and long-document work into continuous working memory." })}
           </p>

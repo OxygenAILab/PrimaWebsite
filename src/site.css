@@ -164,11 +164,10 @@ h3 {
   line-height: 1.3;
   color: var(--ink-2);
 }
-/* 台阶封顶 26px：字号 96px 时 .55em 是 53px，读起来像手误而不是节奏 */
-.split-title .stress { margin-top: .06em; padding-left: min(.55em, 26px); text-wrap: balance; }
+/* 两拍标题靠字号台阶断句，不靠缩进：缩进在 92px 下是 50px，读起来像手误 */
+.split-title .stress { margin-top: .06em; text-wrap: balance; }
 @media (max-width: 720px) {
   .split-title .lead-in { font-size: .7em; }
-  .split-title .stress { padding-left: .26em; }
 }
 /* hero 逐行落位：交给 CSS 而不是 JS，hydration 之前就能播完；首页与 10 个子页共用一条规则 */
 @keyframes hero-rise { from { opacity: 0; translate: 0 16px; } }
@@ -635,31 +634,29 @@ input:focus-visible {
   position: relative;
   z-index: 1;
 }
-/* 首屏文字块：一条左边界 + 一条右边界。
-   顶行 masthead 装 slogan 与状态胶囊，下面标题—导语—按钮共用约 400px 的同一条右边界 */
+/* 首屏：标题一行铺满整幅，导语给到两行的舒适行长，状态胶囊贴着 slogan 不走散 */
 .hero-inner {
   text-align: left;
-  max-width: 620px;
 }
 .hero-meta {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 12px 20px;
-  margin-bottom: 20px;
+  gap: 10px 18px;
+  margin-bottom: 26px;
 }
 .hero-meta .eyebrow { margin-bottom: 0; }
 .hero-inner h1 {
-  margin-bottom: 24px;
-  font-size: clamp(44px, 7.2vw, 96px);
-  line-height: 1.04;
+  margin-bottom: 28px;
+  font-size: clamp(40px, 6.4vw, 92px);
+  line-height: 1.06;
+  max-width: 14em;
 }
 .hero-sub {
   font-size: clamp(18px, 1.7vw, 22px);
-  line-height: 1.6;
+  line-height: 1.65;
   color: var(--ink-2);
-  max-width: 18em;
+  max-width: 30em;
   margin-bottom: 40px;
 }
 .hero-actions {
@@ -865,11 +862,10 @@ main,
 .beta-page {
   padding: 96px 0 128px;
 }
-/* 子页页头：先拿到「页头」的身份——全幅浅色带 + 最小高度 + 底对齐 + 发丝线收尾，
-   再靠字号断层与下方内容分层，而不是只靠一段空白把两块隔开 */
+/* 子页页头：全幅浅色带 + 最小高度 + 底对齐 + 发丝线收尾，先拿到「页头」的身份；
+   标题放开到整幅，导语另给舒适行长，右下角补一圈与首屏同源的生长纹 */
 .about-hero {
   position: relative;
-  max-width: 920px;
   min-height: 40svh;
   display: flex;
   flex-direction: column;
@@ -880,7 +876,7 @@ main,
 .about-hero::before {
   content: "";
   position: absolute;
-  z-index: -1;
+  z-index: -2;
   top: -96px; /* 吃掉 .about-page 的上内边距，色带从导航下方接起 */
   bottom: 0;
   left: 50%;
@@ -888,6 +884,22 @@ main,
   translate: -50% 0;
   background: linear-gradient(180deg, rgba(var(--brand-rgb), .055), rgba(var(--brand-rgb), .012));
   border-bottom: 1px solid var(--border);
+}
+/* 生长纹：与首屏主视觉同一语言，只露四分之一在页头右下角 */
+.about-hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: 0;
+  bottom: 0;
+  width: min(42vw, 460px);
+  height: min(42vw, 460px);
+  border-radius: 50%;
+  background: repeating-radial-gradient(closest-side, transparent 0 44px, rgba(76, 56, 122, .13) 44px 45px);
+  -webkit-mask-image: radial-gradient(closest-side, #000 24%, transparent 76%);
+  mask-image: radial-gradient(closest-side, #000 24%, transparent 76%);
+  opacity: .5;
+  pointer-events: none;
 }
 /* 子页标题比首页收敛一档，保证最长一拍能整行站住，不被挤断 */
 .about-hero h1 { margin-bottom: 20px; font-size: clamp(38px, 5.8vw, 72px); }
@@ -1797,6 +1809,7 @@ button.model-chip[aria-pressed="true"] {
   .about-page { padding: 72px 0 96px; }
   .about-hero { min-height: 34svh; padding: 72px 0 40px; margin-bottom: 64px; }
   .about-hero::before { top: -72px; }
+  .about-hero::after { width: 76vw; height: 76vw; opacity: .34; }
   .about-section { margin-bottom: 80px; }
   .pricing-card { padding: 24px; }
   .pricing-card-head { flex-direction: column; }
