@@ -5,7 +5,6 @@
   --bg-alt: #EAE5F6;
   --white: #fff;
   --border: rgba(76, 56, 122, .13);
-  --border-soft: rgba(76, 56, 122, .07);
   --ink: #191527;
   --ink-2: #4F4966;
   --ink-3: #6A6383;
@@ -710,7 +709,9 @@ main,
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
 }
-.card {
+/* .feature-tile 与 .card 是同一个组件的两种叫法，共用一套声明 */
+.card,
+.feature-tile {
   padding: 36px 32px;
   background: var(--surface-raised);
   border: 1px solid var(--border);
@@ -718,14 +719,19 @@ main,
   box-shadow: var(--glass-hi), var(--shadow-sm);
   transition: transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s var(--ease), background-color .3s var(--ease);
 }
-.card:hover {
+.card:hover,
+.feature-tile:hover {
   transform: translateY(-4px);
   background: var(--surface-hover);
-  border-color: rgba(var(--brand-rgb), .24);
   box-shadow: var(--glass-hi), var(--lift-hover);
 }
-.card h3 { margin-bottom: 12px; }
-.card p {
+.card:hover { border-color: rgba(var(--brand-rgb), .24); }
+.card h3,
+.feature-tile h3 { margin-bottom: 12px; }
+.card p,
+.feature-tile p,
+/* 时间线格子里的正文与卡片正文同一档 */
+.timeline-item p {
   color: var(--ink-2);
   font-size: .95rem;
   line-height: 1.7;
@@ -811,12 +817,6 @@ main,
   margin-bottom: 10px;
   color: var(--ink-3);
 }
-.timeline-item p {
-  color: var(--ink-2);
-  font-size: .95rem;
-  line-height: 1.7;
-}
-
 /* ---------- CTA band ---------- */
 .cta-section {
   text-align: center;
@@ -914,26 +914,6 @@ main,
 .about-section { margin-bottom: 112px; }
 .about-section:last-child { margin-bottom: 0; }
 .about-section > h2 { margin-bottom: 40px; }
-
-.feature-tile {
-  padding: 36px 32px;
-  background: var(--surface-raised);
-  border: 1px solid var(--border);
-  border-radius: var(--r-card);
-  box-shadow: var(--glass-hi), var(--shadow-sm);
-  transition: transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s var(--ease), background-color .3s var(--ease);
-}
-.feature-tile:hover {
-  transform: translateY(-4px);
-  background: var(--surface-hover);
-  box-shadow: var(--glass-hi), var(--lift-hover);
-}
-.feature-tile h3 { margin-bottom: 12px; }
-.feature-tile p {
-  color: var(--ink-2);
-  font-size: .95rem;
-  line-height: 1.7;
-}
 
 .three-grid {
   display: grid;
@@ -1187,7 +1167,9 @@ main,
   color: var(--white);
   background: var(--ink);
 }
-.pricing-family-copy {
+/* 分组导语与区域说明同为一行 62ch 的辅助文案 */
+.pricing-family-copy,
+.model-region-copy {
   max-width: 62ch;
   margin-bottom: 36px;
   color: var(--ink-2);
@@ -1433,11 +1415,6 @@ main,
   min-width: 300px;
   color: var(--ink-2);
   line-height: 1.6;
-}
-.model-region-copy {
-  max-width: 62ch;
-  margin-bottom: 36px;
-  color: var(--ink-2);
 }
 .model-summary {
   display: flex;
