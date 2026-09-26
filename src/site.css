@@ -1,21 +1,23 @@
 :root {
-  /* ---- 冷白纸面 + 蓝黑墨色（对比度：标题 15.6:1 / 正文 6.9:1 / 小标签 4.8:1） ---- */
-  --bg: #eef2f9;
-  --bg-alt: #e4eaf5;
+  /* ---- 珠光白：白里带紫，紫是白自己的干涉色，不是刷在白上的色块 ----
+     对比度按最坏点算（天光最浓处 #ECE6F9）：标题 14.7 / 正文 7.0 / 小标签与链接 4.6~4.7 */
+  --bg: #F4F2FB;
+  --bg-alt: #EAE5F6;
   --white: #fff;
-  --border: rgba(22, 28, 42, .1);
-  --border-soft: rgba(22, 28, 42, .06);
-  --ink: #161c2a;
-  --ink-2: #4e5a70;
-  --ink-3: #626d83;
-  --brand: #7E49E2;
+  --border: rgba(76, 56, 122, .13);
+  --border-soft: rgba(76, 56, 122, .07);
+  --ink: #191527;
+  --ink-2: #4F4966;
+  --ink-3: #6A6383;
+  --brand: #7943DE;
   --brand-dark: #5E32B8;
-  --brand-soft: #EFE7FD;
-  --brand-rgb: 126, 73, 226;
+  --brand-soft: #ECE3FC;
+  --brand-rgb: 121, 67, 222;
   --brand-cool-rgb: 99, 132, 255;
+  --brand-warm-rgb: 226, 122, 190;
   --hairline-light: rgba(255, 255, 255, .14);
-  --shadow-sm: 0 1px 2px rgba(22, 28, 42, .04), 0 10px 24px -18px rgba(var(--brand-rgb), .26);
-  --shadow-md: 0 2px 6px rgba(22, 28, 42, .05), 0 24px 48px -26px rgba(var(--brand-rgb), .34);
+  --shadow-sm: 0 1px 2px rgba(40, 28, 66, .05), 0 10px 24px -18px rgba(var(--brand-rgb), .26);
+  --shadow-md: 0 2px 6px rgba(40, 28, 66, .06), 0 24px 48px -26px rgba(var(--brand-rgb), .34);
   --r-btn: 8px;
   --r-card: 16px;
   --r-panel: 24px;
@@ -27,14 +29,16 @@
   --ease: cubic-bezier(.25, 1, .5, 1);
   --ease-out-expo: cubic-bezier(.16, 1, .3, 1);
   /* 深色仅限页脚与小型面板（stepfun-design 铁律 1） */
-  --dark: #161b26;
-  /* 材质分层：普通卡用近实白 + 发丝线，只有内容会从下面滚过的层才上真玻璃 */
-  --surface: rgba(255, 255, 255, .74);
-  --surface-raised: rgba(255, 255, 255, .86);
-  --glass-hi: inset 0 1px 0 rgba(255, 255, 255, .82);
-  --glass-blur: blur(18px) saturate(1.7);
+  --dark: #1A1526;
+  /* 材质：奶白半透 = 珍珠层的质感；只有内容会从下面滚过的层才上真 blur */
+  --surface: rgba(255, 255, 255, .62);
+  --surface-raised: rgba(255, 255, 255, .78);
+  --surface-hover: rgba(255, 255, 255, .9);
+  /* 玻璃的视觉信息几乎都在边上：上缘接光，下缘透出厚度 */
+  --glass-hi: inset 0 1px 0 rgba(255, 255, 255, .95), inset 0 -1px 0 rgba(var(--brand-rgb), .09);
+  --glass-blur: blur(20px) saturate(1.6);
   --lift: 0 18px 40px -28px rgba(var(--brand-rgb), .4);
-  --lift-hover: 0 24px 48px -26px rgba(var(--brand-rgb), .48);
+  --lift-hover: 0 26px 52px -28px rgba(var(--brand-rgb), .5);
 }
 
 * { box-sizing: border-box; margin: 0; }
@@ -50,9 +54,9 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ---------- 底光（LightField）----------
-   软边靠 radial-gradient 自身衰减，不用 filter: blur；
-   动画只碰 opacity（入场）与 transform（漂移/视差），全部 GPU 合成。 */
+/* ---------- 珠光底（LightField）----------
+   珍珠的读法只有三件事：上方一颗大高光、色相沿竖直方向缓慢偏移、一道会移动的青白反光。
+   三层全部上下对称，切不出竖直边界；动画只碰 opacity 与 transform，全部 GPU 合成。 */
 .lightfield {
   position: fixed;
   inset: 0;
@@ -62,44 +66,49 @@ html {
   animation: light-rise 1.4s var(--ease-out-expo) backwards;
 }
 .lightfield > * { position: absolute; inset: 0; }
-/* 1) 天光：全宽椭圆从顶部压下来，左右对称，切不出竖直边界 */
+/* 1) 珠面：顶部白光压住，上缘偏冷蓝，中段偏紫，下缘偏玫瑰，一个连续的竖直色相坡 */
 .light-canopy {
   background:
-    radial-gradient(120% 58% at 50% -16%, rgba(var(--brand-rgb), .1) 0%, rgba(var(--brand-rgb), .04) 42%, transparent 72%),
-    radial-gradient(90% 44% at 50% 110%, rgba(var(--brand-cool-rgb), .05) 0%, transparent 70%);
-  animation: light-breathe 24s ease-in-out infinite;
+    radial-gradient(105% 44% at 50% -10%, rgba(255, 255, 255, .95) 0%, rgba(255, 255, 255, 0) 62%),
+    radial-gradient(130% 62% at 50% -6%, rgba(var(--brand-rgb), .07) 0%, rgba(var(--brand-rgb), .03) 46%, transparent 74%),
+    radial-gradient(120% 52% at 50% 106%, rgba(var(--brand-warm-rgb), .06) 0%, transparent 66%),
+    linear-gradient(180deg, rgba(var(--brand-cool-rgb), .05) 0%, rgba(var(--brand-cool-rgb), 0) 30%);
+  animation: light-breathe 26s ease-in-out infinite;
 }
-/* 2) 纸面齿纹：比首页点阵更细一档，读作纸的颗粒而不是第二套网格；用遮罩从顶部向下淡出 */
+/* 2) 珠面粉纹：比首页点阵更细一档，用遮罩从顶部向下淡出 */
 .light-grain {
-  background-image: radial-gradient(rgba(22, 28, 42, .12) 1px, transparent 1.1px);
+  background-image: radial-gradient(rgba(76, 56, 122, .14) 1px, transparent 1.1px);
   background-size: 24px 24px;
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, .6) 0%, transparent 46%);
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, .6) 0%, transparent 46%);
-  opacity: .45;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, .55) 0%, transparent 42%);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, .55) 0%, transparent 42%);
+  opacity: .38;
 }
-/* 3) 光扫：一条两端透明的柔光横向经过，让静止的底纹有呼吸感 */
+/* 3) 镜面反光：一道带冷/暖两色边的白色高光缓慢横移，遮罩把它限制在上 2/3，
+      下半页留给阅读，不会有任何东西在文字背后动 */
 .light-sweep {
-  background: linear-gradient(105deg,
-    transparent 32%,
-    rgba(255, 255, 255, .5) 46%,
-    rgba(255, 255, 255, .72) 50%,
-    rgba(255, 255, 255, .5) 54%,
-    transparent 68%);
-  animation: light-travel 34s ease-in-out 1.4s infinite;
+  background: linear-gradient(112deg,
+    transparent 28%,
+    rgba(206, 222, 255, .34) 41%,
+    rgba(255, 255, 255, .82) 50%,
+    rgba(252, 224, 243, .3) 59%,
+    transparent 72%);
+  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, .95) 0%, rgba(0, 0, 0, .5) 46%, transparent 80%);
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, .95) 0%, rgba(0, 0, 0, .5) 46%, transparent 80%);
+  animation: light-travel 30s ease-in-out 1.4s infinite;
 }
 @keyframes light-rise { from { opacity: 0; } to { opacity: 1; } }
-@keyframes light-breathe { 0%, 100% { opacity: .84; } 50% { opacity: 1; } }
+@keyframes light-breathe { 0%, 100% { opacity: .86; } 50% { opacity: 1; } }
 @keyframes light-travel {
-  0% { transform: translate3d(-36%, 0, 0); opacity: 0; }
-  14% { opacity: .5; }
-  50% { opacity: .34; }
-  86% { opacity: .46; }
-  100% { transform: translate3d(36%, 0, 0); opacity: 0; }
+  0% { transform: translate3d(-34%, 0, 0); opacity: 0; }
+  14% { opacity: .55; }
+  50% { opacity: .38; }
+  86% { opacity: .5; }
+  100% { transform: translate3d(34%, 0, 0); opacity: 0; }
 }
-/* 支持滚动时间线时，天光随页面进度轻微上浮；不支持就静止，不影响观感 */
+/* 支持滚动时间线时，珠面随页面进度轻微上浮；不支持就静止，不影响观感 */
 @supports (animation-timeline: scroll()) {
   .light-canopy {
-    animation: light-breathe 24s ease-in-out infinite, light-parallax linear both;
+    animation: light-breathe 26s ease-in-out infinite, light-parallax linear both;
     animation-timeline: auto, scroll(root block);
   }
 }
@@ -108,7 +117,7 @@ html {
   to { transform: translate3d(0, -6vh, 0); }
 }
 @media (prefers-reduced-motion: reduce) {
-  /* 减弱动效：保留光与点阵，只去掉呼吸、光扫与视差 */
+  /* 减弱动效：保留珠光与粉纹，只去掉呼吸、反光横移与视差 */
   .lightfield,
   .light-canopy,
   .light-sweep { animation: none; }
@@ -285,7 +294,7 @@ h3 {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(255, 255, 255, .72);
+  background: var(--surface);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   border-bottom: 1px solid var(--border);
@@ -375,7 +384,7 @@ h3 {
   gap: 2px;
   min-width: 208px;
   padding: 8px;
-  background: rgba(255, 255, 255, .82);
+  background: var(--surface-raised);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--border);
@@ -442,7 +451,7 @@ h3 {
 }
 .section-rail-link:hover {
   color: var(--ink);
-  background: rgba(22, 24, 29, .04);
+  background: rgba(76, 56, 122, .05);
 }
 .section-rail-link:hover::before { width: 22px; opacity: .8; }
 .section-rail-link.is-active {
@@ -497,7 +506,7 @@ h3 {
 .mobile-menu {
   display: none;
   border-top: 1px solid var(--border);
-  background: rgba(255, 255, 255, .9);
+  background: var(--surface-hover);
   -webkit-backdrop-filter: var(--glass-blur);
   backdrop-filter: var(--glass-blur);
   max-height: 0;
@@ -520,7 +529,7 @@ h3 {
   font-weight: 500;
   border-radius: var(--r-btn);
 }
-.mobile-menu-nav a:not(.button):hover { background: rgba(22, 24, 29, .05); }
+.mobile-menu-nav a:not(.button):hover { background: rgba(76, 56, 122, .06); }
 .mobile-menu-nav a[aria-current="page"] { color: var(--brand); font-weight: 600; }
 .mobile-menu-group { display: grid; gap: 2px; }
 .mobile-menu-heading {
@@ -575,8 +584,8 @@ a:focus-visible {
   border: 1px solid var(--border);
 }
 .button.ghost:hover {
-  border-color: rgba(22, 24, 29, .24);
-  background: rgba(22, 24, 29, .03);
+  border-color: rgba(76, 56, 122, .26);
+  background: rgba(76, 56, 122, .04);
 }
 .compact { min-height: 38px; padding: 7px 18px; font-size: .88rem; }
 .text-link {
@@ -640,7 +649,7 @@ a:focus-visible {
   gap: 8px;
   padding: 8px 16px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, .72);
+  background: var(--surface);
   border: 1px solid var(--border);
   box-shadow: var(--glass-hi), var(--shadow-sm);
   font-size: .85rem;
@@ -679,7 +688,7 @@ a:focus-visible {
 }
 .card:hover {
   transform: translateY(-4px);
-  background: rgba(255, 255, 255, .78);
+  background: var(--surface-hover);
   border-color: rgba(var(--brand-rgb), .24);
   box-shadow: var(--glass-hi), var(--lift-hover);
 }
@@ -720,7 +729,7 @@ a:focus-visible {
 .split-copy p { color: var(--ink-2); margin-bottom: 20px; }
 .split-visual {
   border: 1px solid var(--border);
-  background: rgba(255, 255, 255, .55);
+  background: var(--surface);
   box-shadow: var(--glass-hi), var(--shadow-sm);
   border-radius: var(--r-panel);
   overflow: hidden;
@@ -847,7 +856,7 @@ a:focus-visible {
 }
 .feature-tile:hover {
   transform: translateY(-4px);
-  background: rgba(255, 255, 255, .78);
+  background: var(--surface-hover);
   box-shadow: var(--glass-hi), var(--lift-hover);
 }
 .feature-tile h3 { margin-bottom: 12px; }
@@ -1066,7 +1075,7 @@ a:focus-visible {
   gap: 4px;
   padding: 5px;
   margin-bottom: 22px;
-  background: rgba(255, 255, 255, .72);
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 999px;
 }
@@ -1166,7 +1175,7 @@ a:focus-visible {
   transition: border-color .25s var(--ease), box-shadow .25s var(--ease), transform .25s var(--ease), background-color .25s var(--ease);
 }
 .pricing-card:hover {
-  background: rgba(255, 255, 255, .78);
+  background: var(--surface-hover);
   border-color: rgba(var(--brand-rgb), .24);
   box-shadow: var(--glass-hi), var(--lift-hover);
   transform: translateY(-2px);
@@ -1528,7 +1537,7 @@ a:focus-visible {
   top: 4%;
   width: min(52vw, 660px);
   height: min(64vh, 560px);
-  background-image: radial-gradient(rgba(22, 24, 29, .16) 1.2px, transparent 1.2px);
+  background-image: radial-gradient(rgba(76, 56, 122, .16) 1.2px, transparent 1.2px);
   background-size: 38px 38px;
   -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, #000 24%, transparent 74%);
   mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, #000 24%, transparent 74%);
@@ -1543,13 +1552,13 @@ a:focus-visible {
 .hero-art .art-edges,
 .hero-art .art-nodes { animation: art-enter 1.1s var(--ease) .16s both; }
 .hero-art .art-edge {
-  stroke: rgba(22, 24, 29, .16);
+  stroke: rgba(76, 56, 122, .16);
   stroke-width: 1;
   animation: art-shimmer 11s ease-in-out infinite;
 }
 .hero-art .art-node {
   fill: none;
-  stroke: rgba(22, 24, 29, .32);
+  stroke: rgba(76, 56, 122, .32);
   stroke-width: 1;
   transform-box: fill-box;
   transform-origin: center;
