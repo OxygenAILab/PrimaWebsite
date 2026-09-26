@@ -381,16 +381,18 @@ h3 {
   top: 100%;
   left: 50%;
   translate: -50% 0;
+  transform: translateY(-6px);
   padding-top: 14px;
   opacity: 0;
   visibility: hidden;
-  transition: opacity .18s var(--ease), visibility .18s var(--ease);
+  transition: opacity .18s var(--ease), transform .18s var(--ease), visibility .18s var(--ease);
 }
 .nav-group:hover .nav-panel,
 .nav-group:focus-within .nav-panel,
 .nav-group:has(button[aria-expanded="true"]) .nav-panel {
   opacity: 1;
   visibility: visible;
+  transform: none;
 }
 .nav-card {
   display: grid;
@@ -1540,6 +1542,11 @@ button.model-chip[aria-pressed="true"] {
   grid-template-columns: 240px minmax(0, 1fr);
   padding: 20px 26px;
   border-bottom: 1px solid var(--border);
+  animation: group-in .34s var(--ease-out-expo) backwards;
+}
+/* 筛选后新出现的厂商组淡入；未变化的组由 React 复用节点，不会重播 */
+@keyframes group-in {
+  from { opacity: 0; transform: translateY(8px); }
 }
 .model-group:last-child {
   border-bottom: 0;
@@ -1844,6 +1851,27 @@ button.model-chip[aria-pressed="true"] {
   .mobile-menu,
   .nav-card,
   .pricing-table thead th { background: var(--white); }
+}
+
+/* ---------- 开合与切换的高度过渡（渐进增强） ----------
+   interpolate-size 让 auto 高度可插值：支持的浏览器有过渡，
+   不支持的就是瞬间开合，功能与布局都不受影响 */
+@supports (interpolate-size: allow-keywords) {
+  .faq-item,
+  .pricing-grid,
+  .pricing-grid-pair,
+  .pricing-grid-spark { interpolate-size: allow-keywords; }
+
+  .faq-item::details-content {
+    block-size: 0;
+    overflow: clip;
+    transition: block-size .3s var(--ease), content-visibility .3s allow-discrete;
+  }
+  .faq-item[open]::details-content { block-size: auto; }
+
+  .pricing-grid,
+  .pricing-grid-pair,
+  .pricing-grid-spark { transition: block-size .3s var(--ease); }
 }
 
 @media (prefers-reduced-motion: reduce) {

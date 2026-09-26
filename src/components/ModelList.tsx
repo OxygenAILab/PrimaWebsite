@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { groupByLine, groupByVendor, isOverseasOnly, modelMatrix, type ModelRegion } from "../data/models";
 import SplitTitle from "./SplitTitle";
 import { useI18n, type Locale } from "../i18n";
@@ -88,6 +88,36 @@ function vendorToken(vendor: string) {
   return vendor.slice(0, 2).toUpperCase();
 }
 
+/* 统计数字滚动：只在数值变化时补一段 420ms 的计数，减弱动效或直接没有 rAF 时写死值 */
+function Counter({ value }: { value: number }) {
+  const ref = useRef<HTMLDListElement | null>(null);
+  const shown = useRef(value);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || shown.current === value) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      shown.current = value;
+      el.textContent = String(value);
+      return;
+    }
+    const from = shown.current;
+    const start = performance.now();
+    let frame = 0;
+    const tick = (now: number) => {
+      const progress = Math.min((now - start) / 420, 1);
+      const eased = 1 - (1 - progress) ** 3;
+      shown.current = Math.round(from + (value - from) * eased);
+      el.textContent = String(shown.current);
+      if (progress < 1) frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [value]);
+
+  return <dd ref={ref}>{value}</dd>;
+}
+
 export default function ModelList() {
   const { locale, pick } = useI18n();
   const [activeRegion, setActiveRegion] = useState<ModelRegion>("china");
@@ -155,15 +185,15 @@ export default function ModelList() {
         <dl className="model-summary">
           <div>
             <dt>{localText("model-list.statModels", locale)}</dt>
-            <dd>{models.length}</dd>
+            <Counter value={models.length} />
           </div>
           <div>
             <dt>{localText("model-list.statVendors", locale)}</dt>
-            <dd>{vendors.length}</dd>
+            <Counter value={vendors.length} />
           </div>
           <div>
             <dt>{localText("model-list.statExtra", locale)}</dt>
-            <dd>{overseasCount}</dd>
+            <Counter value={overseasCount} />
           </div>
         </dl>
 
