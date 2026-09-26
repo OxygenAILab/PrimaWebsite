@@ -1,42 +1,40 @@
 :root {
-  /* ---- Design tokens (shared with Oxygen main site) ---- */
-  --bg: #f7f7f5;
-  --bg-alt: #efefec;
+  /* ---- 冷白纸面 + 蓝黑墨色（对比度：标题 15.6:1 / 正文 6.9:1 / 小标签 4.8:1） ---- */
+  --bg: #eef2f9;
+  --bg-alt: #e4eaf5;
   --white: #fff;
-  --border: #e3e2de;
-  --ink: #16181d;
-  --ink-2: rgba(22, 24, 29, .72);
-  --ink-3: rgba(22, 24, 29, .64);
+  --border: rgba(22, 28, 42, .1);
+  --border-soft: rgba(22, 28, 42, .06);
+  --ink: #161c2a;
+  --ink-2: #4e5a70;
+  --ink-3: #626d83;
   --brand: #7E49E2;
   --brand-dark: #5E32B8;
   --brand-soft: #EFE7FD;
   --brand-rgb: 126, 73, 226;
+  --brand-cool-rgb: 99, 132, 255;
   --hairline-light: rgba(255, 255, 255, .14);
-  --shadow-sm: 0 2px 10px rgba(20, 20, 20, .05);
-  --shadow-md: 0 8px 28px rgba(20, 20, 20, .08);
+  --shadow-sm: 0 1px 2px rgba(22, 28, 42, .04), 0 10px 24px -18px rgba(var(--brand-rgb), .26);
+  --shadow-md: 0 2px 6px rgba(22, 28, 42, .05), 0 24px 48px -26px rgba(var(--brand-rgb), .34);
   --r-btn: 8px;
   --r-card: 16px;
   --r-panel: 24px;
   --container: min(1200px, calc(100vw - 48px));
   --font-display: "Lora", "Source Han Serif SC", "Noto Serif SC", "Songti SC", Georgia, serif;
-  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Source Han Sans CN",
-    "PingFang SC", "Segoe UI", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  --font-sans: "PingFang SC", "HarmonyOS Sans SC", "Source Han Sans CN", "Noto Sans SC",
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --ease: cubic-bezier(.25, 1, .5, 1);
+  --ease-out-expo: cubic-bezier(.16, 1, .3, 1);
   /* 深色仅限页脚与小型面板（stepfun-design 铁律 1） */
-  --dark: #1a1d22;
-  /* 白紫玻璃：底层光池 + 半透表面 + 内高光 + 紫光投影 */
-  --glass: rgba(255, 255, 255, .62);
-  --glass-strong: rgba(255, 255, 255, .86);
-  --glass-edge: rgba(255, 255, 255, .78);
-  --glass-hi: inset 0 1px 0 rgba(255, 255, 255, .72);
-  --glass-lift: 0 18px 40px -28px rgba(var(--brand-rgb), .42);
-  --glass-hover: 0 22px 46px -26px rgba(var(--brand-rgb), .5);
-  --glass-blur: blur(16px) saturate(165%);
-  --light-pool:
-    radial-gradient(46% 34% at 88% -2%, rgba(var(--brand-rgb), .09), transparent 68%),
-    radial-gradient(38% 30% at 2% 14%, rgba(var(--brand-rgb), .07), transparent 72%),
-    radial-gradient(56% 38% at 52% 104%, rgba(var(--brand-rgb), .06), transparent 70%);
+  --dark: #161b26;
+  /* 材质分层：普通卡用近实白 + 发丝线，只有内容会从下面滚过的层才上真玻璃 */
+  --surface: rgba(255, 255, 255, .74);
+  --surface-raised: rgba(255, 255, 255, .86);
+  --glass-hi: inset 0 1px 0 rgba(255, 255, 255, .82);
+  --glass-blur: blur(18px) saturate(1.7);
+  --lift: 0 18px 40px -28px rgba(var(--brand-rgb), .4);
+  --lift-hover: 0 24px 48px -26px rgba(var(--brand-rgb), .48);
 }
 
 * { box-sizing: border-box; margin: 0; }
@@ -52,16 +50,85 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
-body { min-width: 320px; overflow-x: hidden; }
-/* 底层光池：固定一层紫色光，半透表面浮在上面才有玻璃的厚度 */
-body::before {
-  content: "";
+/* ---------- 底光（LightField）----------
+   软边靠 radial-gradient 自身衰减，不用 filter: blur；
+   动画只碰 opacity（入场）与 transform（漂移/视差），全部 GPU 合成。 */
+.lightfield {
   position: fixed;
   inset: 0;
   z-index: -1;
+  overflow: hidden;
   pointer-events: none;
-  background: var(--light-pool);
 }
+.lightfield > * {
+  position: absolute;
+  opacity: 1;
+  animation: light-rise 1.6s var(--ease-out-expo) backwards;
+}
+/* 斜射光束：从右上打进来的方向感 */
+.light-beam {
+  top: -30%;
+  right: -10%;
+  width: 68vw;
+  height: 150%;
+  background: linear-gradient(112deg,
+    rgba(var(--brand-rgb), .12) 0%,
+    rgba(var(--brand-rgb), .05) 30%,
+    rgba(var(--brand-cool-rgb), .03) 52%,
+    transparent 68%);
+  transform-origin: top right;
+}
+/* 主光源：右上紫，呼吸式漂移 */
+.light-orb-a {
+  top: -26vh;
+  right: -10vw;
+  width: min(72vw, 900px);
+  height: min(72vw, 900px);
+  background: radial-gradient(circle at 50% 50%,
+    rgba(var(--brand-rgb), .24) 0%,
+    rgba(var(--brand-rgb), .10) 36%,
+    rgba(var(--brand-rgb), .03) 55%,
+    transparent 72%);
+  animation: light-rise 1.6s var(--ease-out-expo) backwards, light-drift-a 26s ease-in-out 1.6s infinite;
+}
+/* 补光：左下冷蓝紫，反向漂移，两束不同步才不像程序 */
+.light-orb-b {
+  bottom: -32vh;
+  left: -16vw;
+  width: min(64vw, 780px);
+  height: min(64vw, 780px);
+  background: radial-gradient(circle at 50% 50%,
+    rgba(var(--brand-cool-rgb), .16) 0%,
+    rgba(var(--brand-cool-rgb), .06) 40%,
+    transparent 70%);
+  animation: light-rise 2s var(--ease-out-expo) .15s backwards, light-drift-b 34s ease-in-out 2.2s infinite;
+}
+@keyframes light-rise { from { opacity: 0; } to { opacity: 1; } }
+@keyframes light-drift-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-3.5vw, 4vh, 0) scale(1.07); }
+}
+@keyframes light-drift-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(4vw, -3vh, 0) scale(1.05); }
+}
+/* 支持滚动时间线的浏览器里，光束随页面进度缓慢横扫；否则静止 */
+@supports (animation-timeline: scroll()) {
+  .light-beam {
+    animation: light-rise 1.6s var(--ease-out-expo) backwards, light-sweep linear forwards;
+    animation-timeline: auto, scroll(root block);
+  }
+}
+@keyframes light-sweep {
+  from { transform: translate3d(-7%, 0, 0); }
+  to { transform: translate3d(7%, 0, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* 减弱动效：保留光本身与入场淡显，只去掉位移与呼吸 */
+  .lightfield > * { animation: none; opacity: 1; }
+}
+
+body { min-width: 320px; overflow-x: hidden; }
 img { max-width: 100%; height: auto; display: block; }
 a { color: var(--brand); text-decoration: none; }
 a:hover { color: var(--brand-dark); }
@@ -232,7 +299,7 @@ h3 {
   background: rgba(255, 255, 255, .72);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
-  border-bottom: 1px solid var(--glass-edge);
+  border-bottom: 1px solid var(--border);
 }
 .header-inner {
   display: flex;
@@ -322,9 +389,9 @@ h3 {
   background: rgba(255, 255, 255, .82);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-edge);
+  border: 1px solid var(--border);
   border-radius: 12px;
-  box-shadow: var(--glass-hi), var(--glass-lift);
+  box-shadow: var(--glass-hi), var(--lift);
 }
 .nav-card a {
   display: block;
@@ -585,8 +652,8 @@ a:focus-visible {
   padding: 8px 16px;
   border-radius: 999px;
   background: rgba(255, 255, 255, .72);
-  border: 1px solid var(--glass-edge);
-  box-shadow: var(--glass-hi);
+  border: 1px solid var(--border);
+  box-shadow: var(--glass-hi), var(--shadow-sm);
   font-size: .85rem;
   font-weight: 600;
   color: var(--ink);
@@ -615,17 +682,17 @@ a:focus-visible {
 }
 .card {
   padding: 36px 32px;
-  background: var(--glass);
-  border: 1px solid var(--glass-edge);
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
   border-radius: var(--r-card);
-  box-shadow: var(--glass-hi);
+  box-shadow: var(--glass-hi), var(--shadow-sm);
   transition: transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s var(--ease), background-color .3s var(--ease);
 }
 .card:hover {
   transform: translateY(-4px);
   background: rgba(255, 255, 255, .78);
   border-color: rgba(var(--brand-rgb), .24);
-  box-shadow: var(--glass-hi), var(--glass-hover);
+  box-shadow: var(--glass-hi), var(--lift-hover);
 }
 .card h3 { margin-bottom: 12px; }
 .card p {
@@ -662,9 +729,9 @@ a:focus-visible {
 .split-copy .lead { margin-bottom: 24px; }
 .split-copy p { color: var(--ink-2); margin-bottom: 20px; }
 .split-visual {
-  border: 1px solid var(--glass-edge);
+  border: 1px solid var(--border);
   background: rgba(255, 255, 255, .55);
-  box-shadow: var(--glass-hi);
+  box-shadow: var(--glass-hi), var(--shadow-sm);
   border-radius: var(--r-panel);
   overflow: hidden;
 }
@@ -817,16 +884,16 @@ a:focus-visible {
 
 .feature-tile {
   padding: 36px 32px;
-  background: var(--glass);
-  border: 1px solid var(--glass-edge);
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
   border-radius: var(--r-card);
-  box-shadow: var(--glass-hi);
+  box-shadow: var(--glass-hi), var(--shadow-sm);
   transition: transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s var(--ease), background-color .3s var(--ease);
 }
 .feature-tile:hover {
   transform: translateY(-4px);
   background: rgba(255, 255, 255, .78);
-  box-shadow: var(--glass-hi), var(--glass-hover);
+  box-shadow: var(--glass-hi), var(--lift-hover);
 }
 .feature-tile h3 { margin-bottom: 12px; }
 .feature-tile p {
@@ -937,11 +1004,11 @@ a:focus-visible {
   margin-bottom: 48px;
 }
 .survey-shell {
-  background: var(--glass);
-  border: 1px solid var(--glass-edge);
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
   border-radius: var(--r-panel);
   overflow: hidden;
-  box-shadow: var(--glass-hi), var(--glass-lift);
+  box-shadow: var(--glass-hi), var(--lift);
 }
 .survey-head {
   display: flex;
@@ -1045,7 +1112,7 @@ a:focus-visible {
   padding: 5px;
   margin-bottom: 22px;
   background: rgba(255, 255, 255, .72);
-  border: 1px solid var(--glass-edge);
+  border: 1px solid var(--border);
   border-radius: 999px;
 }
 .pricing-tabs button {
@@ -1137,16 +1204,16 @@ a:focus-visible {
   display: flex;
   flex-direction: column;
   padding: 32px;
-  background: var(--glass);
-  border: 1px solid var(--glass-edge);
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
   border-radius: var(--r-card);
-  box-shadow: var(--glass-hi);
+  box-shadow: var(--glass-hi), var(--shadow-sm);
   transition: border-color .25s var(--ease), box-shadow .25s var(--ease), transform .25s var(--ease), background-color .25s var(--ease);
 }
 .pricing-card:hover {
   background: rgba(255, 255, 255, .78);
   border-color: rgba(var(--brand-rgb), .24);
-  box-shadow: var(--glass-hi), var(--glass-hover);
+  box-shadow: var(--glass-hi), var(--lift-hover);
   transform: translateY(-2px);
 }
 .pricing-card-head {
@@ -1176,7 +1243,7 @@ a:focus-visible {
   gap: 2px;
   padding: 3px;
   background: rgba(var(--brand-rgb), .05);
-  border: 1px solid var(--glass-edge);
+  border: 1px solid var(--border);
   border-radius: 999px;
 }
 .pricing-variants button {
@@ -1267,10 +1334,10 @@ a:focus-visible {
 }
 .pricing-table-scroll {
   overflow: auto;
-  border: 1px solid var(--glass-edge);
+  border: 1px solid var(--border);
   border-radius: var(--r-card);
-  background: var(--glass);
-  box-shadow: var(--glass-hi);
+  background: var(--surface);
+  box-shadow: var(--glass-hi), var(--shadow-sm);
 }
 .pricing-table {
   width: 100%;
@@ -1289,7 +1356,7 @@ a:focus-visible {
   position: sticky;
   top: 0;
   z-index: 1;
-  background: var(--glass-strong);
+  background: var(--surface-raised);
   -webkit-backdrop-filter: var(--glass-blur);
   backdrop-filter: var(--glass-blur);
   color: var(--ink-2);
@@ -1324,9 +1391,9 @@ a:focus-visible {
   flex-wrap: wrap;
   margin-bottom: 28px;
   padding: 20px 24px;
-  background: var(--glass);
-  border: 1px solid var(--glass-edge);
-  box-shadow: var(--glass-hi);
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  box-shadow: var(--glass-hi), var(--shadow-sm);
   border-radius: var(--r-card);
 }
 .model-summary > div {
@@ -1350,9 +1417,9 @@ a:focus-visible {
   font-variant-numeric: tabular-nums;
 }
 .model-groups {
-  background: var(--glass);
-  border: 1px solid var(--glass-edge);
-  box-shadow: var(--glass-hi);
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  box-shadow: var(--glass-hi), var(--shadow-sm);
   border-radius: var(--r-card);
   overflow: hidden;
 }

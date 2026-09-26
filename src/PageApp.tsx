@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { useI18n } from "./i18n";
 import { Footer, Header } from "./components/Chrome";
+import LightField from "./components/LightField";
 import PageMotion from "./components/Motion";
 import RegionBanner from "./components/RegionBanner";
 import SectionRail from "./components/SectionRail";
@@ -68,6 +69,7 @@ export default function PageApp({
   return (
     <>
       <a className="skip-link" href="#main">{pick({ zh: "跳到主要内容", en: "Skip to content" })}</a>
+      <LightField />
       <RegionBanner />
       <PageMotion />
       <Header active={active} />
