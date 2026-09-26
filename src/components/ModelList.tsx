@@ -96,7 +96,8 @@ export default function ModelList() {
   const [betaOnly, setBetaOnly] = useState(false);
 
   const models = modelMatrix.filter((item) => item.regions.includes(activeRegion));
-  const vendors = Array.from(new Set(models.map((item) => item.vendor)));
+  /* 厂商与它的 logo 一起取，区域级列表，不随筛选变化 */
+  const vendors = Array.from(new Map(models.map((item) => [item.vendor, item.icon])).entries());
   const needle = query.trim().toLowerCase();
   const filtering = vendor !== "all" || betaOnly || needle !== "";
   const shown = models.filter((item) => {
@@ -174,14 +175,29 @@ export default function ModelList() {
         ) : null}
 
         <div className="model-filter">
-          <input
-            className="model-search"
-            type="search"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            aria-label={localText("model-list.search", locale)}
-            placeholder={localText("model-list.search", locale)}
-          />
+          <div className="model-filter-top">
+            <input
+              className="model-search"
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              aria-label={localText("model-list.search", locale)}
+              placeholder={localText("model-list.search", locale)}
+            />
+            <button
+              type="button"
+              className="model-chip"
+              aria-pressed={betaOnly}
+              onClick={() => setBetaOnly((value) => !value)}
+            >
+              {localText("model-list.betaOnly", locale)}
+            </button>
+            <p className="model-filter-status" aria-live="polite">
+              {filtering
+                ? localText("model-list.filterCount", locale, { count: shown.length, total: models.length })
+                : localText("model-list.regionCount", locale, { total: models.length })}
+            </p>
+          </div>
           <div className="model-filter-rail" role="group" aria-label={localText("model-list.filters", locale)}>
             <button
               type="button"
@@ -191,7 +207,7 @@ export default function ModelList() {
             >
               {localText("model-list.allVendors", locale)}
             </button>
-            {vendors.map((name) => (
+            {vendors.map(([name, icon]) => (
               <button
                 key={name}
                 type="button"
@@ -199,23 +215,11 @@ export default function ModelList() {
                 aria-pressed={vendor === name}
                 onClick={() => setVendor(name)}
               >
-                {name}
+                {icon ? <img src={icon} alt="" width={14} height={14} loading="lazy" /> : null}
+                <span>{name}</span>
               </button>
             ))}
-            <button
-              type="button"
-              className="model-chip"
-              aria-pressed={betaOnly}
-              onClick={() => setBetaOnly((value) => !value)}
-            >
-              {localText("model-list.betaOnly", locale)}
-            </button>
           </div>
-          <p className="model-filter-status" aria-live="polite">
-            {filtering
-              ? localText("model-list.filterCount", locale, { count: shown.length, total: models.length })
-              : localText("model-list.regionCount", locale, { total: models.length })}
-          </p>
         </div>
 
         <div className="model-groups" id="model-grid" role="tabpanel" aria-labelledby={`model-region-${activeRegion}`}>

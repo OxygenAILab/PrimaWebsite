@@ -1410,13 +1410,18 @@ main,
   font-variant-numeric: tabular-nums;
 }
 /* ---------- 模型筛选条 ----------
-   与模型标签共用 .model-chip 形状，页面上不出现第二种 pill */
+   与模型标签共用 .model-chip 形状，页面上不出现第二种 pill。
+   厂商轨用 auto-fill 定宽：每行几个由容器算出来，超出整齐换行，不用堆断点 */
 .model-filter {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.model-filter-top {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: 10px 14px;
-  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 .model-search {
   width: min(260px, 100%);
@@ -1431,8 +1436,21 @@ main,
   transition: border-color .18s var(--ease), box-shadow .18s var(--ease);
 }
 .model-search::placeholder { color: var(--ink-3); }
-.model-filter-rail { display: flex; flex-wrap: wrap; gap: 8px; }
-.model-filter-status { margin-left: auto; color: var(--ink-3); font-size: .84rem; }
+.model-filter-rail {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(116px, 1fr));
+  gap: 8px;
+}
+.model-filter-rail .model-chip {
+  justify-content: center;
+  min-width: 0;
+}
+.model-filter-rail .model-chip span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.model-filter-status { color: var(--ink-3); font-size: .84rem; }
+.model-filter-top .model-filter-status { margin-left: auto; }
 button.model-chip {
   cursor: pointer;
   background: var(--surface);
@@ -1774,7 +1792,7 @@ button.model-chip[aria-pressed="true"] {
 @media (max-width: 520px) {
   :root { --container: calc(100vw - 32px); }
   .phrase { white-space: normal; }
-  .model-filter-status { margin-left: 0; }
+  .model-filter-top .model-filter-status { margin-left: 0; }
   .hero { padding: 64px 0 80px; }
   .hero-actions { flex-direction: column; align-items: stretch; }
   .hero-actions .button { width: 100%; }
