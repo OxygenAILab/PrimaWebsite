@@ -49,7 +49,10 @@ export function Hero() {
       <HeroArtwork />
       <div className="container">
         <div className="hero-inner">
-          <p className="eyebrow">{t("prima.slogan")}</p>
+          <div className="hero-meta">
+            <p className="eyebrow">{t("prima.slogan")}</p>
+            <p className="stage-pill">{siteConfig.betaStatus[locale]}</p>
+          </div>
           <SplitTitle
             id="hero-title"
             lead={{ zh: "长任务不跑偏，", en: "Long tasks stay aligned." }}
@@ -58,9 +61,6 @@ export function Hero() {
           <p className="hero-sub">
             {pick({ zh: "Prima 把多文件编程、数据分析与长文档写作里的约束、决策和失败教训组织成连续的工作记忆。", en: "Prima organizes constraints, decisions, and lessons from multi-file coding, data analysis, and long-document work into continuous working memory." })}
           </p>
-          <div className="hero-actions">
-            <p className="stage-pill">{siteConfig.betaStatus[locale]}</p>
-          </div>
           <div className="hero-actions">
             <a className="button primary" href="./beta/">{t("cta.joinBeta")}</a>
             <a className="button ghost" href="#product">{pick({ zh: "了解产品方向", en: "Product direction" })}</a>

@@ -164,7 +164,8 @@ h3 {
   line-height: 1.3;
   color: var(--ink-2);
 }
-.split-title .stress { margin-top: .06em; padding-left: .55em; text-wrap: balance; }
+/* 台阶封顶 26px：字号 96px 时 .55em 是 53px，读起来像手误而不是节奏 */
+.split-title .stress { margin-top: .06em; padding-left: min(.55em, 26px); text-wrap: balance; }
 @media (max-width: 720px) {
   .split-title .lead-in { font-size: .7em; }
   .split-title .stress { padding-left: .26em; }
@@ -634,12 +635,23 @@ input:focus-visible {
   position: relative;
   z-index: 1;
 }
+/* 首屏文字块：一条左边界 + 一条右边界。
+   顶行 masthead 装 slogan 与状态胶囊，下面标题—导语—按钮共用约 400px 的同一条右边界 */
 .hero-inner {
   text-align: left;
-  max-width: 900px;
+  max-width: 620px;
 }
+.hero-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  margin-bottom: 20px;
+}
+.hero-meta .eyebrow { margin-bottom: 0; }
 .hero-inner h1 {
-  margin-bottom: 28px;
+  margin-bottom: 24px;
   font-size: clamp(44px, 7.2vw, 96px);
   line-height: 1.04;
 }
@@ -647,8 +659,8 @@ input:focus-visible {
   font-size: clamp(18px, 1.7vw, 22px);
   line-height: 1.6;
   color: var(--ink-2);
-  max-width: 56ch;
-  margin-bottom: 44px;
+  max-width: 18em;
+  margin-bottom: 40px;
 }
 .hero-actions {
   display: flex;
@@ -657,7 +669,6 @@ input:focus-visible {
   gap: 12px;
   flex-wrap: wrap;
 }
-.hero-actions + .hero-actions { margin-top: 20px; }
 .stage-pill {
   display: inline-flex;
   align-items: center;
@@ -670,7 +681,7 @@ input:focus-visible {
   font-size: .85rem;
   font-weight: 600;
   color: var(--ink);
-  margin: 0 0 28px;
+  margin: 0;
 }
 
 /* ---------- Sections (StepFun-style: light canvas + hairline rules) ---------- */
