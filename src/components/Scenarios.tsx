@@ -1,4 +1,5 @@
 import BetaCta from "./BetaCta";
+import SplitTitle from "./SplitTitle";
 import { useI18n } from "../i18n";
 import type { Localized } from "../data/content";
 
@@ -73,7 +74,11 @@ export default function Scenarios() {
     <main id="main" className="about-page">
       <section className="container about-hero" aria-labelledby="scenarios-hero-title">
         <p className="eyebrow">{pick({ zh: "使用场景", en: "Scenarios" })}</p>
-        <h1 id="scenarios-hero-title">{pick({ zh: "先服务长任务，而不是所有任务。", en: "Serve long tasks first, not every task." })}</h1>
+        <SplitTitle
+          id="scenarios-hero-title"
+          lead={{ zh: "先服务长任务，", en: "Serve long tasks first," }}
+          stress={{ zh: "而不是所有任务。", en: "not every task." }}
+        />
         <p className="lead lead-tight">
           {pick({ zh: "Prima 首发聚焦三类最常见的连续性断裂：多文件工程、长数据链路和长文档协作。这些不是行业口号，而是我们调研里反复出现的痛点。", en: "Prima's first release focuses on three common breaks in continuity: multi-file engineering, long data pipelines, and long-document collaboration." })}
         </p>

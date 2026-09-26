@@ -1,5 +1,6 @@
 import { siteConfig } from "../config";
 import BetaCta from "./BetaCta";
+import SplitTitle from "./SplitTitle";
 import { useI18n } from "../i18n";
 import type { Localized } from "../data/content";
 
@@ -58,7 +59,11 @@ export default function About() {
     <main id="main" className="about-page">
       <section className="container about-hero" aria-labelledby="about-page-title">
         <p className="eyebrow">{pick({ zh: "关于项目", en: "About the project" })}</p>
-        <h1 id="about-page-title">{pick({ zh: "Prima 是一个正在与用户共同定义的产品。", en: "Prima is being defined with its users." })}</h1>
+        <SplitTitle
+          id="about-page-title"
+          lead={{ zh: "Prima 是一个", en: "Prima is a product" }}
+          stress={{ zh: "正在与用户共同定义的产品。", en: "being defined with its users." }}
+        />
         <p className="section-copy">
           {pick({ zh: "Prima 面向真实长任务，探索自适应推理、分层长期记忆和更可靠的执行一致性。当前项目由 Oxygen AI 支持，仍处于早期共创阶段。", en: "Prima targets real long tasks and explores adaptive reasoning, layered long-term memory, and reliable execution consistency. Oxygen AI supports the project, which remains in early co-creation." })}
         </p>

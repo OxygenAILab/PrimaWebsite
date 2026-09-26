@@ -7,6 +7,7 @@ import {
   type PlanFamily,
 } from "../data/pricing";
 import BetaCta from "./BetaCta";
+import SplitTitle from "./SplitTitle";
 import { useI18n } from "../i18n";
 import type { Localized } from "../data/content";
 
@@ -56,7 +57,11 @@ export default function Pricing() {
     <main id="main" className="about-page">
       <section className="container about-hero" aria-labelledby="pricing-hero-title">
         <p className="eyebrow">{pick({ zh: "定价", en: "Pricing" })}</p>
-        <h1 id="pricing-hero-title">{pick({ zh: "按验证阶段选择额度。", en: "Choose allocation by validation stage." })}</h1>
+        <SplitTitle
+          id="pricing-hero-title"
+          lead={{ zh: "按验证阶段", en: "Choose allocation" }}
+          stress={{ zh: "选择额度。", en: "by validation stage." }}
+        />
         <p className="lead">
           {pick({ zh: "SparkPlan 覆盖个人从免费验证到高频使用的进阶路径；PrimaPlan 面向团队长任务；Credit+ 给现有 Plan 补充额度。", en: "SparkPlan covers individual progression from free validation to high-frequency use; PrimaPlan targets team long tasks; Credit+ tops up an existing Plan." })}
         </p>

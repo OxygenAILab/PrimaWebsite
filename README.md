@@ -30,6 +30,7 @@ npm run preview
   跨页固定文案进 `src/i18n.tsx` 的 dictionary。
 - 定价档位数据在 `src/data/pricing.ts`，卡片与对照表共用；同族多档合并成一张卡，卡内切换。
 - 模型清单数据在 `src/data/models.ts`，厂商为源、图标只声明一次；`public/vendors/` 放厂商图标。
+- 页面主标题用 `SplitTitle`（`lead` 引导行 + `stress` 重音行）做两拍断行，不要在文案里塞 `<br />`。
 - 颜色、圆角、字体一律走 `src/site.css` 顶部的 token，不要写死色值。
 
 ## 第三方资源

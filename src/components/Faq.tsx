@@ -1,3 +1,4 @@
+import SplitTitle from "./SplitTitle";
 import { useI18n } from "../i18n";
 import type { Localized } from "../data/content";
 
@@ -80,7 +81,11 @@ export default function Faq() {
     <main id="main" className="about-page">
       <section className="container about-hero" aria-labelledby="faq-hero-title">
         <p className="eyebrow">{pick({ zh: "常见问题", en: "FAQ" })}</p>
-        <h1 id="faq-hero-title">{pick({ zh: "把话说清楚。", en: "Clear answers, directly stated." })}</h1>
+        <SplitTitle
+          id="faq-hero-title"
+          lead={{ zh: "不绕弯子，", en: "Clear answers," }}
+          stress={{ zh: "把话说清楚。", en: "directly stated." }}
+        />
         <p className="lead lead-tight">
           {pick({ zh: "关于阶段、数据边界和参与方式，我们在这里直接回答。没有覆盖到的问题可以写信来问。", en: "We answer stage, data-boundary, and participation questions directly. Write to us for anything not covered." })}
         </p>

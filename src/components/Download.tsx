@@ -1,3 +1,4 @@
+import SplitTitle from "./SplitTitle";
 import { useI18n } from "../i18n";
 
 export default function Download() {
@@ -7,7 +8,11 @@ export default function Download() {
     <main id="main" className="about-page">
       <section className="container about-hero" aria-labelledby="download-page-title">
         <p className="eyebrow">{pick({ zh: "下载", en: "Download" })}</p>
-        <h1 id="download-page-title">{pick({ zh: "下载入口暂未开放。", en: "Downloads are not open yet." })}</h1>
+        <SplitTitle
+          id="download-page-title"
+          lead={{ zh: "下载入口", en: "Downloads" }}
+          stress={{ zh: "暂未开放。", en: "are not open yet." }}
+        />
         <p className="lead">
           {pick({ zh: "这里会列出可用的安装包与更新说明；当前产品仍在早期共创阶段，还没有开放下载。", en: "This page will list available packages and release notes. The product remains in early co-creation and downloads are not open yet." })}
         </p>

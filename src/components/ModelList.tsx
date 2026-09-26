@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { groupByLine, groupByVendor, isOverseasOnly, modelMatrix, type ModelRegion } from "../data/models";
+import SplitTitle from "./SplitTitle";
 import { useI18n, type Locale } from "../i18n";
 import type { Localized } from "../data/content";
 
@@ -26,7 +27,6 @@ const regions: Array<{ id: RegionKey; label: Localized; description: Localized }
 
 const copy = {
   "model-list.eyebrow": { zh: "模型列表", en: "Model list" },
-  "model-list.title": { zh: "按服务区域查看支持范围。", en: "View support by service region." },
   "model-list.lead": {
     zh: "其他地区包含中国大陆支持的所有模型，并额外开放海外模型。第一批内测模型会用 # 标注，可用性以开通说明为准。",
     en: "Other regions include every model available in mainland China plus additional overseas models. Early Beta models are marked with #; availability follows activation notices.",
@@ -88,7 +88,11 @@ export default function ModelList() {
     <main id="main" className="about-page">
       <section className="container about-hero" aria-labelledby="model-list-title">
         <p className="eyebrow">{localText("model-list.eyebrow", locale)}</p>
-        <h1 id="model-list-title">{localText("model-list.title", locale)}</h1>
+        <SplitTitle
+          id="model-list-title"
+          lead={{ zh: "按服务区域", en: "View support" }}
+          stress={{ zh: "查看支持范围。", en: "by service region." }}
+        />
         <p className="lead">
           {localText("model-list.lead", locale)}
         </p>

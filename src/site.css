@@ -70,6 +70,19 @@ h3 {
   line-height: 1.35;
   letter-spacing: 0;
 }
+/* 两拍标题：第一拍退半步（小一号、暗一档），第二踏上台阶接住视线 */
+.split-title .lead-in,
+.split-title .stress { display: block; }
+.split-title .lead-in {
+  font-size: .56em;
+  line-height: 1.3;
+  color: var(--ink-2);
+}
+.split-title .stress { margin-top: .06em; padding-left: .55em; }
+@media (max-width: 720px) {
+  .split-title .lead-in { font-size: .7em; }
+  .split-title .stress { padding-left: .26em; }
+}
 .lead {
   font-size: clamp(19px, 1.8vw, 22px);
   line-height: 1.55;

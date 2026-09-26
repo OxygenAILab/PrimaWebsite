@@ -1,3 +1,4 @@
+import SplitTitle from "./SplitTitle";
 import { useI18n } from "../i18n";
 import type { Localized } from "../data/content";
 
@@ -39,7 +40,11 @@ export default function Security() {
     <main id="main" className="about-page">
       <section className="container about-hero" aria-labelledby="sec-hero-title">
         <p className="eyebrow">{pick({ zh: "安全与数据边界", en: "Security and data boundaries" })}</p>
-        <h1 id="sec-hero-title">{pick({ zh: "你的工作区，边界由你。", en: "Your workspace, your boundaries." })}</h1>
+        <SplitTitle
+          id="sec-hero-title"
+          lead={{ zh: "你的工作区，", en: "Your workspace," }}
+          stress={{ zh: "边界由你。", en: "your boundaries." }}
+        />
         <p className="lead lead-tight">
           {pick({ zh: "长任务意味着 Agent 会接触更多上下文。我们把数据边界当作产品的第一性设计，而不是事后补丁。", en: "Long tasks expose more context. We treat data boundaries as first-class product design, not a later patch." })}
         </p>

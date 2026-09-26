@@ -1,4 +1,5 @@
 import { siteConfig } from "../config";
+import SplitTitle from "./SplitTitle";
 import { useI18n } from "../i18n";
 
 export default function BetaSection() {
@@ -9,7 +10,11 @@ export default function BetaSection() {
       <div className="container">
         <div className="section-head reveal">
           <p className="eyebrow">Prima Beta</p>
-          <h1 id="beta-page-title">{pick({ zh: "填写问卷，申请 Beta 资格。", en: "Complete the survey to apply for Beta." })}</h1>
+          <SplitTitle
+            id="beta-page-title"
+            lead={{ zh: "填写问卷，", en: "Complete the survey" }}
+            stress={{ zh: "申请 Beta 资格。", en: "to apply for Beta." }}
+          />
           <p className="section-copy">
             {pick({ zh: "问卷约需 5 分钟，用于了解你的使用习惯、真实痛点、部署偏好和服务期待，同时作为 Beta 用户筛选参考。提交后，我们会结合反馈安排体验资格。", en: "The survey takes about five minutes. It covers usage habits, real pain points, deployment preferences, and service expectations, and also informs Beta selection." })}
           </p>

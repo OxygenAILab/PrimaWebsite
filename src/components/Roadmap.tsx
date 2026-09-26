@@ -1,4 +1,5 @@
 import BetaCta from "./BetaCta";
+import SplitTitle from "./SplitTitle";
 import { useI18n } from "../i18n";
 import type { Localized } from "../data/content";
 
@@ -49,7 +50,11 @@ export default function Roadmap() {
     <main id="main" className="about-page">
       <section className="container about-hero" aria-labelledby="roadmap-hero-title">
         <p className="eyebrow">{pick({ zh: "路线图", en: "Roadmap" })}</p>
-        <h1 id="roadmap-hero-title">{pick({ zh: "我们按阶段走，不跳步。", en: "We move by stages; no shortcuts." })}</h1>
+        <SplitTitle
+          id="roadmap-hero-title"
+          lead={{ zh: "我们按阶段走，", en: "We move by stages;" }}
+          stress={{ zh: "不跳步。", en: "no shortcuts." }}
+        />
         <p className="lead lead-tight">
           {pick({ zh: "Prima 的每个阶段都以「可验证的进展」为推进条件。这里的计划是当前视角，会随调研反馈调整。", en: "Each Prima stage advances only on verifiable progress. The plan reflects the current view and will change with research feedback." })}
         </p>
