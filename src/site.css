@@ -136,7 +136,10 @@ h2 {
   font-weight: 500;
   line-height: 1.14;
   letter-spacing: 0;
+  text-wrap: balance;
 }
+/* 中文标题的换行只落在逗号处；窄屏一行装不下时退回自然换行 */
+.phrase { white-space: nowrap; }
 h3 {
   font-family: var(--font-sans);
   font-size: 1.12rem;
@@ -711,7 +714,8 @@ a:focus-visible {
   margin-bottom: 56px;
 }
 .split-copy { max-width: 520px; }
-.split-copy h2 { margin-bottom: 16px; }
+/* 左栏只有 520px，标题字号必须跟着收一档，否则整句必然断腰 */
+.split-copy h2 { margin-bottom: 16px; font-size: clamp(32px, 3.6vw, 44px); }
 .split-copy .lead { margin-bottom: 24px; }
 .split-copy p { color: var(--ink-2); margin-bottom: 20px; }
 .split-visual {
@@ -749,14 +753,15 @@ a:focus-visible {
   border-top: 1px solid var(--border);
   position: relative;
 }
-.timeline-item:first-child { border-top: 2px solid var(--ink); }
+/* 刻度压在发丝线的正中间：线 1px、刻度 3px，向上偏 2px 才居中 */
 .timeline-item::before {
   content: "";
   position: absolute;
-  top: -1px;
+  top: -2px;
   left: 0;
-  width: 40px;
-  height: 2px;
+  width: 28px;
+  height: 3px;
+  border-radius: 2px;
   background: var(--ink);
 }
 .timeline-item h3 {
@@ -812,42 +817,6 @@ a:focus-visible {
   border-radius: 2px;
   background: var(--brand);
 }
-
-/* ---------- Sub page head（页序线 + 基元点阵角标） ---------- */
-.page-head { position: relative; padding-top: 44px; }
-.page-head-row {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  font-family: var(--font-mono);
-  font-size: .72rem;
-  letter-spacing: .1em;
-  color: var(--ink-3);
-}
-.page-rule { flex: 1; height: 1px; background: var(--border); }
-.page-mark-row { position: relative; }
-.page-mark {
-  position: absolute;
-  right: 0;
-  top: 18px;
-  display: grid;
-  grid-template-columns: repeat(3, 13px);
-  gap: 10px;
-}
-.mark-dot {
-  width: 4px;
-  height: 4px;
-  justify-self: center;
-  border-radius: 50%;
-  background: rgba(22, 24, 29, .18);
-}
-.mark-dot.is-lit {
-  width: 6px;
-  height: 6px;
-  background: var(--brand);
-  box-shadow: 0 0 0 4px var(--brand-soft);
-}
-.page-head + main { padding-top: 34px; }
 
 /* ---------- Sub pages (About / Model / How / Scenarios) ---------- */
 .about-page,
@@ -1710,9 +1679,6 @@ a:focus-visible {
   .footer-bottom { flex-direction: column; gap: 8px; }
   .contact-panel { grid-template-columns: 1fr; padding: 32px; }
   .section { padding: 88px 0; }
-  .page-head { padding-top: 26px; }
-  .page-mark { display: none; }
-  .page-head + main { padding-top: 40px; }
   .about-page { padding: 72px 0 96px; }
   .about-hero { margin-bottom: 64px; }
   .about-section { margin-bottom: 80px; }
@@ -1726,6 +1692,7 @@ a:focus-visible {
 }
 @media (max-width: 520px) {
   :root { --container: calc(100vw - 32px); }
+  .phrase { white-space: normal; }
   .hero { padding: 64px 0 80px; }
   .hero-actions { flex-direction: column; align-items: stretch; }
   .hero-actions .button { width: 100%; }

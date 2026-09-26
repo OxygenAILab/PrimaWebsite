@@ -1,6 +1,6 @@
 import { siteConfig } from "../config";
 import BetaCta from "./BetaCta";
-import SplitTitle from "./SplitTitle";
+import SplitTitle, { PhraseTitle } from "./SplitTitle";
 import { useI18n } from "../i18n";
 import type { Localized } from "../data/content";
 
@@ -108,7 +108,7 @@ export default function About() {
       <section className="container about-section" aria-labelledby="boundary-title">
         <div className="section-head">
           <p className="eyebrow">{pick({ zh: "研究边界", en: "Research boundaries" })}</p>
-          <h2 id="boundary-title">{pick({ zh: "诚实标注阶段，不夸大能力。", en: "Label stages honestly; do not overstate capability." })}</h2>
+          <PhraseTitle id="boundary-title" title={{ zh: "诚实标注阶段，不夸大能力。", en: "Label stages honestly; do not overstate capability." }} />
         </div>
         <div className="three-grid">
           {boundaries.map((item) => (

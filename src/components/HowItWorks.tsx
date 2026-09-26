@@ -1,6 +1,6 @@
 import { LayeredArtwork } from "./SectionArtwork";
 import BetaCta from "./BetaCta";
-import SplitTitle from "./SplitTitle";
+import SplitTitle, { PhraseTitle } from "./SplitTitle";
 import { useI18n } from "../i18n";
 import type { Localized } from "../data/content";
 
@@ -80,7 +80,7 @@ export default function HowItWorks() {
         <div className="split">
           <div className="split-copy">
             <p className="eyebrow">{pick({ zh: "推理分层", en: "Layered reasoning" })}</p>
-            <h2 id="layer-title">{pick({ zh: "三种思考方式，而不是一个固定速度。", en: "Three ways to think, not one fixed speed." })}</h2>
+            <PhraseTitle id="layer-title" title={{ zh: "三种思考方式，而不是一个固定速度。", en: "Three ways to think, not one fixed speed." }} />
             <p>
               {pick({ zh: "我们不想让简单问题被拖慢，也不想复杂问题被草率对待。Prima 的核心假设是：推理深度应该跟任务复杂度匹配，而不是跟着对话轮数增长。", en: "Simple work should not wait and complex work should not be rushed. Prima assumes reasoning depth should match task complexity, not conversation length." })}
             </p>

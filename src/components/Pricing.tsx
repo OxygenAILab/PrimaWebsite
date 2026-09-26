@@ -7,7 +7,7 @@ import {
   type PlanFamily,
 } from "../data/pricing";
 import BetaCta from "./BetaCta";
-import SplitTitle from "./SplitTitle";
+import SplitTitle, { PhraseTitle } from "./SplitTitle";
 import { useI18n } from "../i18n";
 import type { Localized } from "../data/content";
 
@@ -73,7 +73,7 @@ export default function Pricing() {
       <section className="container about-section" aria-labelledby="plans-title">
         <div className="section-head">
           <p className="eyebrow">{pick({ zh: "订阅方案", en: "Subscriptions" })}</p>
-          <h2 id="plans-title">{pick({ zh: "三条产品线，从免费验证到团队生产。", en: "Three product lines, from free validation to team production." })}</h2>
+          <PhraseTitle id="plans-title" title={{ zh: "三条产品线，从免费验证到团队生产。", en: "Three product lines, from free validation to team production." }} />
         </div>
         <div className="pricing-tabs" role="tablist" aria-label={pick({ zh: "定价分组", en: "Plan groups" })}>
           {pricingFamilies.map((family) => (

@@ -1,5 +1,5 @@
 import { siteConfig } from "../config";
-import SplitTitle from "./SplitTitle";
+import SplitTitle, { PhraseTitle } from "./SplitTitle";
 import { useI18n } from "../i18n";
 import HeroArtwork from "./HeroArtwork";
 import { capabilities, painPoints, scenarios, type Localized } from "../data/content";
@@ -79,7 +79,7 @@ export function Product() {
       <div className="container">
         <div className="section-head reveal">
           <p className="eyebrow">{pick({ zh: "痛点", en: "Pain points" })}</p>
-          <h2 id="product-title">{pick({ zh: "AI Agent 的问题，不只是不够聪明。", en: "AI agents are not just insufficiently smart." })}</h2>
+          <PhraseTitle id="product-title" title={{ zh: "AI Agent 的问题，不只是不够聪明。", en: "AI agents are not just insufficiently smart." }} />
           <p className="section-copy">
             {pick({ zh: "真实工作里，上下文持续存在，决策也会累积。一个好的 Agent 需要理解这些连续性。", en: "In real work, context persists and decisions accumulate. A useful agent has to understand that continuity." })}
           </p>
@@ -135,7 +135,7 @@ export function Scenarios() {
       <div className="container">
         <div className="section-head reveal">
           <p className="eyebrow">{pick({ zh: "首发场景", en: "Launch scenarios" })}</p>
-          <h2 id="scenarios-title">{pick({ zh: "先服务长任务，而不是所有任务。", en: "Serve long tasks first, not every task." })}</h2>
+          <PhraseTitle id="scenarios-title" title={{ zh: "先服务长任务，而不是所有任务。", en: "Serve long tasks first, not every task." }} />
         </div>
         <div className="card-grid reveal">
           {scenarios.map((item) => (
@@ -193,7 +193,7 @@ export function StageAndBeta() {
       <section className="section" id="stage" aria-labelledby="stage-title">
         <div className="container reveal">
           <p className="eyebrow">{pick({ zh: "产品阶段与共创", en: "Stage and co-creation" })}</p>
-          <h2 id="stage-title">{pick({ zh: "我们正在打磨第一版，也想先听你说。", en: "We are shaping the first version and want to hear from you." })}</h2>
+          <PhraseTitle id="stage-title" title={{ zh: "我们正在打磨第一版，也想先听你说。", en: "We are shaping the first version and want to hear from you." }} />
           <p className="section-copy">
             {pick({ zh: "Prima 还没有开放注册。我们先从真实现场开始：识别任务在哪里断裂、决策在哪里丢失，再决定第一版最该守住哪些秩序。", en: "Prima is not open for registration yet. We start in the field: identify where tasks break and decisions are lost, then decide what the first version must protect." })}
           </p>
@@ -202,7 +202,7 @@ export function StageAndBeta() {
       <section className="cta-section" id="beta" aria-labelledby="beta-title">
         <div className="container reveal">
           <p className="eyebrow">{pick({ zh: "Beta 调研", en: "Beta research" })}</p>
-          <h2 id="beta-title">{pick({ zh: "现在参与，影响第一版", en: "Join now and shape the first version" })}</h2>
+          <PhraseTitle id="beta-title" title={{ zh: "现在参与，影响第一版", en: "Join now and shape the first version" }} />
           <p className="section-copy">
             {pick({ zh: "问卷约需 5 分钟，覆盖你的使用习惯、真实痛点、部署偏好和服务期待，同时作为 Beta 用户筛选参考。入选用户有机会提前体验产品。", en: "The survey takes about five minutes and covers usage habits, real pain points, deployment preferences, and service expectations. Responses also inform early access." })}
           </p>

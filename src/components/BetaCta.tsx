@@ -1,4 +1,5 @@
 import { useI18n } from "../i18n";
+import { PhraseTitle } from "./SplitTitle";
 import type { Localized } from "../data/content";
 
 type BetaCtaProps = {
@@ -15,7 +16,7 @@ export default function BetaCta({ id, title, copy }: BetaCtaProps) {
     <section className="container about-section" aria-labelledby={id}>
       <div className="contact-panel">
         <div>
-          <h2 id={id}>{pick(title)}</h2>
+          <PhraseTitle id={id} title={title} />
           <p>{pick(copy)}</p>
         </div>
         <a className="button primary" href="../beta/">{t("cta.joinBeta")}</a>

@@ -19,3 +19,22 @@ export default function SplitTitle({ id, lead, stress, as: Tag = "h1" }: SplitTi
     </Tag>
   );
 }
+
+/* 中文可以任意字间断行，整句标题会被拦腰截断。
+   按逗号切成语义块，块内禁止换行，换行只发生在停顿处；
+   西文本就按词断行，交给 text-wrap 处理。 */
+export function PhraseTitle({ id, title }: { id?: string; title: Localized }) {
+  const { locale, pick } = useI18n();
+  const text = pick(title);
+  const clauses = locale === "zh" ? text.split("，") : [text];
+
+  return (
+    <h2 id={id}>
+      {clauses.map((clause, i) => (
+        <span key={i} className="phrase">
+          {i < clauses.length - 1 ? `${clause}，` : clause}
+        </span>
+      ))}
+    </h2>
+  );
+}
