@@ -1,8 +1,14 @@
+import { useI18n } from "../i18n";
+
 export function ContinuityArtwork() {
+  const { locale } = useI18n();
+
   return (
     <figure className="split-visual artwork-shell" aria-labelledby="continuity-art-caption">
       <svg className="section-art" viewBox="0 0 720 450" role="img">
-        <title id="continuity-art-caption">长任务在多次修正后仍保持目标一致</title>
+        <title id="continuity-art-caption">
+          {locale === "zh" ? "长任务在多次修正后仍保持目标一致" : "Long tasks keep goals aligned through repeated revisions"}
+        </title>
         <defs>
           <pattern id="prima-dot-grid" width="24" height="24" patternUnits="userSpaceOnUse">
             <circle cx="1.2" cy="1.2" r="1.2" fill="rgba(22,24,29,.09)" />
@@ -23,12 +29,12 @@ export function ContinuityArtwork() {
         </g>
 
         <g fontFamily="var(--font-sans)" fill="var(--ink)">
-          <text x="78" y="90" fontSize="15" fontWeight="650">输入约束</text>
-          <text x="78" y="118" fontSize="12" fill="var(--ink-2)">目标 · 文件 · 边界</text>
-          <text x="295" y="204" fontSize="15" fontWeight="650">状态回看</text>
-          <text x="295" y="232" fontSize="12" fill="var(--ink-2)">已确认事实</text>
-          <text x="512" y="90" fontSize="15" fontWeight="650">交付结果</text>
-          <text x="512" y="118" fontSize="12" fill="var(--ink-2)">可复核输出</text>
+          <text x="78" y="90" fontSize="15" fontWeight="650">{locale === "zh" ? "输入约束" : "Input constraints"}</text>
+          <text x="78" y="118" fontSize="12" fill="var(--ink-2)">{locale === "zh" ? "目标 · 文件 · 边界" : "Goals · files · boundaries"}</text>
+          <text x="295" y="204" fontSize="15" fontWeight="650">{locale === "zh" ? "状态回看" : "State review"}</text>
+          <text x="295" y="232" fontSize="12" fill="var(--ink-2)">{locale === "zh" ? "已确认事实" : "Confirmed facts"}</text>
+          <text x="512" y="90" fontSize="15" fontWeight="650">{locale === "zh" ? "交付结果" : "Deliverable"}</text>
+          <text x="512" y="118" fontSize="12" fill="var(--ink-2)">{locale === "zh" ? "可复核输出" : "Reviewable output"}</text>
         </g>
 
         <path
@@ -54,10 +60,10 @@ export function ContinuityArtwork() {
         <circle cx="636" cy="366" r="9" fill="var(--brand)" />
 
         <g fontFamily="var(--font-sans)" fontSize="12" fill="var(--ink-3)" textAnchor="middle">
-          <text x="92" y="402">开始</text>
-          <text x="258" y="402">中途修正</text>
-          <text x="424" y="402">验证</text>
-          <text x="636" y="402">交付</text>
+          <text x="92" y="402">{locale === "zh" ? "开始" : "Start"}</text>
+          <text x="258" y="402">{locale === "zh" ? "中途修正" : "Mid-course correction"}</text>
+          <text x="424" y="402">{locale === "zh" ? "验证" : "Verify"}</text>
+          <text x="636" y="402">{locale === "zh" ? "交付" : "Deliver"}</text>
         </g>
       </svg>
     </figure>
@@ -65,10 +71,14 @@ export function ContinuityArtwork() {
 }
 
 export function ResearchArtwork() {
+  const { locale } = useI18n();
+
   return (
     <figure className="split-visual artwork-shell" aria-labelledby="research-art-caption">
       <svg className="section-art" viewBox="0 0 720 450" role="img">
-        <title id="research-art-caption">产品验证形成研究证据，再进入模型研究</title>
+        <title id="research-art-caption">
+          {locale === "zh" ? "产品验证形成研究证据，再进入模型研究" : "Product validation creates research evidence before model research"}
+        </title>
         <defs>
           <pattern id="research-dot-grid" width="24" height="24" patternUnits="userSpaceOnUse">
             <circle cx="1.2" cy="1.2" r="1.2" fill="rgba(22,24,29,.09)" />
@@ -79,7 +89,7 @@ export function ResearchArtwork() {
         <g fill="var(--white)" stroke="var(--border)" strokeWidth="1">
           <rect x="52" y="62" width="270" height="130" rx="16" />
           <rect x="398" y="62" width="270" height="130" rx="16" />
-          <rect x="164" y="262" width="392" height="122" rx="18" stroke="rgba(10,107,96,.24)" />
+          <rect x="164" y="262" width="392" height="122" rx="18" stroke="rgba(126,73,226,.24)" />
         </g>
 
         <g fill="none" stroke="rgba(22,24,29,.22)" strokeWidth="1.25">
@@ -88,12 +98,12 @@ export function ResearchArtwork() {
         </g>
 
         <g fontFamily="var(--font-sans)" fill="var(--ink)">
-          <text x="82" y="98" fontSize="15" fontWeight="650">产品验证</text>
-          <text x="82" y="128" fontSize="12" fill="var(--ink-2)">真实长任务</text>
-          <text x="82" y="154" fontSize="12" fill="var(--ink-2)">用户反馈</text>
-          <text x="428" y="98" fontSize="15" fontWeight="650">公开边界</text>
-          <text x="428" y="128" fontSize="12" fill="var(--ink-2)">方向级描述</text>
-          <text x="428" y="154" fontSize="12" fill="var(--ink-2)">阶段标注</text>
+          <text x="82" y="98" fontSize="15" fontWeight="650">{locale === "zh" ? "产品验证" : "Product validation"}</text>
+          <text x="82" y="128" fontSize="12" fill="var(--ink-2)">{locale === "zh" ? "真实长任务" : "Real long tasks"}</text>
+          <text x="82" y="154" fontSize="12" fill="var(--ink-2)">{locale === "zh" ? "用户反馈" : "User feedback"}</text>
+          <text x="428" y="98" fontSize="15" fontWeight="650">{locale === "zh" ? "公开边界" : "Public boundary"}</text>
+          <text x="428" y="128" fontSize="12" fill="var(--ink-2)">{locale === "zh" ? "方向级描述" : "Direction-level description"}</text>
+          <text x="428" y="154" fontSize="12" fill="var(--ink-2)">{locale === "zh" ? "阶段标注" : "Stage labels"}</text>
         </g>
 
         <g>
@@ -109,7 +119,7 @@ export function ResearchArtwork() {
             strokeLinejoin="round"
           />
           <text x="516" y="306" fontFamily="var(--font-sans)" fontSize="14" fontWeight="650" fill="var(--ink)">
-            架构研究
+            {locale === "zh" ? "架构研究" : "Architecture research"}
           </text>
         </g>
       </svg>
@@ -118,10 +128,14 @@ export function ResearchArtwork() {
 }
 
 export function LayeredArtwork() {
+  const { locale } = useI18n();
+
   return (
     <figure className="split-visual artwork-shell" aria-labelledby="layered-art-caption">
       <svg className="section-art" viewBox="0 0 720 450" role="img">
-        <title id="layered-art-caption">快答、深想和记忆按任务复杂度分层调度</title>
+        <title id="layered-art-caption">
+          {locale === "zh" ? "快答、深想和记忆按任务复杂度分层调度" : "Quick answers, deep reasoning, and memory are scheduled by task complexity"}
+        </title>
         <defs>
           <pattern id="layered-dot-grid" width="24" height="24" patternUnits="userSpaceOnUse">
             <circle cx="1.2" cy="1.2" r="1.2" fill="rgba(22,24,29,.09)" />
@@ -159,16 +173,16 @@ export function LayeredArtwork() {
         <g fill="var(--white)" stroke="var(--border)" strokeWidth="1">
           <rect x="150" y="66" width="180" height="72" rx="14" />
           <rect x="226" y="190" width="180" height="72" rx="14" />
-          <rect x="196" y="290" width="180" height="72" rx="14" stroke="rgba(10,107,96,.22)" />
+          <rect x="196" y="290" width="180" height="72" rx="14" stroke="rgba(126,73,226,.22)" />
         </g>
 
         <g fontFamily="var(--font-sans)" fill="var(--ink)">
-          <text x="174" y="98" fontSize="14" fontWeight="650">快答层</text>
-          <text x="174" y="122" fontSize="12" fill="var(--ink-2)">低复杂度</text>
-          <text x="250" y="222" fontSize="14" fontWeight="650">深想层</text>
-          <text x="250" y="246" fontSize="12" fill="var(--ink-2)">多步验证</text>
-          <text x="220" y="322" fontSize="14" fontWeight="650">记忆层</text>
-          <text x="220" y="346" fontSize="12" fill="var(--ink-2)">长期上下文</text>
+          <text x="174" y="98" fontSize="14" fontWeight="650">{locale === "zh" ? "快答层" : "Quick answer"}</text>
+          <text x="174" y="122" fontSize="12" fill="var(--ink-2)">{locale === "zh" ? "低复杂度" : "Low complexity"}</text>
+          <text x="250" y="222" fontSize="14" fontWeight="650">{locale === "zh" ? "深想层" : "Deep reasoning"}</text>
+          <text x="250" y="246" fontSize="12" fill="var(--ink-2)">{locale === "zh" ? "多步验证" : "Multi-step verification"}</text>
+          <text x="220" y="322" fontSize="14" fontWeight="650">{locale === "zh" ? "记忆层" : "Memory"}</text>
+          <text x="220" y="346" fontSize="12" fill="var(--ink-2)">{locale === "zh" ? "长期上下文" : "Long-term context"}</text>
         </g>
       </svg>
     </figure>

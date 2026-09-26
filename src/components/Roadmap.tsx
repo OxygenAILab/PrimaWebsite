@@ -1,56 +1,70 @@
-const phases = [
+import { useI18n } from "../i18n";
+import type { Localized } from "../data/content";
+
+type Phase = {
+  title: Localized;
+  status: Localized;
+  tone: string;
+  items: Localized[];
+};
+
+const phases: Phase[] = [
   {
-    title: "现在 · Beta 调研",
-    status: "进行中",
+    title: { zh: "现在 · Beta 调研", en: "Now · Beta research" },
+    status: { zh: "进行中", en: "Active" },
     tone: "mint",
     items: [
-      "收集真实用户的长任务痛点与使用习惯",
-      "验证自适应推理深度与分层记忆的产品假设",
-      "确定第一版产品的核心能力边界",
+      { zh: "收集真实用户的长任务痛点与使用习惯", en: "Collect real long-task pain points and usage habits" },
+      { zh: "验证自适应推理深度与分层记忆的产品假设", en: "Validate product hypotheses for adaptive reasoning and layered memory" },
+      { zh: "确定第一版产品的核心能力边界", en: "Define the first version's core capability boundaries" },
     ],
   },
   {
-    title: "下一步 · 内部 Alpha",
-    status: "筹备中",
+    title: { zh: "下一步 · 内部 Alpha", en: "Next · Internal Alpha" },
+    status: { zh: "筹备中", en: "Preparing" },
     tone: "peri",
     items: [
-      "向入选调研用户开放小范围内测",
-      "打磨长任务执行一致性与记忆召回",
-      "建立共创反馈通道与迭代节奏",
+      { zh: "向入选调研用户开放小范围内测", en: "Open small-scale testing to selected research users" },
+      { zh: "打磨长任务执行一致性与记忆召回", en: "Refine long-task execution consistency and memory recall" },
+      { zh: "建立共创反馈通道与迭代节奏", en: "Establish co-creation feedback channels and iteration cadence" },
     ],
   },
   {
-    title: "之后 · 公开 Beta",
-    status: "规划中",
+    title: { zh: "之后 · 公开 Beta", en: "Later · Public Beta" },
+    status: { zh: "规划中", en: "Planned" },
     tone: "gray",
     items: [
-      "扩大测试范围并沉淀可量化的体验指标",
-      "探索本地与混合部署的适用场景",
-      "反哺 Oxygen 模型矩阵的架构设计",
+      { zh: "扩大测试范围并沉淀可量化的体验指标", en: "Expand testing and establish measurable experience metrics" },
+      { zh: "探索本地与混合部署的适用场景", en: "Explore local and hybrid deployment fit" },
+      { zh: "反哺 Oxygen 模型矩阵的架构设计", en: "Feed findings into Oxygen's model architecture design" },
     ],
   },
 ];
 
 export default function Roadmap() {
+  const { locale } = useI18n();
+
   return (
     <main id="main" className="about-page">
       <section className="container about-hero" aria-labelledby="roadmap-hero-title">
-        <p className="eyebrow">路线图</p>
-        <h1 id="roadmap-hero-title">我们按阶段走，不跳步。</h1>
+        <p className="eyebrow">{locale === "zh" ? "路线图" : "Roadmap"}</p>
+        <h1 id="roadmap-hero-title">{locale === "zh" ? "我们按阶段走，不跳步。" : "We move by stages; no shortcuts."}</h1>
         <p className="lead" style={{ maxWidth: "56ch" }}>
-          Prima 的每个阶段都以「可验证的进展」为推进条件。这里的计划是当前视角，会随调研反馈调整。
+          {locale === "zh"
+            ? "Prima 的每个阶段都以「可验证的进展」为推进条件。这里的计划是当前视角，会随调研反馈调整。"
+            : "Each Prima stage advances only on verifiable progress. The plan reflects the current view and will change with research feedback."}
         </p>
       </section>
 
       <section className="container about-section" aria-labelledby="phases-title">
         <div className="card-grid">
           {phases.map((phase) => (
-            <article className="card" key={phase.title}>
-              <p className={`tag ${phase.tone}`}>{phase.status}</p>
-              <h3>{phase.title}</h3>
+            <article className="card" key={phase.title.en}>
+              <p className={`tag ${phase.tone}`}>{phase.status[locale]}</p>
+              <h3>{phase.title[locale]}</h3>
               <ul className="phase-list">
                 {phase.items.map((item) => (
-                  <li key={item}>{item}</li>
+                  <li key={item.en}>{item[locale]}</li>
                 ))}
               </ul>
             </article>
@@ -61,10 +75,10 @@ export default function Roadmap() {
       <section className="container about-section" aria-labelledby="roadmap-cta-title">
         <div className="contact-panel">
           <div>
-            <h2 id="roadmap-cta-title">想影响这个路线图？</h2>
-            <p>填写 Beta 调研，告诉我们你最需要的能力。调研反馈会直接决定优先级。</p>
+            <h2 id="roadmap-cta-title">{locale === "zh" ? "想影响这个路线图？" : "Want to shape this roadmap?"}</h2>
+            <p>{locale === "zh" ? "填写 Beta 调研，告诉我们你最需要的能力。调研反馈会直接决定优先级。" : "Complete Beta research and tell us the capabilities you need most; feedback directly sets priorities."}</p>
           </div>
-          <a className="button primary" href="../beta/">参与 Beta 调研</a>
+          <a className="button primary" href="../beta/">{locale === "zh" ? "参与 Beta 调研" : "Join Beta research"}</a>
         </div>
       </section>
     </main>
