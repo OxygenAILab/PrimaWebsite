@@ -235,6 +235,12 @@ export function Footer({ active = "home" }: { active?: PrimaPage }) {
       <div className="container footer-bottom">
         <p>&copy; 2026 Oxygen AI</p>
         <p>{pick({ zh: "产品仍在打磨，能力描述不代表已经可用；反馈仅用于产品研究与 Beta 招募。", en: "The product is still being refined; descriptions do not imply availability. Feedback is used only for product research and Beta recruitment." })}</p>
+        <nav className="footer-legal" aria-label={pick({ zh: "法务与页脚工具", en: "Legal and footer tools" })}>
+          <a href={fromPage(active, "privacy/")}>{pick({ zh: "隐私", en: "Privacy" })}</a>
+          <a href={fromPage(active, "terms/")}>{pick({ zh: "条款", en: "Terms" })}</a>
+          {/* 用锚点而不是 JS：html 已有 scroll-behavior，减弱动效时自动变成立刻到顶 */}
+          <a className="back-to-top" href="#top" aria-label={pick({ zh: "返回顶部", en: "Back to top" })}>&uarr;</a>
+        </nav>
       </div>
     </footer>
   );

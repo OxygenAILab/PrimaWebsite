@@ -16,7 +16,9 @@ export type PrimaPage =
   | "pricing"
   | "model-list"
   | "security"
-  | "download";
+  | "download"
+  | "privacy"
+  | "terms";
 
 export default function PageApp({
   active,

@@ -14,10 +14,11 @@ npm run preview
 
 ## 页面结构
 
-多入口静态站，11 个页面各自一个 `index.html`，共用 `src/main.tsx`：根目录是首页，其余在
-`about/ beta/ download/ faq/ how-it-works/ model-list/ pricing/ roadmap/ scenarios/ security/`。
-入口靠 `<body data-page="...">` 选中组件，新增页面要同时改 `vite.config.ts` 的 `rollupOptions.input`
-和 `src/PageApp.tsx` 的 `PrimaPage`。
+多入口静态站，13 个 `index.html` 共用 `src/main.tsx`：根目录是首页，其余在
+`about/ beta/ download/ faq/ how-it-works/ model-list/ pricing/ privacy/ roadmap/ scenarios/ security/ terms/`。
+其中 `faq/` 是不挂 React 的静态跳转页，指向 `about/`。入口靠 `<body data-page="...">` 选中组件，
+新增页面要同时改三处：`vite.config.ts` 的 `rollupOptions.input`、`src/PageApp.tsx` 的 `PrimaPage`、
+`src/main.tsx` 的 `pageMap`。
 
 ## 部署
 

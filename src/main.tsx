@@ -14,6 +14,7 @@ import Pricing from "./components/Pricing";
 import ModelList from "./components/ModelList";
 import Security from "./components/Security";
 import Download from "./components/Download";
+import { Privacy, Terms } from "./components/Legal";
 import { I18nProvider } from "./i18n";
 import "./site.css";
 
@@ -36,6 +37,8 @@ const pageMap: Partial<Record<PrimaPage, React.ReactNode>> = {
   "model-list": <ModelList />,
   security: <Security />,
   download: <Download />,
+  privacy: <Privacy />,
+  terms: <Terms />,
 };
 
 const page = pageMap[pageId];

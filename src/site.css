@@ -565,7 +565,9 @@ h3 {
     transform .2s var(--ease), box-shadow .2s var(--ease);
 }
 .button:focus-visible,
-a:focus-visible {
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
   outline: 2px solid var(--brand);
   outline-offset: 3px;
 }
@@ -659,6 +661,13 @@ a:focus-visible {
 }
 
 /* ---------- Sections (StepFun-style: light canvas + hairline rules) ---------- */
+/* 锚点跳转要给粘顶导航让位，否则标题正好被压在 header 底下 */
+main,
+#top,
+.section[id],
+.cta-section[id] {
+  scroll-margin-top: 88px;
+}
 .section {
   padding: 120px 0;
 }
@@ -1043,6 +1052,7 @@ a:focus-visible {
 .site-footer nav a:hover { color: var(--white); }
 .footer-bottom {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: flex-start;
   gap: 16px;
@@ -1051,6 +1061,25 @@ a:focus-visible {
   color: rgba(255, 255, 255, .58);
 }
 .footer-bottom p { margin: 0; }
+.footer-legal {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: auto;
+}
+.back-to-top {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: 999px;
+  transition: transform .18s var(--ease), border-color .18s var(--ease);
+}
+@media (hover: hover) {
+  .back-to-top:hover { transform: translateY(-2px); border-color: rgba(255, 255, 255, .42); }
+}
 
 /* ---------- Reveal animation ---------- */
 .reveal {
@@ -1380,6 +1409,49 @@ a:focus-visible {
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
+/* ---------- 模型筛选条 ----------
+   与模型标签共用 .model-chip 形状，页面上不出现第二种 pill */
+.model-filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin-bottom: 20px;
+}
+.model-search {
+  width: min(260px, 100%);
+  min-height: 38px;
+  padding: 0 16px;
+  color: var(--ink);
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: .88rem;
+  transition: border-color .18s var(--ease), box-shadow .18s var(--ease);
+}
+.model-search::placeholder { color: var(--ink-3); }
+.model-filter-rail { display: flex; flex-wrap: wrap; gap: 8px; }
+.model-filter-status { margin-left: auto; color: var(--ink-3); font-size: .84rem; }
+button.model-chip {
+  cursor: pointer;
+  background: var(--surface);
+  color: var(--ink-2);
+  font-family: inherit;
+  transition: color .18s var(--ease), background-color .18s var(--ease), border-color .18s var(--ease);
+}
+@media (hover: hover) {
+  button.model-chip:hover { color: var(--ink); border-color: rgba(var(--brand-rgb), .32); }
+}
+button.model-chip[aria-pressed="true"] {
+  color: var(--brand-dark);
+  background: var(--brand-soft);
+  border-color: transparent;
+}
+.model-empty { padding: 30px 26px; }
+.model-empty h3 { margin-bottom: 8px; }
+.model-empty p { color: var(--ink-2); font-size: .95rem; }
+
 .model-groups {
   background: var(--surface-raised);
   border: 1px solid var(--border);
@@ -1702,6 +1774,7 @@ a:focus-visible {
 @media (max-width: 520px) {
   :root { --container: calc(100vw - 32px); }
   .phrase { white-space: normal; }
+  .model-filter-status { margin-left: 0; }
   .hero { padding: 64px 0 80px; }
   .hero-actions { flex-direction: column; align-items: stretch; }
   .hero-actions .button { width: 100%; }

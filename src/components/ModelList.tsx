@@ -4,9 +4,7 @@ import SplitTitle from "./SplitTitle";
 import { useI18n, type Locale } from "../i18n";
 import type { Localized } from "../data/content";
 
-type RegionKey = "china" | "global";
-
-const regions: Array<{ id: RegionKey; label: Localized; description: Localized }> = [
+const regions: Array<{ id: ModelRegion; label: Localized; description: Localized }> = [
   {
     id: "china",
     label: { zh: "中国大陆", en: "Mainland China" },
@@ -60,6 +58,20 @@ const copy = {
     zh: "会。模型进入或离开支持范围时，这里会同步调整；不确定时请以最新页面为准。",
     en: "Yes. It updates as models enter or leave support; when uncertain, defer to the latest page.",
   },
+  "model-list.search": { zh: "搜索模型或厂商", en: "Search models or vendors" },
+  "model-list.filters": { zh: "按厂商与内测状态筛选", en: "Filter by vendor and Beta status" },
+  "model-list.allVendors": { zh: "全部厂商", en: "All vendors" },
+  "model-list.betaOnly": { zh: "仅第一批内测", en: "Early Beta only" },
+  "model-list.filterCount": {
+    zh: "当前筛选 {count} / {total} 个模型。",
+    en: "Showing {count} of {total} models.",
+  },
+  "model-list.regionCount": { zh: "本区域 {total} 个模型。", en: "{total} models in this region." },
+  "model-list.emptyTitle": { zh: "没有匹配的模型", en: "No matching models" },
+  "model-list.empty": {
+    zh: "换个关键词，或清掉厂商与内测筛选。名单会随阶段更新。",
+    en: "Try another keyword, or clear the vendor and Beta filters. This list updates with each stage.",
+  },
 } satisfies Record<string, { zh: string; en: string }>;
 
 function localText(key: keyof typeof copy, locale: Locale, values?: Record<string, string | number>) {
@@ -78,9 +90,21 @@ function vendorToken(vendor: string) {
 
 export default function ModelList() {
   const { locale, pick } = useI18n();
-  const [activeRegion, setActiveRegion] = useState<RegionKey>("china");
-  const models = modelMatrix.filter((item) => item.regions.includes(activeRegion as ModelRegion));
-  const groups = groupByVendor(models);
+  const [activeRegion, setActiveRegion] = useState<ModelRegion>("china");
+  const [query, setQuery] = useState("");
+  const [vendor, setVendor] = useState<string | "all">("all");
+  const [betaOnly, setBetaOnly] = useState(false);
+
+  const models = modelMatrix.filter((item) => item.regions.includes(activeRegion));
+  const vendors = Array.from(new Set(models.map((item) => item.vendor)));
+  const needle = query.trim().toLowerCase();
+  const filtering = vendor !== "all" || betaOnly || needle !== "";
+  const shown = models.filter((item) => {
+    if (vendor !== "all" && item.vendor !== vendor) return false;
+    if (betaOnly && !item.beta) return false;
+    return !needle || item.name.toLowerCase().includes(needle) || item.vendor.toLowerCase().includes(needle);
+  });
+  const groups = groupByVendor(shown);
   const overseasCount = models.filter(isOverseasOnly).length;
   const showRegion = activeRegion === "global";
 
@@ -113,7 +137,11 @@ export default function ModelList() {
               aria-selected={activeRegion === region.id}
               aria-controls="model-grid"
               className={activeRegion === region.id ? "active" : ""}
-              onClick={() => setActiveRegion(region.id)}
+              onClick={() => {
+                setActiveRegion(region.id);
+                /* 厂商列表按区域派生，换区域后旧选择可能已不存在，跟着回落 */
+                setVendor("all");
+              }}
             >
               {region.label[locale]}
             </button>
@@ -130,7 +158,7 @@ export default function ModelList() {
           </div>
           <div>
             <dt>{localText("model-list.statVendors", locale)}</dt>
-            <dd>{groups.length}</dd>
+            <dd>{vendors.length}</dd>
           </div>
           <div>
             <dt>{localText("model-list.statExtra", locale)}</dt>
@@ -145,7 +173,58 @@ export default function ModelList() {
           </p>
         ) : null}
 
+        <div className="model-filter">
+          <input
+            className="model-search"
+            type="search"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            aria-label={localText("model-list.search", locale)}
+            placeholder={localText("model-list.search", locale)}
+          />
+          <div className="model-filter-rail" role="group" aria-label={localText("model-list.filters", locale)}>
+            <button
+              type="button"
+              className="model-chip"
+              aria-pressed={vendor === "all"}
+              onClick={() => setVendor("all")}
+            >
+              {localText("model-list.allVendors", locale)}
+            </button>
+            {vendors.map((name) => (
+              <button
+                key={name}
+                type="button"
+                className="model-chip"
+                aria-pressed={vendor === name}
+                onClick={() => setVendor(name)}
+              >
+                {name}
+              </button>
+            ))}
+            <button
+              type="button"
+              className="model-chip"
+              aria-pressed={betaOnly}
+              onClick={() => setBetaOnly((value) => !value)}
+            >
+              {localText("model-list.betaOnly", locale)}
+            </button>
+          </div>
+          <p className="model-filter-status" aria-live="polite">
+            {filtering
+              ? localText("model-list.filterCount", locale, { count: shown.length, total: models.length })
+              : localText("model-list.regionCount", locale, { total: models.length })}
+          </p>
+        </div>
+
         <div className="model-groups" id="model-grid" role="tabpanel" aria-labelledby={`model-region-${activeRegion}`}>
+          {groups.length === 0 ? (
+            <div className="model-empty">
+              <h3>{localText("model-list.emptyTitle", locale)}</h3>
+              <p>{localText("model-list.empty", locale)}</p>
+            </div>
+          ) : null}
           {groups.map((group) => {
             const countLabel = localText(
               group.models.length === 1 ? "model-list.groupCountOne" : "model-list.groupCount",
