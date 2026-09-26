@@ -132,6 +132,7 @@ const vendorCatalog: VendorSeed[] = [
     icon: "/vendors/deepseek.svg",
     models: [
       { name: "DeepSeek V4.1 Flash", beta: true },
+      { name: "DeepSeek V4 Pro 0813", beta: true },
       { name: "DeepSeek V3.2", beta: true },
     ],
   },
