@@ -1,12 +1,13 @@
-/* 页面底光：一束斜射光 + 两团呼吸光球。
-   软边由 radial-gradient 自身衰减产生，不用 filter: blur（大面积模糊在 Safari 上很贵）。
-   动画只碰 transform / opacity，滚动视差用 @supports 分级，不支持就静止。 */
+/* 页面底光。三条规则：
+   1. 不用矩形光带、不用角落大色球 —— 那会在页面上切出硬边界；
+   2. 光的层次来自品牌自己的「基元点阵」，不是通用 aurora；
+   3. 动效只碰 opacity / transform，软边一律靠渐变自身衰减。 */
 export default function LightField() {
   return (
     <div className="lightfield" aria-hidden="true">
-      <div className="light-beam" />
-      <div className="light-orb light-orb-a" />
-      <div className="light-orb light-orb-b" />
+      <div className="light-canopy" />
+      <div className="light-grain" />
+      <div className="light-sweep" />
     </div>
   );
 }

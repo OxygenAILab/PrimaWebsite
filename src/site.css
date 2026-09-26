@@ -59,73 +59,59 @@ html {
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
+  animation: light-rise 1.4s var(--ease-out-expo) backwards;
 }
-.lightfield > * {
-  position: absolute;
-  opacity: 1;
-  animation: light-rise 1.6s var(--ease-out-expo) backwards;
+.lightfield > * { position: absolute; inset: 0; }
+/* 1) 天光：全宽椭圆从顶部压下来，左右对称，切不出竖直边界 */
+.light-canopy {
+  background:
+    radial-gradient(120% 58% at 50% -16%, rgba(var(--brand-rgb), .1) 0%, rgba(var(--brand-rgb), .04) 42%, transparent 72%),
+    radial-gradient(90% 44% at 50% 110%, rgba(var(--brand-cool-rgb), .05) 0%, transparent 70%);
+  animation: light-breathe 24s ease-in-out infinite;
 }
-/* 斜射光束：从右上打进来的方向感 */
-.light-beam {
-  top: -30%;
-  right: -10%;
-  width: 68vw;
-  height: 150%;
-  background: linear-gradient(112deg,
-    rgba(var(--brand-rgb), .12) 0%,
-    rgba(var(--brand-rgb), .05) 30%,
-    rgba(var(--brand-cool-rgb), .03) 52%,
+/* 2) 纸面齿纹：比首页点阵更细一档，读作纸的颗粒而不是第二套网格；用遮罩从顶部向下淡出 */
+.light-grain {
+  background-image: radial-gradient(rgba(22, 28, 42, .12) 1px, transparent 1.1px);
+  background-size: 24px 24px;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, .6) 0%, transparent 46%);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, .6) 0%, transparent 46%);
+  opacity: .45;
+}
+/* 3) 光扫：一条两端透明的柔光横向经过，让静止的底纹有呼吸感 */
+.light-sweep {
+  background: linear-gradient(105deg,
+    transparent 32%,
+    rgba(255, 255, 255, .5) 46%,
+    rgba(255, 255, 255, .72) 50%,
+    rgba(255, 255, 255, .5) 54%,
     transparent 68%);
-  transform-origin: top right;
-}
-/* 主光源：右上紫，呼吸式漂移 */
-.light-orb-a {
-  top: -26vh;
-  right: -10vw;
-  width: min(72vw, 900px);
-  height: min(72vw, 900px);
-  background: radial-gradient(circle at 50% 50%,
-    rgba(var(--brand-rgb), .24) 0%,
-    rgba(var(--brand-rgb), .10) 36%,
-    rgba(var(--brand-rgb), .03) 55%,
-    transparent 72%);
-  animation: light-rise 1.6s var(--ease-out-expo) backwards, light-drift-a 26s ease-in-out 1.6s infinite;
-}
-/* 补光：左下冷蓝紫，反向漂移，两束不同步才不像程序 */
-.light-orb-b {
-  bottom: -32vh;
-  left: -16vw;
-  width: min(64vw, 780px);
-  height: min(64vw, 780px);
-  background: radial-gradient(circle at 50% 50%,
-    rgba(var(--brand-cool-rgb), .16) 0%,
-    rgba(var(--brand-cool-rgb), .06) 40%,
-    transparent 70%);
-  animation: light-rise 2s var(--ease-out-expo) .15s backwards, light-drift-b 34s ease-in-out 2.2s infinite;
+  animation: light-travel 34s ease-in-out 1.4s infinite;
 }
 @keyframes light-rise { from { opacity: 0; } to { opacity: 1; } }
-@keyframes light-drift-a {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(-3.5vw, 4vh, 0) scale(1.07); }
+@keyframes light-breathe { 0%, 100% { opacity: .84; } 50% { opacity: 1; } }
+@keyframes light-travel {
+  0% { transform: translate3d(-36%, 0, 0); opacity: 0; }
+  14% { opacity: .5; }
+  50% { opacity: .34; }
+  86% { opacity: .46; }
+  100% { transform: translate3d(36%, 0, 0); opacity: 0; }
 }
-@keyframes light-drift-b {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(4vw, -3vh, 0) scale(1.05); }
-}
-/* 支持滚动时间线的浏览器里，光束随页面进度缓慢横扫；否则静止 */
+/* 支持滚动时间线时，天光随页面进度轻微上浮；不支持就静止，不影响观感 */
 @supports (animation-timeline: scroll()) {
-  .light-beam {
-    animation: light-rise 1.6s var(--ease-out-expo) backwards, light-sweep linear forwards;
+  .light-canopy {
+    animation: light-breathe 24s ease-in-out infinite, light-parallax linear both;
     animation-timeline: auto, scroll(root block);
   }
 }
-@keyframes light-sweep {
-  from { transform: translate3d(-7%, 0, 0); }
-  to { transform: translate3d(7%, 0, 0); }
+@keyframes light-parallax {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(0, -6vh, 0); }
 }
 @media (prefers-reduced-motion: reduce) {
-  /* 减弱动效：保留光本身与入场淡显，只去掉位移与呼吸 */
-  .lightfield > * { animation: none; opacity: 1; }
+  /* 减弱动效：保留光与点阵，只去掉呼吸、光扫与视差 */
+  .lightfield,
+  .light-canopy,
+  .light-sweep { animation: none; }
 }
 
 body { min-width: 320px; overflow-x: hidden; }
@@ -192,7 +178,7 @@ h3 {
 
 /* ---------- Announcement banner (soft brand tint, hairline base) ---------- */
 .announce {
-  background: linear-gradient(90deg, rgba(var(--brand-rgb), .1), var(--brand-soft) 46%, rgba(var(--brand-rgb), .12));
+  background: linear-gradient(180deg, rgba(var(--brand-rgb), .07), rgba(var(--brand-rgb), .035));
   color: var(--brand-dark);
   text-align: center;
   font-size: .84rem;
