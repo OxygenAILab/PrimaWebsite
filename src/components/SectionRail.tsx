@@ -2,9 +2,7 @@ import { useEffect, useState, type MouseEvent } from "react";
 import { useI18n } from "../i18n";
 import type { Localized } from "../data/content";
 
-type RailItem = { id: string };
-
-const railItems: Array<RailItem & { label: Localized }> = [
+const railItems: Array<{ id: string; label: Localized }> = [
   { id: "product", label: { zh: "痛点", en: "Pain points" } },
   { id: "capabilities", label: { zh: "能力", en: "Capabilities" } },
   { id: "scenarios", label: { zh: "场景", en: "Scenarios" } },
@@ -36,7 +34,7 @@ export default function SectionRail() {
     return () => observer.disconnect();
   }, []);
 
-  const handleClick = (event: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+  const handleClick = (event: MouseEvent<HTMLAnchorElement>, id: string) => {
     const target = document.getElementById(id);
     if (!target) return;
     event.preventDefault();

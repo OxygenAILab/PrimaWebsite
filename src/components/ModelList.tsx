@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { modelMatrix, type ModelRegion } from "../data/models";
-import { useI18n } from "../i18n";
+import { groupByLine, groupByVendor, isOverseasOnly, modelMatrix, type ModelRegion } from "../data/models";
+import { useI18n, type Locale } from "../i18n";
 import type { Localized } from "../data/content";
 
 type RegionKey = "china" | "global";
@@ -32,13 +32,19 @@ const copy = {
     en: "Other regions include every model available in mainland China plus additional overseas models. Early Beta models are marked with #; availability follows activation notices.",
   },
   "model-list.supported": { zh: "支持模型", en: "Supported models" },
-  "model-list.regionChina": { zh: "中国大陆", en: "Mainland China" },
-  "model-list.regionGlobal": { zh: "其他地区", en: "Other regions" },
-  "model-list.count": { zh: "当前区域共 {count} 个模型。", en: "{count} models are available in this region." },
+  "model-list.grouped": { zh: "按厂商分组。", en: "Grouped by vendor." },
+  "model-list.statModels": { zh: "本区域模型", en: "Models in region" },
+  "model-list.statVendors": { zh: "覆盖厂商", en: "Vendors" },
+  "model-list.statExtra": { zh: "海外专属", en: "Overseas only" },
+  "model-list.groupCount": { zh: "{count} 个模型", en: "{count} models" },
+  "model-list.groupCountOne": { zh: "{count} 个模型", en: "{count} model" },
+  "model-list.overseasOnly": { zh: "海外专属", en: "Overseas only" },
   "model-list.beta": { zh: "第一批内测", en: "Early Beta" },
   "model-list.planned": { zh: "计划支持", en: "Planned" },
-  "model-list.regionMainland": { zh: "中国大陆", en: "Mainland China" },
-  "model-list.regionOverseas": { zh: "其他地区", en: "Other regions" },
+  "model-list.legend": {
+    zh: "紫色标签为其他地区独有，其余模型两地均可用。",
+    en: "Purple chips are exclusive to other regions; the rest are available in both.",
+  },
   "model-list.faqBetaTitle": { zh: "# 是什么意思？", en: "What does # mean?" },
   "model-list.faqBetaCopy": {
     zh: "表示该模型进入第一批内测可用清单；是否获得资格仍以开通通知与权限设置为准。",
@@ -56,7 +62,7 @@ const copy = {
   },
 } satisfies Record<string, { zh: string; en: string }>;
 
-function localText(key: keyof typeof copy, locale: "zh" | "en", values?: Record<string, string | number>) {
+function localText(key: keyof typeof copy, locale: Locale, values?: Record<string, string | number>) {
   let text = copy[key][locale];
   if (values) {
     for (const [name, value] of Object.entries(values)) {
@@ -78,13 +84,16 @@ export default function ModelList() {
   const { locale } = useI18n();
   const [activeRegion, setActiveRegion] = useState<RegionKey>("china");
   const models = modelMatrix.filter((item) => item.regions.includes(activeRegion as ModelRegion));
+  const groups = groupByVendor(models);
+  const overseasCount = models.filter(isOverseasOnly).length;
+  const showRegion = activeRegion === "global";
 
   return (
-    <main id="main" className="about-page model-list-page">
+    <main id="main" className="about-page">
       <section className="container about-hero" aria-labelledby="model-list-title">
         <p className="eyebrow">{localText("model-list.eyebrow", locale)}</p>
         <h1 id="model-list-title">{localText("model-list.title", locale)}</h1>
-        <p className="lead" style={{ maxWidth: "62ch" }}>
+        <p className="lead">
           {localText("model-list.lead", locale)}
         </p>
       </section>
@@ -92,9 +101,9 @@ export default function ModelList() {
       <section className="container about-section" aria-labelledby="supported-models-title">
         <div className="section-head">
           <p className="eyebrow">{localText("model-list.supported", locale)}</p>
-          <h2 id="supported-models-title">{localText("model-list.count", locale, { count: models.length })}</h2>
+          <h2 id="supported-models-title">{localText("model-list.grouped", locale)}</h2>
         </div>
-        <div className="pricing-tabs" role="tablist" aria-label="选择服务区域">
+        <div className="pricing-tabs" role="tablist" aria-label={locale === "zh" ? "选择服务区域" : "Service region"}>
           {regions.map((region) => (
             <button
               key={region.id}
@@ -113,39 +122,89 @@ export default function ModelList() {
         <p className="model-region-copy" aria-live="polite">
           {regions.find((region) => region.id === activeRegion)?.description[locale]}
         </p>
-        <div className="model-grid" id="model-grid" role="tabpanel" aria-labelledby={`model-region-${activeRegion}`}>
-          {models.map((item) => (
-            <article className="model-card" key={item.name}>
-              <div className="model-head">
-              <span className={`model-mark ${vendorClass(item.vendor)}`} aria-hidden="true">
-                {item.icon ? (
-                  <img src={item.icon} alt="" width={22} height={22} loading="lazy" />
-                ) : (
-                  vendorToken(item.vendor)
-                )}
-              </span>
-                <div>
-                  <h3>{item.name}{item.beta ? <span className="model-beta">#</span> : null}</h3>
-                  <p className="model-vendor">{item.vendor}</p>
+
+        <dl className="model-summary">
+          <div>
+            <dt>{localText("model-list.statModels", locale)}</dt>
+            <dd>{models.length}</dd>
+          </div>
+          <div>
+            <dt>{localText("model-list.statVendors", locale)}</dt>
+            <dd>{groups.length}</dd>
+          </div>
+          <div>
+            <dt>{localText("model-list.statExtra", locale)}</dt>
+            <dd>{overseasCount}</dd>
+          </div>
+        </dl>
+
+        {showRegion ? (
+          <p className="model-legend">
+            <span className="model-name is-overseas">{localText("model-list.overseasOnly", locale)}</span>
+            <span>{localText("model-list.legend", locale)}</span>
+          </p>
+        ) : null}
+
+        <div className="model-groups" id="model-grid" role="tabpanel" aria-labelledby={`model-region-${activeRegion}`}>
+          {groups.map((group) => {
+            const countLabel = localText(
+              group.models.length === 1 ? "model-list.groupCountOne" : "model-list.groupCount",
+              locale,
+              { count: group.models.length },
+            );
+            const notes = group.models.filter((item) => item.note);
+
+            return (
+              <section className="model-group" key={group.vendor} aria-labelledby={`vendor-${group.vendor}`}>
+                <header className="model-group-head">
+                  <span className={`model-mark ${vendorClass(group.vendor)}`} aria-hidden="true">
+                    {group.icon ? (
+                      <img src={group.icon} alt="" width={17} height={17} loading="lazy" />
+                    ) : (
+                      vendorToken(group.vendor)
+                    )}
+                  </span>
+                  <h3 id={`vendor-${group.vendor}`}>{group.vendor}</h3>
+                  <span className="model-group-count">{countLabel}</span>
+                </header>
+                <div className="model-group-body">
+                  <div className="model-columns">
+                    {groupByLine(group.models).map((line) => (
+                      <div className="model-column" key={line.line}>
+                        {line.generations.map((generation) => (
+                          <ul className="model-series" key={generation.key}>
+                            {generation.models.map((item) => (
+                              <li
+                                className={`model-chip${showRegion && isOverseasOnly(item) ? " is-overseas" : ""}`}
+                                key={item.name}
+                              >
+                                {item.name}
+                                {item.beta ? <span className="model-beta">#</span> : null}
+                                <span className="model-chip-state">
+                                  {item.beta
+                                    ? localText("model-list.beta", locale)
+                                    : localText("model-list.planned", locale)}
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                  {notes.map((item) => (
+                    <p className="model-note" key={item.name}>
+                      {item.note?.[locale]}
+                    </p>
+                  ))}
                 </div>
-              </div>
-              <div className="model-foot">
-                <span className={item.beta ? "tag mint" : "tag gray"}>
-                  {item.beta ? localText("model-list.beta", locale) : localText("model-list.planned", locale)}
-                </span>
-                <span className="model-region">
-                  {item.regions
-                    .map((region) => (region === "china" ? localText("model-list.regionMainland", locale) : localText("model-list.regionOverseas", locale)))
-                    .join(locale === "zh" ? " · " : " / ")}
-                </span>
-              </div>
-              {item.note ? <p className="model-note">{item.note[locale]}</p> : null}
-            </article>
-          ))}
+              </section>
+            );
+          })}
         </div>
       </section>
 
-      <section className="container about-section" aria-labelledby="model-note-title">
+      <section className="container about-section" aria-label={locale === "zh" ? "名单说明" : "List notes"}>
         <div className="card-grid">
           <article className="card">
             <h3>{localText("model-list.faqBetaTitle", locale)}</h3>

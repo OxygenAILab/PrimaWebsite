@@ -65,7 +65,7 @@ export default function HowItWorks() {
       <section className="container about-hero" aria-labelledby="how-hero-title">
         <p className="eyebrow">{locale === "zh" ? "工作方式" : "How it works"}</p>
         <h1 id="how-hero-title">{locale === "zh" ? "想多深，由任务说了算。" : "The task decides how deeply to think."}</h1>
-        <p className="lead" style={{maxWidth: "56ch"}}>
+        <p className="lead lead-tight">
           {locale === "zh"
             ? "Prima 不是把“多想几步”当作一个开关，而是在每次任务里判断：此刻需要多深的推理、多少上下文，以及哪些记忆值得被调用。"
             : "Prima does not treat more thinking as a switch. Each task is judged for reasoning depth, context, and which memories are worth recalling."}
@@ -85,7 +85,7 @@ export default function HowItWorks() {
           </div>
           <LayeredArtwork />
         </div>
-        <div className="card-grid" style={{marginTop: "48px"}}>
+        <div className="card-grid card-grid-after-split">
           {layers.map((item) => (
             <article className="card" key={item.title.en}>
               <h3>{item.title[locale]}</h3>

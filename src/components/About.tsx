@@ -55,7 +55,7 @@ export default function About() {
 
   return (
     <main id="main" className="about-page">
-      <section className="container page-hero" aria-labelledby="about-page-title">
+      <section className="container about-hero" aria-labelledby="about-page-title">
         <p className="eyebrow">{locale === "zh" ? "关于项目" : "About the project"}</p>
         <h1 id="about-page-title">{locale === "zh" ? "Prima 是一个正在与用户共同定义的产品。" : "Prima is being defined with its users."}</h1>
         <p className="section-copy">

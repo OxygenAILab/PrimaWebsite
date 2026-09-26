@@ -84,7 +84,7 @@ export default function HeroArtwork() {
             {nodes.map((node, index) => (
               <rect
                 key={`${node.x}-${node.y}`}
-                className={index === 0 ? "art-node art-node-hub" : "art-node"}
+                className="art-node"
                 x={node.x - 7}
                 y={node.y - 7}
                 width={14}

@@ -4,11 +4,11 @@ export default function Download() {
   const { locale } = useI18n();
 
   return (
-    <main id="main" className="about-page download-page">
+    <main id="main" className="about-page">
       <section className="container about-hero" aria-labelledby="download-page-title">
         <p className="eyebrow">{locale === "zh" ? "下载" : "Download"}</p>
         <h1 id="download-page-title">{locale === "zh" ? "下载入口暂未开放。" : "Downloads are not open yet."}</h1>
-        <p className="lead" style={{ maxWidth: "62ch" }}>
+        <p className="lead">
           {locale === "zh"
             ? "这里会列出可用的安装包与更新说明；当前产品仍在早期共创阶段，还没有开放下载。"
             : "This page will list available packages and release notes. The product remains in early co-creation and downloads are not open yet."}

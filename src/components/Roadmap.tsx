@@ -49,7 +49,7 @@ export default function Roadmap() {
       <section className="container about-hero" aria-labelledby="roadmap-hero-title">
         <p className="eyebrow">{locale === "zh" ? "路线图" : "Roadmap"}</p>
         <h1 id="roadmap-hero-title">{locale === "zh" ? "我们按阶段走，不跳步。" : "We move by stages; no shortcuts."}</h1>
-        <p className="lead" style={{ maxWidth: "56ch" }}>
+        <p className="lead lead-tight">
           {locale === "zh"
             ? "Prima 的每个阶段都以「可验证的进展」为推进条件。这里的计划是当前视角，会随调研反馈调整。"
             : "Each Prima stage advances only on verifiable progress. The plan reflects the current view and will change with research feedback."}

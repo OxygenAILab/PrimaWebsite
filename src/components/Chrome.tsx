@@ -2,70 +2,61 @@ import { useEffect, useState } from "react";
 import { siteConfig } from "../config";
 import logoImage from "../../assets/images/logo.png";
 import { useI18n } from "../i18n";
+import type { Localized } from "../data/content";
+import type { PrimaPage } from "../PageApp";
 
-type PageId =
-  | "home"
-  | "beta"
-  | "about"
-  | "how-it-works"
-  | "scenarios"
-  | "roadmap"
-  | "pricing"
-  | "model-list"
-  | "faq"
-  | "security"
-  | "download";
+const navItems: PrimaPage[] = [
+  "home",
+  "how-it-works",
+  "scenarios",
+  "roadmap",
+  "pricing",
+  "model-list",
+  "faq",
+  "beta",
+  "about",
+];
+
+const navLabels: Record<PrimaPage, Localized> = {
+  home: { zh: "产品理念", en: "Product" },
+  beta: { zh: "Beta 调研", en: "Beta research" },
+  about: { zh: "关于项目", en: "About" },
+  "how-it-works": { zh: "工作方式", en: "How it works" },
+  scenarios: { zh: "使用场景", en: "Scenarios" },
+  roadmap: { zh: "路线图", en: "Roadmap" },
+  pricing: { zh: "定价", en: "Pricing" },
+  "model-list": { zh: "模型列表", en: "Model list" },
+  faq: { zh: "常见问题", en: "FAQ" },
+  security: { zh: "数据边界", en: "Data boundaries" },
+  download: { zh: "下载", en: "Download" },
+};
 
 function Announce() {
-  const { locale, t } = useI18n();
-  const copy = {
-    zh: "Prima Beta 调研进行中，约 5 分钟 →",
-    en: "Prima Beta research is open; about 5 minutes →",
-  };
+  const { t } = useI18n();
 
   return (
     <div className="announce">
       <a href={siteConfig.surveyUrl} target="_blank" rel="noopener noreferrer">
-        {locale === "zh" ? copy.zh : copy.en}
+        {t("announce.beta")}
       </a>
     </div>
   );
 }
 
-const navItems: Array<{ id: PageId; label: string }> = [
-  { id: "home", label: "产品理念" },
-  { id: "how-it-works", label: "工作方式" },
-  { id: "scenarios", label: "使用场景" },
-  { id: "roadmap", label: "路线图" },
-  { id: "pricing", label: "定价" },
-  { id: "model-list", label: "模型列表" },
-  { id: "faq", label: "常见问题" },
-  { id: "beta", label: "Beta 调研" },
-  { id: "about", label: "关于项目" },
-];
-
-function navHref(id: PageId, active: PageId): string {
+function navHref(id: PrimaPage, active: PrimaPage): string {
   if (id === "home") return active === "home" ? "#product" : "../#product";
   if (id === active) return "#top";
   return active === "home" ? `./${id}/` : `../${id}/`;
 }
 
-export function Header({ active = "home" }: { active?: PageId }) {
+/* 页脚链接：首页用 ./x/，子页用 ../x/ */
+function fromPage(active: PrimaPage, path: string): string {
+  return `${active === "home" ? "./" : "../"}${path}`;
+}
+
+export function Header({ active = "home" }: { active?: PrimaPage }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const { locale } = useI18n();
-  const navLabels: Record<PageId, { zh: string; en: string }> = {
-    home: { zh: "产品理念", en: "Product" },
-    beta: { zh: "Beta 调研", en: "Beta research" },
-    about: { zh: "关于项目", en: "About" },
-    "how-it-works": { zh: "工作方式", en: "How it works" },
-    scenarios: { zh: "使用场景", en: "Scenarios" },
-    roadmap: { zh: "路线图", en: "Roadmap" },
-    pricing: { zh: "定价", en: "Pricing" },
-    "model-list": { zh: "模型列表", en: "Model list" },
-    faq: { zh: "常见问题", en: "FAQ" },
-    security: { zh: "数据边界", en: "Data boundaries" },
-    download: { zh: "下载", en: "Download" },
-  };
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -83,15 +74,15 @@ export function Header({ active = "home" }: { active?: PageId }) {
   return (
     <>
       <Announce />
-      <header className={menuOpen ? "site-header menu-open" : "site-header"} id="top">
+      <header className="site-header" id="top">
         <div className="container header-inner">
           <a className="brand" href={active === "beta" ? "../" : "#top"} aria-label={locale === "zh" ? `${siteConfig.brandShortName} 首页` : `${siteConfig.brandShortName} home`}>
             <img className="brand-mark" src={logoImage} alt="" width={30} height={30} />
             <span>{siteConfig.brandShortName}</span>
           </a>
           <nav className="site-nav" aria-label={locale === "zh" ? "主导航" : "Main navigation"}>
-            {navItems.map((item) => (
-              <a key={item.id} href={navHref(item.id, active)}>{navLabels[item.id][locale]}</a>
+            {navItems.map((id) => (
+              <a key={id} href={navHref(id, active)}>{navLabels[id][locale]}</a>
             ))}
           </nav>
           <a
@@ -116,14 +107,14 @@ export function Header({ active = "home" }: { active?: PageId }) {
         </div>
         <div className={menuOpen ? "mobile-menu open" : "mobile-menu"} id="mobile-menu">
           <nav className="container mobile-menu-nav" aria-label={locale === "zh" ? "移动端导航" : "Mobile navigation"}>
-            {navItems.map((item) => (
+            {navItems.map((id) => (
               <a
-                key={item.id}
-                href={navHref(item.id, active)}
-                aria-current={item.id === active ? "page" : undefined}
+                key={id}
+                href={navHref(id, active)}
+                aria-current={id === active ? "page" : undefined}
                 onClick={() => setMenuOpen(false)}
               >
-                {navLabels[item.id][locale]}
+                {navLabels[id][locale]}
               </a>
             ))}
             <a
@@ -140,7 +131,17 @@ export function Header({ active = "home" }: { active?: PageId }) {
   );
 }
 
-export function Footer({ active = "home" }: { active?: PageId }) {
+const footerPages: Array<{ path: string; label: Localized }> = [
+  { path: "scenarios/", label: { zh: "使用场景", en: "Scenarios" } },
+  { path: "roadmap/", label: { zh: "路线图", en: "Roadmap" } },
+  { path: "pricing/", label: { zh: "定价", en: "Pricing" } },
+  { path: "model-list/", label: { zh: "模型列表", en: "Model list" } },
+  { path: "security/", label: { zh: "数据边界", en: "Data boundaries" } },
+  { path: "beta/", label: { zh: "Beta 调研", en: "Beta research" } },
+  { path: "download/", label: { zh: "下载", en: "Download" } },
+];
+
+export function Footer({ active = "home" }: { active?: PrimaPage }) {
   const { locale, t } = useI18n();
 
   return (
@@ -157,13 +158,11 @@ export function Footer({ active = "home" }: { active?: PageId }) {
         <nav aria-label={locale === "zh" ? "项目导航" : "Project navigation"}>
           {active === "home" ? <a href="./about/">{locale === "zh" ? "关于项目" : "About"}</a> : <a href="../">{locale === "zh" ? "返回首页" : "Back home"}</a>}
           <a href={active === "home" ? "#capabilities" : "../#capabilities"}>{locale === "zh" ? "核心能力" : "Capabilities"}</a>
-          <a href={active === "home" ? "./scenarios/" : "../scenarios/"}>{locale === "zh" ? "使用场景" : "Scenarios"}</a>
-          <a href={active === "home" ? "./roadmap/" : "../roadmap/"}>{locale === "zh" ? "路线图" : "Roadmap"}</a>
-          <a href={active === "home" ? "./pricing/" : "../pricing/"}>{locale === "zh" ? "定价" : "Pricing"}</a>
-          <a href={active === "home" ? "./model-list/" : "../model-list/"}>{locale === "zh" ? "模型列表" : "Model list"}</a>
-          <a href={active === "home" ? "./security/" : "../security/"}>{locale === "zh" ? "数据边界" : "Data boundaries"}</a>
-          <a href={active === "home" ? "./beta/" : "../beta/"}>{locale === "zh" ? "Beta 调研" : "Beta research"}</a>
-          <a href={active === "home" ? "./download/" : "../download/"}>{locale === "zh" ? "下载" : "Download"}</a>
+          {footerPages.map((item) => (
+            <a key={item.path} href={fromPage(active, item.path)}>
+              {item.label[locale]}
+            </a>
+          ))}
         </nav>
         <nav aria-label={locale === "zh" ? "参与入口" : "Participation links"}>
           <a href={siteConfig.oxygenUrl} target="_blank" rel="noopener noreferrer">Oxygen AI</a>

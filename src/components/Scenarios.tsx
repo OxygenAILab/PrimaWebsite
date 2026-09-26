@@ -73,7 +73,7 @@ export default function Scenarios() {
       <section className="container about-hero" aria-labelledby="scenarios-hero-title">
         <p className="eyebrow">{locale === "zh" ? "使用场景" : "Scenarios"}</p>
         <h1 id="scenarios-hero-title">{locale === "zh" ? "先服务长任务，而不是所有任务。" : "Serve long tasks first, not every task."}</h1>
-        <p className="lead" style={{maxWidth: "56ch"}}>
+        <p className="lead lead-tight">
           {locale === "zh"
             ? "Prima 首发聚焦三类最常见的连续性断裂：多文件工程、长数据链路和长文档协作。这些不是行业口号，而是我们调研里反复出现的痛点。"
             : "Prima's first release focuses on three common breaks in continuity: multi-file engineering, long data pipelines, and long-document collaboration."}
@@ -83,20 +83,20 @@ export default function Scenarios() {
       <section className="container about-section" aria-labelledby="scenario-list-title">
         <div className="card-grid">
           {scenarios.map((item) => (
-            <article className="card" key={item.title.en} style={{display: "grid", gap: "16px", alignContent: "start"}}>
+            <article className="card scenario-card" key={item.title.en}>
               <div>
                 <p className="tag gray">{item.audience[locale]}</p>
                 <h3>{item.title[locale]}</h3>
               </div>
               <div>
-                <p style={{fontWeight: 600, marginBottom: "8px"}}>{locale === "zh" ? "今天的断裂" : "Where it breaks today"}</p>
-                <ul style={{paddingLeft: "20px", margin: 0, color: "var(--ink-2)", fontSize: ".95rem", lineHeight: 1.65}}>
-                  {item.problems.map((problem) => <li key={problem.en} style={{marginBottom: "6px"}}>{problem[locale]}</li>)}
+                <p className="scenario-label">{locale === "zh" ? "今天的断裂" : "Where it breaks today"}</p>
+                <ul className="scenario-list">
+                  {item.problems.map((problem) => <li key={problem.en}>{problem[locale]}</li>)}
                 </ul>
               </div>
               <div>
-                <p style={{fontWeight: 600, marginBottom: "8px", color: "var(--brand)"}}>{locale === "zh" ? "Prima 想做的事" : "What Prima aims to do"}</p>
-                <p style={{margin: 0}}>{item.prima[locale]}</p>
+                <p className="scenario-label scenario-label-brand">{locale === "zh" ? "Prima 想做的事" : "What Prima aims to do"}</p>
+                <p>{item.prima[locale]}</p>
               </div>
             </article>
           ))}

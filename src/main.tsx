@@ -3,7 +3,6 @@ import { createRoot } from "react-dom/client";
 // Lora 拉丁字面自托管（标题西文字符）；中文标题走系统衬线回退（思源宋体/宋体）
 import "@fontsource/lora/400.css";
 import "@fontsource/lora/500.css";
-import "@fontsource/lora/600.css";
 import App from "./App";
 import PageApp, { type PrimaPage } from "./PageApp";
 import BetaSection from "./components/Beta";
@@ -27,6 +26,7 @@ if (!rootElement) {
 
 const pageId = (document.body.dataset.page ?? "home") as PrimaPage;
 
+/* 首页由 App 自带完整版式，其余子页共用 PageApp 外壳 */
 const pageMap: Partial<Record<PrimaPage, React.ReactNode>> = {
   beta: <BetaSection />,
   about: <About />,
@@ -40,10 +40,12 @@ const pageMap: Partial<Record<PrimaPage, React.ReactNode>> = {
   download: <Download />,
 };
 
+const page = pageMap[pageId];
+
 createRoot(rootElement).render(
   <StrictMode>
     <I18nProvider>
-      {pageId === "home" ? <App /> : <PageApp active={pageId}>{pageMap[pageId] ?? <App />}</PageApp>}
+      {page ? <PageApp active={pageId}>{page}</PageApp> : <App />}
     </I18nProvider>
   </StrictMode>,
 );

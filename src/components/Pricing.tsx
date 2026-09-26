@@ -52,11 +52,11 @@ export default function Pricing() {
   };
 
   return (
-    <main id="main" className="about-page pricing-page">
+    <main id="main" className="about-page">
       <section className="container about-hero" aria-labelledby="pricing-hero-title">
         <p className="eyebrow">{locale === "zh" ? "定价" : "Pricing"}</p>
         <h1 id="pricing-hero-title">{locale === "zh" ? "按验证阶段选择额度。" : "Choose allocation by validation stage."}</h1>
-        <p className="lead" style={{ maxWidth: "62ch" }}>
+        <p className="lead">
           {locale === "zh"
             ? "SparkPlan 覆盖个人从免费验证到高频使用的进阶路径；PrimaPlan 面向团队长任务；Credit+ 给现有 Plan 补充额度。"
             : "SparkPlan covers individual progression from free validation to high-frequency use; PrimaPlan targets team long tasks; Credit+ tops up an existing Plan."}
@@ -68,10 +68,10 @@ export default function Pricing() {
 
       <section className="container about-section" aria-labelledby="plans-title">
         <div className="section-head">
-<p className="eyebrow">{locale === "zh" ? "订阅方案" : "Subscriptions"}</p>
+          <p className="eyebrow">{locale === "zh" ? "订阅方案" : "Subscriptions"}</p>
           <h2 id="plans-title">{locale === "zh" ? "三条产品线，从免费验证到团队生产。" : "Three product lines, from free validation to team production."}</h2>
         </div>
-        <div className="pricing-tabs" role="tablist" aria-label="定价分组">
+        <div className="pricing-tabs" role="tablist" aria-label={locale === "zh" ? "定价分组" : "Plan groups"}>
           {pricingFamilies.map((family) => (
             <button
               key={family.id}
@@ -109,7 +109,7 @@ export default function Pricing() {
                     <div className="pricing-card-name">
                       <h3>{group.name}</h3>
                       {group.variants.length > 1 && (
-                        <div className="pricing-variants" role="radiogroup" aria-label={`${group.name} 档位`}>
+                        <div className="pricing-variants" role="radiogroup" aria-label={locale === "zh" ? `${group.name} 档位` : `${group.name} tiers`}>
                           {group.variants.map((option, index) => {
                             const selected = index === activeIndex;
                             return (
@@ -134,7 +134,7 @@ export default function Pricing() {
                     <span>/{variant.period[locale]}</span>
                   </div>
                 </div>
-<div className="pricing-swap" key={variant.tier}>
+                <div className="pricing-swap" key={variant.tier}>
                   <p className="pricing-credits">
                     <strong>{variant.credits}</strong>
                     <span>{locale === "zh" ? "积分" : "credits"}</span>

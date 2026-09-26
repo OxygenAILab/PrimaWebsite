@@ -1,8 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export default function PageMotion() {
+  const progressRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
-    const progress = document.querySelector<HTMLElement>(".scroll-progress");
+    const progress = progressRef.current;
     if (!progress) return;
 
     let frame = 0;
@@ -46,5 +48,5 @@ export default function PageMotion() {
     };
   }, []);
 
-  return <div className="scroll-progress" aria-hidden="true" />;
+  return <div className="scroll-progress" ref={progressRef} aria-hidden="true" />;
 }

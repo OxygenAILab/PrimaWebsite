@@ -57,10 +57,10 @@ export function Hero() {
               ? "Prima organizes constraints, decisions, and lessons from multi-file coding, data analysis, and long-document work into continuous working memory."
               : "Prima 把多文件编程、数据分析与长文档写作里的约束、决策和失败教训组织成连续的工作记忆。"}
           </p>
-          <div className="hero-actions" style={{justifyContent: "flex-start"}}>
-            <p className="stage-pill">{locale === "zh" ? siteConfig.betaStatus : "Early co-creation · Beta research"}</p>
+          <div className="hero-actions">
+            <p className="stage-pill">{siteConfig.betaStatus[locale]}</p>
           </div>
-          <div className="hero-actions" style={{justifyContent: "flex-start", marginTop: "20px"}}>
+          <div className="hero-actions">
             <a className="button primary" href="./beta/">{locale === "zh" ? "参与调研" : "Join research"}</a>
             <a className="button ghost" href="#product">{locale === "zh" ? "了解产品方向" : "Product direction"}</a>
           </div>
@@ -155,7 +155,7 @@ export function Updates() {
   const { locale } = useI18n();
 
   return (
-    <section className="section alt" id="updates" aria-labelledby="updates-title">
+    <section className="section" id="updates" aria-labelledby="updates-title">
       <div className="container">
         <div className="section-head reveal">
           <p className="eyebrow">{locale === "zh" ? "最新动态" : "Updates"}</p>
@@ -203,7 +203,7 @@ export function StageAndBeta() {
         </div>
       </section>
       <section className="cta-section" id="beta" aria-labelledby="beta-title">
-        <div className="container reveal" style={{textAlign: "center"}}>
+        <div className="container reveal">
           <p className="eyebrow">{locale === "zh" ? "Beta 调研" : "Beta research"}</p>
           <h2 id="beta-title">{locale === "zh" ? "现在参与，影响第一版" : "Join now and shape the first version"}</h2>
           <p className="section-copy">

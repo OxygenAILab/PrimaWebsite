@@ -3,7 +3,6 @@ import { LanguageSwitch, useI18n } from "../i18n";
 
 type RegionState = {
   status: "detecting" | "china" | "other" | "unknown" | "hidden";
-  country: string;
 };
 
 const STORAGE_KEY = "prima-region-preference";
@@ -15,45 +14,41 @@ function detectWithIpWho() {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = (await response.json()) as {
       success?: boolean;
-      country?: string;
       country_code?: string;
     };
     if (!data.success) throw new Error("lookup failed");
-    return { country: data.country || data.country_code || "", code: data.country_code || "" };
+    return data.country_code || "";
   });
 }
 
 function detectWithIpApi() {
-  return fetch("https://ip-api.com/json/?fields=status,country,countryCode", {
+  return fetch("https://ip-api.com/json/?fields=status,countryCode", {
     signal: AbortSignal.timeout(3500),
   }).then(async (response) => {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = (await response.json()) as {
       status?: string;
-      country?: string;
       countryCode?: string;
     };
     if (data.status !== "success") throw new Error("lookup failed");
-    return { country: data.country || data.countryCode || "", code: data.countryCode || "" };
+    return data.countryCode || "";
   });
 }
 
 export default function RegionBanner() {
   const { setLocale, t } = useI18n();
   const [region, setRegion] = useState<RegionState>(() => {
-    if (window.sessionStorage.getItem(`${STORAGE_KEY}-seen`)) {
-      return { status: "hidden", country: "" };
-    }
+    if (window.sessionStorage.getItem(`${STORAGE_KEY}-seen`)) return { status: "hidden" };
     const cached = window.sessionStorage.getItem(`${STORAGE_KEY}-state`);
-    if (cached === "china" || cached === "other") return { status: cached, country: "" };
-    return { status: "detecting", country: "" };
+    if (cached === "china" || cached === "other") return { status: cached };
+    return { status: "detecting" };
   });
   useEffect(() => {
     const stored = window.localStorage.getItem(STORAGE_KEY);
     const seen = window.sessionStorage.getItem(`${STORAGE_KEY}-seen`);
     const language = window.localStorage.getItem("site-language");
     if (seen || stored === "china" || stored === "other" || language) {
-      setRegion({ status: "hidden", country: "" });
+      setRegion({ status: "hidden" });
       return;
     }
 
@@ -61,18 +56,15 @@ export default function RegionBanner() {
     (async () => {
       try {
         await new Promise((resolve) => setTimeout(resolve, 450));
-        const result = await detectWithIpWho().catch(detectWithIpApi);
+        const countryCode = await detectWithIpWho().catch(detectWithIpApi);
         if (!active) return;
-        const code = result.code.toUpperCase();
-        if (!window.localStorage.getItem("site-language")) setLocale(code === "CN" ? "zh" : "en");
+        const status = countryCode.toUpperCase() === "CN" ? "china" : "other";
+        if (!window.localStorage.getItem("site-language")) setLocale(status === "china" ? "zh" : "en");
         window.sessionStorage.setItem(`${STORAGE_KEY}-seen`, "1");
-        window.sessionStorage.setItem(`${STORAGE_KEY}-state`, result.code.toUpperCase() === "CN" ? "china" : "other");
-        setRegion({
-          status: code === "CN" ? "china" : "other",
-          country: result.country,
-        });
+        window.sessionStorage.setItem(`${STORAGE_KEY}-state`, status);
+        setRegion({ status });
       } catch {
-        if (active) setRegion({ status: "unknown", country: "" });
+        if (active) setRegion({ status: "unknown" });
       }
     })();
 

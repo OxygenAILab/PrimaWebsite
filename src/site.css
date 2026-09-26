@@ -10,6 +10,7 @@
   --brand: #7E49E2;
   --brand-dark: #5E32B8;
   --brand-soft: #EFE7FD;
+  --brand-rgb: 126, 73, 226;
   --hairline-light: rgba(255, 255, 255, .14);
   --shadow-sm: 0 2px 10px rgba(20, 20, 20, .05);
   --shadow-md: 0 8px 28px rgba(20, 20, 20, .08);
@@ -168,25 +169,9 @@ h3 {
   background: var(--white);
   border-color: var(--white);
 }
-.region-actions button {
-  min-height: 26px;
-  padding: 2px 10px;
-  border: 1px solid rgba(255, 255, 255, .26);
-  border-radius: 999px;
-  background: transparent;
-  color: inherit;
-  cursor: pointer;
-  font-size: .76rem;
-  transition: background-color .18s var(--ease), color .18s var(--ease), border-color .18s var(--ease);
-}
 .region-actions button:hover {
   color: var(--white);
   border-color: rgba(255, 255, 255, .52);
-}
-.region-actions button.active {
-  color: var(--ink);
-  background: var(--white);
-  border-color: var(--white);
 }
 
 /* ---------- Skip link ---------- */
@@ -448,75 +433,7 @@ a:focus-visible {
   overflow: hidden;
   isolation: isolate;
 }
-/* Prima 首屏保留编辑式版式；星图装饰与 Oxygen 站共用品牌母题。 */
-.art-field > * { position: absolute; display: block; }
-
-/* 层容器：承接指针位移（第 ③ 层运动） */
-.art-field {
-  position: absolute;
-  inset: 0;
-  translate: calc(var(--art-mx) * 16px) calc(var(--art-my) * 12px);
-  transition: translate .6s cubic-bezier(.22, 1, .36, 1);
-}
-
-/* 基元点阵：隐喻「构于基元」 */
-.art-grid {
-  right: 1%;
-  top: 2%;
-  width: min(52vw, 700px);
-  height: min(68vh, 640px);
-  background-image: radial-gradient(rgba(22, 24, 29, .18) 1.25px, transparent 1.25px);
-  background-size: 40px 40px;
-  -webkit-mask-image: radial-gradient(ellipse 58% 58% at 50% 50%, #000 26%, transparent 72%);
-  mask-image: radial-gradient(ellipse 58% 58% at 50% 50%, #000 26%, transparent 72%);
-  animation: art-enter 1.2s var(--ease) both;
-}
-
-/* 星火光核 */
-.art-core {
-  right: 30%;
-  top: 40%;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  animation: art-enter .9s var(--ease) .46s both;
-}
-/* 游走粒子：低密度浮尘，围着光核缓慢游移 */
-.art-particle {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: rgba(126, 73, 226, .5);
-  box-shadow: 0 0 10px 2px rgba(126, 73, 226, .22);
-}
-.art-particle-a { right: 36%; top: 24%; animation: art-drift-a 15s ease-in-out infinite, art-twinkle 5s ease-in-out infinite; }
-.art-particle-b { right: 22%; top: 33%; animation: art-drift-b 19s ease-in-out .6s infinite, art-twinkle 7s ease-in-out 1s infinite; }
-.art-particle-c { right: 33%; top: 52%; animation: art-drift-c 17s ease-in-out 1.2s infinite, art-twinkle 6s ease-in-out .4s infinite; }
-.art-particle-d { right: 44%; top: 40%; animation: art-drift-d 22s ease-in-out .3s infinite, art-twinkle 8s ease-in-out 1.8s infinite; }
-
-/* ---- 关键帧 ---- */
-@keyframes art-enter {
-  from { opacity: 0; scale: .985; }
-  to { opacity: 1; scale: 1; }
-}
-@keyframes art-drift-a { 50% { translate: 12px -18px; } }
-@keyframes art-drift-b { 50% { translate: -14px -9px; } }
-@keyframes art-drift-c { 50% { translate: 10px 15px; } }
-@keyframes art-drift-d { 50% { translate: -9px 12px; } }
-@keyframes art-twinkle { 50% { opacity: .22; } }
-
-@media (max-width: 960px) {
-  .art-grid { width: 76vw; height: 40vh; right: -10%; top: 1%; opacity: .5; }
-  /* 光核上移，避开下方文案区 */
-  .art-core { right: 16%; top: 20%; }
-  .art-particle-c { display: none; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .art-field { translate: none; transition: none; }
-  .art-grid,
-  .art-core,
-  .art-particle { animation: none; }
-}
+/* Prima 首屏的星图装饰与 Oxygen 站共用品牌母题，样式集中在文末「首屏主视觉」一节。 */
 
 .hero .container {
   position: relative;
@@ -545,6 +462,7 @@ a:focus-visible {
   gap: 12px;
   flex-wrap: wrap;
 }
+.hero-actions + .hero-actions { margin-top: 20px; }
 .stage-pill {
   display: inline-flex;
   align-items: center;
@@ -585,10 +503,10 @@ a:focus-visible {
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: var(--r-card);
-  transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s var(--ease);
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s var(--ease);
 }
 .card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
   border-color: rgba(22, 24, 29, .22);
   box-shadow: var(--shadow-sm);
 }
@@ -610,7 +528,7 @@ a:focus-visible {
   border-radius: 999px;
 }
 .tag.mint { color: var(--brand-dark); background: var(--brand-soft); }
-.tag.peri { color: var(--ink-2); background: var(--bg-alt); }
+.tag.peri,
 .tag.gray { color: var(--ink-2); background: var(--bg-alt); }
 
 /* ---------- Split panel ---------- */
@@ -645,6 +563,7 @@ a:focus-visible {
   aspect-ratio: 16 / 10;
   object-fit: cover;
 }
+.card-grid-after-split { margin-top: 48px; }
 
 
 /* ---------- Timeline ---------- */
@@ -724,18 +643,20 @@ a:focus-visible {
 }
 
 /* ---------- Sub pages (About / Model / How / Scenarios) ---------- */
-.about-page {
+.about-page,
+.beta-page {
   padding: 96px 0 128px;
   background: var(--bg);
 }
-.page-hero,
 .about-hero {
   max-width: 820px;
   margin-bottom: 96px;
 }
-.page-hero h1,
 .about-hero h1 { margin-bottom: 20px; }
-.page-hero .section-copy { margin-bottom: 40px; }
+.about-hero .section-copy { margin-bottom: 40px; }
+.about-hero .lead { max-width: 62ch; }
+/* 4 页把导语再收窄一档，与 62ch 保持两种节奏 */
+.about-hero .lead-tight { max-width: 56ch; }
 .about-section { margin-bottom: 112px; }
 .about-section:last-child { margin-bottom: 0; }
 .about-section > h2 { margin-bottom: 40px; }
@@ -745,7 +666,9 @@ a:focus-visible {
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: var(--r-card);
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s var(--ease);
 }
+.feature-tile:hover { transform: translateY(-4px); }
 .feature-tile h3 { margin-bottom: 12px; }
 .feature-tile p {
   color: var(--ink-2);
@@ -758,6 +681,19 @@ a:focus-visible {
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
+
+/* 场景卡：受众 → 断裂点 → Prima 方向，三段在同一张卡里纵向排开 */
+.scenario-card { display: grid; gap: 16px; align-content: start; }
+.scenario-label { margin-bottom: 8px; font-weight: 600; }
+.scenario-card .scenario-label-brand { color: var(--brand); }
+.scenario-list {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--ink-2);
+  font-size: .95rem;
+  line-height: 1.65;
+}
+.scenario-list li { margin-bottom: 6px; }
 
 .stack-cards {
   display: grid;
@@ -795,10 +731,6 @@ a:focus-visible {
 .contact-panel .button:hover { background: var(--bg-alt); }
 
 /* ---------- Beta / Survey page ---------- */
-.beta-page {
-  padding: 96px 0 128px;
-  background: var(--bg);
-}
 .beta-page .section-head {
   max-width: 780px;
   margin-bottom: 48px;
@@ -893,6 +825,7 @@ a:focus-visible {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity .7s var(--ease), transform .7s var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
 }
 .reveal.visible {
   opacity: 1;
@@ -1014,7 +947,7 @@ a:focus-visible {
   transform: translateY(-2px);
 }
 .pricing-card.featured {
-  border-color: rgba(126, 73, 226, .22);
+  border-color: rgba(var(--brand-rgb), .22);
 }
 .pricing-card-head {
   display: flex;
@@ -1183,47 +1116,84 @@ a:focus-visible {
   margin-bottom: 36px;
   color: var(--ink-2);
 }
-.model-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-}
-.model-card {
+.model-summary {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+  padding: 20px 24px;
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: var(--r-card);
-  transition: transform .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);
 }
-.model-card:hover {
-  border-color: rgba(22, 24, 29, .2);
-  box-shadow: var(--shadow-sm);
-  transform: translateY(-2px);
+.model-summary > div {
+  flex: 1 1 0;
+  min-width: 110px;
+  padding-left: 24px;
+  border-left: 1px solid var(--border);
 }
-.model-head {
+.model-summary > div:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+.model-summary dt {
+  color: var(--ink-3);
+  font-size: .84rem;
+}
+.model-summary dd {
+  margin: 4px 0 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.model-groups {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  overflow: hidden;
+}
+.model-group {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  padding: 20px 26px;
+  border-bottom: 1px solid var(--border);
+}
+.model-group:last-child {
+  border-bottom: 0;
+}
+.model-group-head {
   display: flex;
-  align-items: flex-start;
-  gap: 14px;
+  align-items: center;
+  gap: 11px;
+  align-self: stretch;
+  padding-right: 26px;
+  border-right: 1px dashed var(--border);
+}
+.model-group-head h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  white-space: nowrap;
+}
+.model-group-count {
+  color: var(--ink-3);
+  font-size: .78rem;
+  white-space: nowrap;
 }
 .model-mark {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex: 0 0 auto;
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
   background: var(--bg-alt);
   color: var(--ink-2);
-  font-size: .82rem;
+  font-size: .7rem;
   font-weight: 700;
 }
 .model-mark img {
-  width: 22px;
-  height: 22px;
+  width: 17px;
+  height: 17px;
   object-fit: contain;
 }
 .model-vendor-alibaba { background: #e6eef8; }
@@ -1232,51 +1202,98 @@ a:focus-visible {
 .model-vendor-stepfun { background: #efece6; }
 .model-vendor-moonshotai { background: #edeaf5; }
 .model-vendor-deepseek { background: #e8eff3; }
-.model-vendor-hunyuan { background: #e7eef7; }
 .model-vendor-tencent { background: #e7eef7; }
 .model-vendor-xiaomi { background: #f2ebe8; }
 .model-vendor-xai { background: #eceef0; }
 .model-vendor-anthropic { background: #eee8df; }
 .model-vendor-openai { background: #e8efe9; }
 .model-vendor-google { background: #e9eef8; }
-.model-vendor-yuanshitech { background: #efe9ef; }
-.model-head h3 {
-  margin-bottom: 4px;
+.model-vendor-yosee { background: #f0edf7; }
+.model-group-body {
+  display: grid;
+  align-content: center;
+  gap: 8px;
+  min-width: 0;
+  padding-left: 26px;
 }
-.model-beta {
-  margin-left: 5px;
-  color: var(--brand);
-  font-family: var(--font-mono);
+.model-columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 28px;
+  align-items: start;
 }
-.model-vendor {
+.model-column {
+  display: grid;
+  gap: 6px;
+}
+.model-series {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0 0 0 16px;
+  list-style: none;
+}
+.model-series::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  translate: 0 -50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--ink-3);
+}
+.model-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--ink);
+  font-size: .84rem;
+  white-space: nowrap;
+}
+.model-chip-state {
   color: var(--ink-3);
-  font-size: .86rem;
+  font-size: .72rem;
 }
-.model-foot {
+.model-name.is-overseas,
+.model-chip.is-overseas {
+  color: var(--brand-dark);
+}
+.model-chip.is-overseas {
+  background: var(--brand-soft);
+  border-color: transparent;
+}
+.model-legend {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: auto;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 24px;
+  color: var(--ink-2);
+  font-size: .85rem;
 }
-.model-foot .tag {
-  margin-bottom: 0;
-}
-.model-region {
+.model-beta {
+  margin-left: 4px;
   color: var(--ink-3);
-  font-size: .8rem;
-  text-align: right;
+  font-family: var(--font-mono);
 }
 .model-note {
   padding: 12px 14px;
   background: var(--bg);
   border-radius: var(--r-btn);
-  color: var(--ink-2) !important;
-  font-size: .84rem !important;
-  line-height: 1.6 !important;
+  color: var(--ink-2);
+  font-size: .84rem;
+  line-height: 1.6;
 }
 
-/* Shared spark graph, scoped to Prima's hero */
+/* ---------- 首屏主视觉：基元点阵 + 星图连线 + 星火光核 ---------- */
 .hero-art {
   position: absolute;
   inset: 0;
@@ -1287,11 +1304,14 @@ a:focus-visible {
 }
 .hero-art > *,
 .hero-art .art-field > * { position: absolute; display: block; }
+/* 层容器：承接指针位移 */
 .hero-art .art-field {
+  position: absolute;
   inset: 0;
   translate: calc(var(--art-mx) * 14px) calc(var(--art-my) * 10px);
   transition: translate .6s var(--ease);
 }
+/* 基元点阵：隐喻「构于基元」 */
 .hero-art .art-grid {
   right: 0;
   top: 4%;
@@ -1332,30 +1352,63 @@ a:focus-visible {
   transform-origin: center;
   animation: art-halo 9s ease-in-out infinite;
 }
+/* 星火光核：方芯旋转 45°，与品牌菱形呼应 */
 .hero-art .art-core {
   fill: var(--brand);
-  width: 20px;
-  height: 20px;
-  right: auto;
-  top: auto;
-  border-radius: 6px;
   transform-box: fill-box;
   transform-origin: center;
   rotate: 45deg;
   animation: art-enter .9s var(--ease) .4s both, art-spark 6s ease-in-out 1.2s infinite;
 }
+/* 游走粒子：低密度浮尘，围着光核缓慢游移 */
 .hero-art .art-particle {
-  background: rgba(126, 73, 226, .45);
-  box-shadow: 0 0 10px 2px rgba(126, 73, 226, .18);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(var(--brand-rgb), .45);
+  box-shadow: 0 0 10px 2px rgba(var(--brand-rgb), .18);
 }
 .hero-art .art-particle-a { right: 34%; top: 26%; animation: art-drift-a 17s ease-in-out infinite, art-twinkle 6s ease-in-out infinite; }
 .hero-art .art-particle-b { right: 19%; top: 38%; animation: art-drift-b 21s ease-in-out .7s infinite, art-twinkle 8s ease-in-out 1.1s infinite; }
 .hero-art .art-particle-c { right: 41%; top: 58%; animation: art-drift-c 15s ease-in-out 1.4s infinite, art-twinkle 7s ease-in-out .5s infinite; }
 .hero-art .art-particle-d { right: 26%; top: 68%; animation: art-drift-d 23s ease-in-out .3s infinite, art-twinkle 9s ease-in-out 1.9s infinite; }
+
+@keyframes art-enter {
+  from { opacity: 0; scale: .985; }
+  to { opacity: 1; scale: 1; }
+}
+@keyframes art-drift-a { 50% { translate: 12px -18px; } }
+@keyframes art-drift-b { 50% { translate: -14px -9px; } }
+@keyframes art-drift-c { 50% { translate: 10px 15px; } }
+@keyframes art-drift-d { 50% { translate: -9px 12px; } }
+@keyframes art-twinkle { 50% { opacity: .22; } }
 @keyframes art-grid-breathe { 50% { opacity: .62; } }
 @keyframes art-shimmer { 50% { stroke-opacity: .38; } }
 @keyframes art-halo { 50% { opacity: .68; scale: 1.1; } }
 @keyframes art-spark { 50% { opacity: .74; scale: 1.16; } }
+
+@media (max-width: 960px) {
+  .hero-art .art-grid { width: 82vw; height: 40vh; right: -12%; top: 1%; opacity: .6; }
+  .hero-art .art-graph { width: 78vw; height: 40vh; right: -10%; top: 2%; opacity: .85; }
+  .hero-art .art-halo { r: 116px; }
+  .hero-art .art-particle-b,
+  .hero-art .art-particle-c,
+  .hero-art .art-particle-d { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-art .art-field { translate: none; transition: none; }
+  .hero-art .art-grid,
+  .hero-art .art-edges,
+  .hero-art .art-nodes,
+  .hero-art .art-edge,
+  .hero-art .art-node,
+  .hero-art .art-halo,
+  .hero-art .art-core,
+  .hero-art .art-particle-a,
+  .hero-art .art-particle-b,
+  .hero-art .art-particle-c,
+  .hero-art .art-particle-d { animation: none; }
+}
 
 @view-transition {
   navigation: auto;
@@ -1370,19 +1423,6 @@ a:focus-visible {
   background: var(--brand);
   transform: scaleX(0);
   transform-origin: left;
-}
-.reveal {
-  transition-delay: var(--reveal-delay, 0ms);
-}
-.card,
-.feature-tile,
-.update-card {
-  transition: transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s var(--ease);
-}
-.card:hover,
-.feature-tile:hover,
-.update-card:hover {
-  transform: translateY(-4px);
 }
 .footer-grid > div:first-child .footer-slogan {
   font-family: var(--font-display);
@@ -1410,19 +1450,25 @@ a:focus-visible {
   .split,
   .card-grid,
   .three-grid,
-  .model-grid { grid-template-columns: 1fr; }
+  .timeline { grid-template-columns: 1fr; }
+  .model-group { grid-template-columns: 1fr; padding: 16px 18px; }
+  .model-group-head {
+    padding-right: 0;
+    padding-bottom: 12px;
+    border-right: 0;
+    border-bottom: 1px dashed var(--border);
+  }
+  .model-group-body { padding-left: 0; padding-top: 12px; }
   .pricing-grid > .pricing-card,
   .pricing-grid-pair > .pricing-card,
   .pricing-grid-spark > .pricing-card,
   .pricing-grid-spark > .pricing-card:first-child { flex-basis: 100%; }
   .split { gap: 32px; }
-  .timeline { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
   .footer-bottom { flex-direction: column; gap: 8px; }
   .contact-panel { grid-template-columns: 1fr; padding: 32px; }
   .section { padding: 88px 0; }
   .about-page { padding: 72px 0 96px; }
-  .page-hero,
   .about-hero { margin-bottom: 64px; }
   .about-section { margin-bottom: 80px; }
   .pricing-card { padding: 24px; }
@@ -1430,11 +1476,6 @@ a:focus-visible {
   .pricing-price { text-align: left; }
   .pricing-tabs { width: 100%; justify-content: space-between; }
   .pricing-tabs button { flex: 1; padding-inline: 10px; }
-  .hero-art .art-grid { width: 82vw; height: 40vh; right: -12%; top: 1%; opacity: .6; }
-  .hero-art .art-graph { width: 78vw; height: 40vh; right: -10%; top: 2%; opacity: .85; }
-  .hero-art .art-halo { r: 116px; }
-  .hero-art .art-particle-b,
-  .hero-art .art-particle-d { display: none; }
   .region-banner { flex-wrap: wrap; gap: 8px; }
   .scroll-progress { display: none; }
 }
@@ -1447,6 +1488,14 @@ a:focus-visible {
   .feature-tile { padding: 24px; }
   .survey-head { padding: 20px; }
   .survey-note { padding: 14px 20px 20px; }
+  .model-summary { flex-direction: column; padding: 18px 20px; }
+  .model-summary > div {
+    padding: 14px 0 0;
+    margin-top: 14px;
+    border-top: 1px solid var(--border);
+    border-left: 0;
+  }
+  .model-summary > div:first-child { padding-top: 0; margin-top: 0; border-top: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

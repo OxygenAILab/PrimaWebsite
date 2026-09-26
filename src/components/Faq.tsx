@@ -81,17 +81,17 @@ export default function Faq() {
       <section className="container about-hero" aria-labelledby="faq-hero-title">
         <p className="eyebrow">{locale === "zh" ? "常见问题" : "FAQ"}</p>
         <h1 id="faq-hero-title">{locale === "zh" ? "把话说清楚。" : "Clear answers, directly stated."}</h1>
-        <p className="lead" style={{ maxWidth: "56ch" }}>
+        <p className="lead lead-tight">
           {locale === "zh"
             ? "关于阶段、数据边界和参与方式，我们在这里直接回答。没有覆盖到的问题可以写信来问。"
             : "We answer stage, data-boundary, and participation questions directly. Write to us for anything not covered."}
         </p>
       </section>
 
-      {groups.map((group) => (
-        <section className="container about-section" key={group.title.en} aria-labelledby={`faq-${group.title.en}-title`}>
+      {groups.map((group, index) => (
+        <section className="container about-section" key={group.title.en} aria-labelledby={`faq-group-${index}`}>
           <div className="section-head">
-            <p className="eyebrow">{group.title[locale]}</p>
+            <p className="eyebrow" id={`faq-group-${index}`}>{group.title[locale]}</p>
           </div>
           <div className="stack-cards">
             {group.items.map((item) => (

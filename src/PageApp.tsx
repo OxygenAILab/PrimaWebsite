@@ -1,8 +1,9 @@
-import { useEffect, type ReactNode } from "react";
+import type { ReactNode } from "react";
 import { useI18n } from "./i18n";
 import { Footer, Header } from "./components/Chrome";
 import PageMotion from "./components/Motion";
 import RegionBanner from "./components/RegionBanner";
+import SectionRail from "./components/SectionRail";
 
 export type PrimaPage =
   | "home"
@@ -17,7 +18,15 @@ export type PrimaPage =
   | "security"
   | "download";
 
-export default function PageApp({ active, children }: { active: PrimaPage; children: ReactNode }) {
+export default function PageApp({
+  active,
+  rail = false,
+  children,
+}: {
+  active: PrimaPage;
+  rail?: boolean;
+  children: ReactNode;
+}) {
   const { locale } = useI18n();
 
   return (
@@ -26,6 +35,7 @@ export default function PageApp({ active, children }: { active: PrimaPage; child
       <RegionBanner />
       <PageMotion />
       <Header active={active} />
+      {rail ? <SectionRail /> : null}
       {children}
       <Footer active={active} />
     </>

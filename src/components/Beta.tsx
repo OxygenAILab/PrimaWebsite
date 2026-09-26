@@ -8,7 +8,7 @@ export default function BetaSection() {
     <main id="main" className="beta-page">
       <div className="container">
         <div className="section-head reveal">
-          <p className="eyebrow">{locale === "zh" ? "Prima Beta" : "Prima Beta"}</p>
+          <p className="eyebrow">Prima Beta</p>
           <h1 id="beta-page-title">{locale === "zh" ? "填写问卷，申请 Beta 资格。" : "Complete the survey to apply for Beta."}</h1>
           <p className="section-copy">
             {locale === "zh"
@@ -19,7 +19,7 @@ export default function BetaSection() {
         <div className="survey-shell reveal">
           <div className="survey-head">
             <div>
-              <p className="tag">{locale === "zh" ? siteConfig.betaStatus : "Early co-creation · Beta research"}</p>
+              <p className="tag">{siteConfig.betaStatus[locale]}</p>
               <h2>{locale === "zh" ? "Prima 用户调研" : "Prima user research"}</h2>
             </div>
             <a className="button primary compact" href={siteConfig.surveyUrl} target="_blank" rel="noopener noreferrer">

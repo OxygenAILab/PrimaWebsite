@@ -40,14 +40,14 @@ export default function Security() {
       <section className="container about-hero" aria-labelledby="sec-hero-title">
         <p className="eyebrow">{locale === "zh" ? "安全与数据边界" : "Security and data boundaries"}</p>
         <h1 id="sec-hero-title">{locale === "zh" ? "你的工作区，边界由你。" : "Your workspace, your boundaries."}</h1>
-        <p className="lead" style={{ maxWidth: "56ch" }}>
+        <p className="lead lead-tight">
           {locale === "zh"
             ? "长任务意味着 Agent 会接触更多上下文。我们把数据边界当作产品的第一性设计，而不是事后补丁。"
             : "Long tasks expose more context. We treat data boundaries as first-class product design, not a later patch."}
         </p>
       </section>
 
-      <section className="container about-section" aria-labelledby="principles-title">
+      <section className="container about-section" aria-label={locale === "zh" ? "数据边界原则" : "Data boundary principles"}>
         <div className="card-grid">
           {principles.map((item) => (
             <article className="card" key={item.title.en}>
