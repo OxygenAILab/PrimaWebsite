@@ -6,17 +6,27 @@ import {
   pricingRules,
   type PlanFamily,
 } from "../data/pricing";
+import { useI18n } from "../i18n";
+import type { Localized } from "../data/content";
 
-const tableHeads = [
-  "计划",
-  "档位",
-  "标价",
-  "积分",
-  "模型权益",
-  "限速",
-  "并行限制",
-  "媒体生成倍率",
-  "备注",
+/* 卡片与对照表共用同一份规格字段，避免两处各写一遍标签 */
+const specFields: Array<{
+  key: "models" | "rateLimit" | "parallelLimit" | "mediaRate";
+  label: Localized;
+}> = [
+  { key: "models", label: { zh: "模型权益", en: "Model access" } },
+  { key: "rateLimit", label: { zh: "限速", en: "Rate limit" } },
+  { key: "parallelLimit", label: { zh: "并行限制", en: "Parallel limit" } },
+  { key: "mediaRate", label: { zh: "媒体生成倍率", en: "Media multiplier" } },
+];
+
+const tableHeads: Array<{ key: string; label: Localized }> = [
+  { key: "family", label: { zh: "计划", en: "Plan" } },
+  { key: "tier", label: { zh: "档位", en: "Tier" } },
+  { key: "price", label: { zh: "标价", en: "Price" } },
+  { key: "credits", label: { zh: "积分", en: "Credits" } },
+  ...specFields,
+  { key: "note", label: { zh: "备注", en: "Notes" } },
 ];
 
 function familyTone(family: PlanFamily) {
@@ -32,6 +42,7 @@ function gridModifier(family: PlanFamily, count: number) {
 }
 
 export default function Pricing() {
+  const { locale } = useI18n();
   const [activeFamily, setActiveFamily] = useState<PlanFamily>("SparkPlan");
   const [variantIndex, setVariantIndex] = useState<Record<string, number>>({});
   const groups = pricingGroups.filter((group) => group.family === activeFamily);
@@ -43,18 +54,22 @@ export default function Pricing() {
   return (
     <main id="main" className="about-page pricing-page">
       <section className="container about-hero" aria-labelledby="pricing-hero-title">
-        <p className="eyebrow">定价</p>
-        <h1 id="pricing-hero-title">按验证阶段选择额度。</h1>
+        <p className="eyebrow">{locale === "zh" ? "定价" : "Pricing"}</p>
+        <h1 id="pricing-hero-title">{locale === "zh" ? "按验证阶段选择额度。" : "Choose allocation by validation stage."}</h1>
         <p className="lead" style={{ maxWidth: "62ch" }}>
-          SparkPlan 覆盖个人从免费验证到高频使用的进阶路径；PrimaPlan 面向团队长任务；Credit+ 给现有 Plan 补充额度。
+          {locale === "zh"
+            ? "SparkPlan 覆盖个人从免费验证到高频使用的进阶路径；PrimaPlan 面向团队长任务；Credit+ 给现有 Plan 补充额度。"
+            : "SparkPlan covers individual progression from free validation to high-frequency use; PrimaPlan targets team long tasks; Credit+ tops up an existing Plan."}
         </p>
-        <p className="pricing-note-line">以下为当前定价方案，发布细节和可用范围以正式开通说明为准。</p>
+        <p className="pricing-note-line">
+          {locale === "zh" ? "以下为当前定价方案，发布细节和可用范围以正式开通说明为准。" : "This is the current pricing proposal; final release details and availability govern activation."}
+        </p>
       </section>
 
       <section className="container about-section" aria-labelledby="plans-title">
         <div className="section-head">
-          <p className="eyebrow">订阅方案</p>
-          <h2 id="plans-title">三条产品线，从免费验证到团队生产。</h2>
+<p className="eyebrow">{locale === "zh" ? "订阅方案" : "Subscriptions"}</p>
+          <h2 id="plans-title">{locale === "zh" ? "三条产品线，从免费验证到团队生产。" : "Three product lines, from free validation to team production."}</h2>
         </div>
         <div className="pricing-tabs" role="tablist" aria-label="定价分组">
           {pricingFamilies.map((family) => (
@@ -73,7 +88,7 @@ export default function Pricing() {
           ))}
         </div>
         <p className="pricing-family-copy" aria-live="polite">
-          {pricingFamilies.find((family) => family.id === activeFamily)?.description}
+          {pricingFamilies.find((family) => family.id === activeFamily)?.description[locale]}
         </p>
         <div
           className={`pricing-grid${gridModifier(activeFamily, groups.length)}`}
@@ -116,33 +131,23 @@ export default function Pricing() {
                   </div>
                   <div className="pricing-price" aria-live="polite">
                     <strong>¥{variant.price}</strong>
-                    <span>/{variant.period}</span>
+                    <span>/{variant.period[locale]}</span>
                   </div>
                 </div>
-                <div className="pricing-swap" key={variant.tier}>
+<div className="pricing-swap" key={variant.tier}>
                   <p className="pricing-credits">
                     <strong>{variant.credits}</strong>
-                    <span>积分</span>
+                    <span>{locale === "zh" ? "积分" : "credits"}</span>
                   </p>
                   <dl className="pricing-specs">
-                    <div>
-                      <dt>模型权益</dt>
-                      <dd>{variant.models}</dd>
-                    </div>
-                    <div>
-                      <dt>限速</dt>
-                      <dd>{variant.rateLimit}</dd>
-                    </div>
-                    <div>
-                      <dt>并行限制</dt>
-                      <dd>{variant.parallelLimit}</dd>
-                    </div>
-                    <div>
-                      <dt>媒体生成倍率</dt>
-                      <dd>{variant.mediaRate}</dd>
-                    </div>
+                    {specFields.map((field) => (
+                      <div key={field.key}>
+                        <dt>{field.label[locale]}</dt>
+                        <dd>{variant[field.key][locale]}</dd>
+                      </div>
+                    ))}
                   </dl>
-                  <p className="pricing-card-note">{variant.note}</p>
+                  <p className="pricing-card-note">{variant.note[locale]}</p>
                 </div>
               </article>
             );
@@ -152,14 +157,14 @@ export default function Pricing() {
 
       <section className="container about-section" aria-labelledby="rules-title">
         <div className="section-head">
-          <p className="eyebrow">计费规则</p>
-          <h2 id="rules-title">额度、倍率和购买条件。</h2>
+          <p className="eyebrow">{locale === "zh" ? "计费规则" : "Billing rules"}</p>
+          <h2 id="rules-title">{locale === "zh" ? "额度、倍率和购买条件。" : "Allocation, multipliers, and purchase conditions."}</h2>
         </div>
         <div className="card-grid">
           {pricingRules.map((item) => (
-            <article className="card" key={item.title}>
-              <h3>{item.title}</h3>
-              <p>{item.copy}</p>
+            <article className="card" key={item.title.en}>
+              <h3>{item.title[locale]}</h3>
+              <p>{item.copy[locale]}</p>
             </article>
           ))}
         </div>
@@ -167,15 +172,15 @@ export default function Pricing() {
 
       <section className="container about-section" aria-labelledby="compare-title">
         <div className="section-head">
-          <p className="eyebrow">完整对照</p>
-          <h2 id="compare-title">所有档位放在一张表里。</h2>
+          <p className="eyebrow">{locale === "zh" ? "完整对照" : "Full comparison"}</p>
+          <h2 id="compare-title">{locale === "zh" ? "所有档位放在一张表里。" : "All tiers in one table."}</h2>
         </div>
         <div className="pricing-table-scroll" tabIndex={0} aria-label="定价对照表">
           <table className="pricing-table">
             <thead>
               <tr>
                 {tableHeads.map((head) => (
-                  <th key={head} scope="col">{head}</th>
+                  <th key={head.key} scope="col">{head.label[locale]}</th>
                 ))}
               </tr>
             </thead>
@@ -184,13 +189,13 @@ export default function Pricing() {
                 <tr key={`${item.family}-${item.tier}`}>
                   <th scope="row">{item.family}</th>
                   <td>{item.tier}</td>
-                  <td>¥{item.price}<span> / {item.period}</span></td>
+                  <td>¥{item.price}<span> / {item.period[locale]}</span></td>
                   <td>{item.credits}</td>
-                  <td>{item.models}</td>
-                  <td>{item.rateLimit}</td>
-                  <td>{item.parallelLimit}</td>
-                  <td>{item.mediaRate}</td>
-                  <td>{item.note}</td>
+                  <td>{item.models[locale]}</td>
+                  <td>{item.rateLimit[locale]}</td>
+                  <td>{item.parallelLimit[locale]}</td>
+                  <td>{item.mediaRate[locale]}</td>
+                  <td>{item.note[locale]}</td>
                 </tr>
               ))}
             </tbody>
@@ -201,10 +206,10 @@ export default function Pricing() {
       <section className="container about-section" aria-labelledby="pricing-cta-title">
         <div className="contact-panel">
           <div>
-            <h2 id="pricing-cta-title">还没确定选哪一档？</h2>
-            <p>参加 Beta 调研，告诉我们任务规模、并发需求和媒体用量，我们会帮你判断合适档位。</p>
+            <h2 id="pricing-cta-title">{locale === "zh" ? "还没确定选哪一档？" : "Unsure which tier fits?"}</h2>
+            <p>{locale === "zh" ? "参加 Beta 调研，告诉我们任务规模、并发需求和媒体用量，我们会帮你判断合适档位。" : "Join Beta research and tell us task scale, concurrency, and media use; we can help you choose a tier."}</p>
           </div>
-          <a className="button primary" href="../beta/">参与调研</a>
+          <a className="button primary" href="../beta/">{locale === "zh" ? "参与调研" : "Join research"}</a>
         </div>
       </section>
     </main>

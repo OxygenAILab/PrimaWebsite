@@ -1,61 +1,102 @@
-const scenarios = [
+import { useI18n } from "../i18n";
+import type { Localized } from "../data/content";
+
+type Scenario = {
+  title: Localized;
+  audience: Localized;
+  problems: Localized[];
+  prima: Localized;
+};
+
+const scenarios: Scenario[] = [
   {
-    title: "多文件编程与 Bug 定位",
-    audience: "工程团队 · 日常开发",
+    title: { zh: "多文件编程与 Bug 定位", en: "Multi-file coding and bug localization" },
+    audience: { zh: "工程团队 · 日常开发", en: "Engineering teams · Daily development" },
     problems: [
-      "改一个接口定义，下游五个文件都要跟着动，Agent 忘记改第三个。",
-      "上一轮刚确认的约束，十轮对话后再问一遍，答案完全相反。",
+      {
+        zh: "改一个接口定义，下游五个文件都要跟着动，Agent 忘记改第三个。",
+        en: "One interface change ripples into five files, and the agent forgets the third one.",
+      },
+      {
+        zh: "上一轮刚确认的约束，十轮对话后再问一遍，答案完全相反。",
+        en: "A constraint confirmed one turn earlier is contradicted ten turns later.",
+      },
     ],
-    prima: "Prima 记住本轮会话里你确认的约束（如“保持现有 API 兼容”），在每次改动前重新校验，发现冲突时主动停下来问你，而不是默默改完。",
+    prima: {
+      zh: "Prima 记住本轮会话里你确认的约束，在每次改动前重新校验，发现冲突时主动停下来问你，而不是默默改完。",
+      en: "Prima keeps confirmed constraints, revalidates before every change, and pauses to ask about conflicts instead of silently finishing.",
+    },
   },
   {
-    title: "数据分析与研究汇总",
-    audience: "分析师 · 研究员",
+    title: { zh: "数据分析与研究汇总", en: "Data analysis and research synthesis" },
+    audience: { zh: "分析师 · 研究员", en: "Analysts · Researchers" },
     problems: [
-      "反复清理同一份数据，每次都要重新说明列名和口径。",
-      "结论文档改到第 8 版，早就忘了第 2 版为什么被否决。",
+      {
+        zh: "反复清理同一份数据，每次都要重新说明列名和口径。",
+        en: "Cleaning the same dataset repeatedly means restating column names and definitions each time.",
+      },
+      {
+        zh: "结论文档改到第 8 版，早就忘了第 2 版为什么被否决。",
+        en: "By version eight, nobody remembers why version two was rejected.",
+      },
     ],
-    prima: "Prima 把你的口径、术语和被否决的结论存进分层记忆，引用时能区分“当前采纳”和“已废弃”，减少无效返工。",
+    prima: {
+      zh: "Prima 把你的口径、术语和被否决的结论存进分层记忆，引用时能区分“当前采纳”和“已废弃”，减少无效返工。",
+      en: "Prima stores definitions, terminology, and rejected conclusions in layered memory, distinguishing adopted from retired work.",
+    },
   },
   {
-    title: "写作、文档与知识工作",
-    audience: "作者 · 内容团队",
+    title: { zh: "写作、文档与知识工作", en: "Writing, documentation, and knowledge work" },
+    audience: { zh: "作者 · 内容团队", en: "Writers · Content teams" },
     problems: [
-      "同一份报告换个角度写，语气和术语就变了。",
-      "写到后半段，Agent 忘记了你前半段确立的论点结构。",
+      {
+        zh: "同一份报告换个角度写，语气和术语就变了。",
+        en: "Rewriting the same report from another angle changes tone and terminology.",
+      },
+      {
+        zh: "写到后半段，Agent 忘记了你前半段确立的论点结构。",
+        en: "Later sections forget the argument structure established earlier.",
+      },
     ],
-    prima: "Prima 记录你的写作偏好（正式度、术语表、受众），在长文档里保持章节间的论点一致性，而不是每次都从零开始。",
+    prima: {
+      zh: "Prima 记录你的写作偏好，在长文档里保持章节间的论点一致性，而不是每次都从零开始。",
+      en: "Prima records your writing preferences and keeps argument consistency across long documents instead of starting over.",
+    },
   },
 ];
 
 export default function Scenarios() {
+  const { locale } = useI18n();
+
   return (
     <main id="main" className="about-page">
       <section className="container about-hero" aria-labelledby="scenarios-hero-title">
-        <p className="eyebrow">使用场景</p>
-        <h1 id="scenarios-hero-title">先服务长任务，而不是所有任务。</h1>
+        <p className="eyebrow">{locale === "zh" ? "使用场景" : "Scenarios"}</p>
+        <h1 id="scenarios-hero-title">{locale === "zh" ? "先服务长任务，而不是所有任务。" : "Serve long tasks first, not every task."}</h1>
         <p className="lead" style={{maxWidth: "56ch"}}>
-          Prima 首发聚焦三类最常见的连续性断裂：多文件工程、长数据链路和长文档协作。这些不是行业口号，而是我们调研里反复出现的痛点。
+          {locale === "zh"
+            ? "Prima 首发聚焦三类最常见的连续性断裂：多文件工程、长数据链路和长文档协作。这些不是行业口号，而是我们调研里反复出现的痛点。"
+            : "Prima's first release focuses on three common breaks in continuity: multi-file engineering, long data pipelines, and long-document collaboration."}
         </p>
       </section>
 
       <section className="container about-section" aria-labelledby="scenario-list-title">
         <div className="card-grid">
           {scenarios.map((item) => (
-            <article className="card" key={item.title} style={{display: "grid", gap: "16px", alignContent: "start"}}>
+            <article className="card" key={item.title.en} style={{display: "grid", gap: "16px", alignContent: "start"}}>
               <div>
-                <p className="tag gray">{item.audience}</p>
-                <h3>{item.title}</h3>
+                <p className="tag gray">{item.audience[locale]}</p>
+                <h3>{item.title[locale]}</h3>
               </div>
               <div>
-                <p style={{fontWeight: 600, marginBottom: "8px"}}>今天的断裂</p>
+                <p style={{fontWeight: 600, marginBottom: "8px"}}>{locale === "zh" ? "今天的断裂" : "Where it breaks today"}</p>
                 <ul style={{paddingLeft: "20px", margin: 0, color: "var(--ink-2)", fontSize: ".95rem", lineHeight: 1.65}}>
-                  {item.problems.map((p) => <li key={p} style={{marginBottom: "6px"}}>{p}</li>)}
+                  {item.problems.map((problem) => <li key={problem.en} style={{marginBottom: "6px"}}>{problem[locale]}</li>)}
                 </ul>
               </div>
               <div>
-                <p style={{fontWeight: 600, marginBottom: "8px", color: "var(--brand)"}}>Prima 想做的事</p>
-                <p style={{margin: 0}}>{item.prima}</p>
+                <p style={{fontWeight: 600, marginBottom: "8px", color: "var(--brand)"}}>{locale === "zh" ? "Prima 想做的事" : "What Prima aims to do"}</p>
+                <p style={{margin: 0}}>{item.prima[locale]}</p>
               </div>
             </article>
           ))}
@@ -65,10 +106,10 @@ export default function Scenarios() {
       <section className="container about-section" aria-labelledby="scenario-cta-title">
         <div className="contact-panel">
           <div>
-            <h2 id="scenario-cta-title">你的场景没有被覆盖？</h2>
-            <p>告诉我们你工作中最容易返工的环节。你的反馈会直接影响我们下一轮打磨的重点。</p>
+            <h2 id="scenario-cta-title">{locale === "zh" ? "你的场景没有被覆盖？" : "Scenario not covered?"}</h2>
+            <p>{locale === "zh" ? "告诉我们你工作中最容易返工的环节。你的反馈会直接影响我们下一轮打磨的重点。" : "Tell us where your work is easiest to redo. Your feedback directly sets the next refinement focus."}</p>
           </div>
-          <a className="button primary" href="../beta/">参与 Beta 调研</a>
+          <a className="button primary" href="../beta/">{locale === "zh" ? "参与 Beta 调研" : "Join Beta research"}</a>
         </div>
       </section>
     </main>
