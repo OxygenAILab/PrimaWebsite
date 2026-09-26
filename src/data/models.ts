@@ -26,8 +26,8 @@ const chinaModels: Array<Omit<ModelEntry, "regions">> = [
   { name: "Kimi K3", vendor: "Moonshot AI", icon: "/vendors/moonshot.svg", beta: false },
   { name: "DeepSeek V4.1 Flash", vendor: "DeepSeek", icon: "/vendors/deepseek.svg", beta: true },
   { name: "DeepSeek V3.2", vendor: "DeepSeek", icon: "/vendors/deepseek.svg", beta: true },
-  { name: "Hy 3", vendor: "Hunyuan", beta: false },
-  { name: "Hy 4 Preview", vendor: "Hunyuan", beta: false },
+  { name: "Hy 3", vendor: "Tencent", beta: false },
+  { name: "Hy 4 Preview", vendor: "Tencent", beta: false },
   { name: "Xiaomi MIMO V2.6", vendor: "Xiaomi", icon: "/vendors/xiaomi.svg", beta: false },
 ];
 
@@ -69,7 +69,7 @@ export const modelVendors = [
   "StepFun",
   "Moonshot AI",
   "DeepSeek",
-  "Hunyuan",
+  "Tencent",
   "Xiaomi",
   "xAI",
   "Anthropic",

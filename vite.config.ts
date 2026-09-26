@@ -18,6 +18,7 @@ export default defineConfig({
         "model-list": resolve(__dirname, "model-list/index.html"),
         faq: resolve(__dirname, "faq/index.html"),
         security: resolve(__dirname, "security/index.html"),
+        download: resolve(__dirname, "download/index.html"),
       },
     },
   },

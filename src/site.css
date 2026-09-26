@@ -125,6 +125,11 @@ h3 {
   pointer-events: none;
   transform: translateY(-100%);
   visibility: hidden;
+  height: 0;
+  min-height: 0;
+  padding-block: 0;
+  overflow: hidden;
+  border: 0;
 }
 .language-switch {
   display: inline-flex;
@@ -1291,6 +1296,7 @@ a:focus-visible {
 .model-vendor-moonshotai { background: #edeaf5; }
 .model-vendor-deepseek { background: #e8eff3; }
 .model-vendor-hunyuan { background: #e7eef7; }
+.model-vendor-tencent { background: #e7eef7; }
 .model-vendor-xiaomi { background: #f2ebe8; }
 .model-vendor-xai { background: #eceef0; }
 .model-vendor-anthropic { background: #eee8df; }
