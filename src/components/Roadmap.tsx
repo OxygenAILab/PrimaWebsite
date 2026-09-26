@@ -1,3 +1,4 @@
+import BetaCta from "./BetaCta";
 import { useI18n } from "../i18n";
 import type { Localized } from "../data/content";
 
@@ -42,17 +43,15 @@ const phases: Phase[] = [
 ];
 
 export default function Roadmap() {
-  const { locale } = useI18n();
+  const { locale, pick } = useI18n();
 
   return (
     <main id="main" className="about-page">
       <section className="container about-hero" aria-labelledby="roadmap-hero-title">
-        <p className="eyebrow">{locale === "zh" ? "路线图" : "Roadmap"}</p>
-        <h1 id="roadmap-hero-title">{locale === "zh" ? "我们按阶段走，不跳步。" : "We move by stages; no shortcuts."}</h1>
+        <p className="eyebrow">{pick({ zh: "路线图", en: "Roadmap" })}</p>
+        <h1 id="roadmap-hero-title">{pick({ zh: "我们按阶段走，不跳步。", en: "We move by stages; no shortcuts." })}</h1>
         <p className="lead lead-tight">
-          {locale === "zh"
-            ? "Prima 的每个阶段都以「可验证的进展」为推进条件。这里的计划是当前视角，会随调研反馈调整。"
-            : "Each Prima stage advances only on verifiable progress. The plan reflects the current view and will change with research feedback."}
+          {pick({ zh: "Prima 的每个阶段都以「可验证的进展」为推进条件。这里的计划是当前视角，会随调研反馈调整。", en: "Each Prima stage advances only on verifiable progress. The plan reflects the current view and will change with research feedback." })}
         </p>
       </section>
 
@@ -72,15 +71,12 @@ export default function Roadmap() {
         </div>
       </section>
 
-      <section className="container about-section" aria-labelledby="roadmap-cta-title">
-        <div className="contact-panel">
-          <div>
-            <h2 id="roadmap-cta-title">{locale === "zh" ? "想影响这个路线图？" : "Want to shape this roadmap?"}</h2>
-            <p>{locale === "zh" ? "填写 Beta 调研，告诉我们你最需要的能力。调研反馈会直接决定优先级。" : "Complete Beta research and tell us the capabilities you need most; feedback directly sets priorities."}</p>
-          </div>
-          <a className="button primary" href="../beta/">{locale === "zh" ? "参与 Beta 调研" : "Join Beta research"}</a>
-        </div>
-      </section>
+      <BetaCta
+        id="roadmap-cta-title"
+        title={{ zh: "想影响这个路线图？", en: "Want to shape this roadmap?" }}
+        copy={{ zh: "填写 Beta 调研，告诉我们你最需要的能力。调研反馈会直接决定优先级。", en: "Complete Beta research and tell us the capabilities you need most; feedback directly sets priorities." }}
+        action={{ zh: "参与 Beta 调研", en: "Join Beta research" }}
+      />
     </main>
   );
 }

@@ -11,7 +11,7 @@ const railItems: Array<{ id: string; label: Localized }> = [
 ];
 
 export default function SectionRail() {
-  const { locale } = useI18n();
+  const { locale, pick } = useI18n();
   const [activeId, setActiveId] = useState<string>("");
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export default function SectionRail() {
   };
 
   return (
-    <nav className="section-rail" aria-label={locale === "zh" ? "页面段落导航" : "Section navigation"}>
+    <nav className="section-rail" aria-label={pick({ zh: "页面段落导航", en: "Section navigation" })}>
       <ul className="section-rail-list">
         {railItems.map((item) => (
           <li key={item.id}>

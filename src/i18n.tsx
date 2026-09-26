@@ -29,6 +29,8 @@ type I18nValue = {
   locale: Locale;
   setLocale: (locale: Locale) => void;
   t: (key: keyof typeof dictionary) => string;
+  /** 双语取值：按当前 locale 从 zh/en 两个分支里取一项，与数据层的 Localized 对象同一套写法 */
+  pick: <T,>(entry: Record<Locale, T>) => T;
 };
 
 const I18nContext = createContext<I18nValue | null>(null);
@@ -56,6 +58,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
       setLocale(next);
     },
     t: (key) => dictionary[key][locale],
+    pick: (entry) => entry[locale],
   }), [locale]);
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;

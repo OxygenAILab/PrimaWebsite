@@ -56,7 +56,7 @@ function fromPage(active: PrimaPage, path: string): string {
 
 export function Header({ active = "home" }: { active?: PrimaPage }) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { locale } = useI18n();
+  const { locale, pick } = useI18n();
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -76,11 +76,11 @@ export function Header({ active = "home" }: { active?: PrimaPage }) {
       <Announce />
       <header className="site-header" id="top">
         <div className="container header-inner">
-          <a className="brand" href={active === "beta" ? "../" : "#top"} aria-label={locale === "zh" ? `${siteConfig.brandShortName} 首页` : `${siteConfig.brandShortName} home`}>
+          <a className="brand" href={active === "beta" ? "../" : "#top"} aria-label={pick({ zh: `${siteConfig.brandShortName} 首页`, en: `${siteConfig.brandShortName} home` })}>
             <img className="brand-mark" src={logoImage} alt="" width={30} height={30} />
             <span>{siteConfig.brandShortName}</span>
           </a>
-          <nav className="site-nav" aria-label={locale === "zh" ? "主导航" : "Main navigation"}>
+          <nav className="site-nav" aria-label={pick({ zh: "主导航", en: "Main navigation" })}>
             {navItems.map((id) => (
               <a key={id} href={navHref(id, active)}>{navLabels[id][locale]}</a>
             ))}
@@ -91,14 +91,14 @@ export function Header({ active = "home" }: { active?: PrimaPage }) {
             target={active === "beta" ? "_blank" : undefined}
             rel="noopener noreferrer"
           >
-            {locale === "zh" ? "立即参与调研" : "Join research"}
+            {pick({ zh: "立即参与调研", en: "Join research" })}
           </a>
           <button
             type="button"
             className="nav-toggle"
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
-            aria-label={menuOpen ? (locale === "zh" ? "关闭菜单" : "Close menu") : (locale === "zh" ? "打开菜单" : "Open menu")}
+            aria-label={menuOpen ? (pick({ zh: "关闭菜单", en: "Close menu" })) : (pick({ zh: "打开菜单", en: "Open menu" }))}
             onClick={() => setMenuOpen((open) => !open)}
           >
             <span className="nav-toggle-bar" aria-hidden="true" />
@@ -106,7 +106,7 @@ export function Header({ active = "home" }: { active?: PrimaPage }) {
           </button>
         </div>
         <div className={menuOpen ? "mobile-menu open" : "mobile-menu"} id="mobile-menu">
-          <nav className="container mobile-menu-nav" aria-label={locale === "zh" ? "移动端导航" : "Mobile navigation"}>
+          <nav className="container mobile-menu-nav" aria-label={pick({ zh: "移动端导航", en: "Mobile navigation" })}>
             {navItems.map((id) => (
               <a
                 key={id}
@@ -122,7 +122,7 @@ export function Header({ active = "home" }: { active?: PrimaPage }) {
               href={active === "beta" ? siteConfig.surveyUrl : "./beta/"}
               onClick={() => setMenuOpen(false)}
             >
-              {locale === "zh" ? "立即参与调研" : "Join research"}
+              {pick({ zh: "立即参与调研", en: "Join research" })}
             </a>
           </nav>
         </div>
@@ -142,7 +142,7 @@ const footerPages: Array<{ path: string; label: Localized }> = [
 ];
 
 export function Footer({ active = "home" }: { active?: PrimaPage }) {
-  const { locale, t } = useI18n();
+  const { locale, t, pick } = useI18n();
 
   return (
     <footer className="site-footer">
@@ -152,28 +152,28 @@ export function Footer({ active = "home" }: { active?: PrimaPage }) {
             <img className="footer-logo" src={logoImage} alt="" width={28} height={28} />
             {siteConfig.brandShortName}
           </p>
-          <p>{locale === "zh" ? "面向真实长任务的 AI Agent，现在处于早期共创阶段。" : "An AI Agent for real long tasks, currently in early co-creation."}</p>
+          <p>{pick({ zh: "面向真实长任务的 AI Agent，现在处于早期共创阶段。", en: "An AI Agent for real long tasks, currently in early co-creation." })}</p>
           <p className="footer-slogan">{t("prima.slogan")}</p>
         </div>
-        <nav aria-label={locale === "zh" ? "项目导航" : "Project navigation"}>
-          {active === "home" ? <a href="./about/">{locale === "zh" ? "关于项目" : "About"}</a> : <a href="../">{locale === "zh" ? "返回首页" : "Back home"}</a>}
-          <a href={active === "home" ? "#capabilities" : "../#capabilities"}>{locale === "zh" ? "核心能力" : "Capabilities"}</a>
+        <nav aria-label={pick({ zh: "项目导航", en: "Project navigation" })}>
+          {active === "home" ? <a href="./about/">{pick({ zh: "关于项目", en: "About" })}</a> : <a href="../">{pick({ zh: "返回首页", en: "Back home" })}</a>}
+          <a href={active === "home" ? "#capabilities" : "../#capabilities"}>{pick({ zh: "核心能力", en: "Capabilities" })}</a>
           {footerPages.map((item) => (
             <a key={item.path} href={fromPage(active, item.path)}>
               {item.label[locale]}
             </a>
           ))}
         </nav>
-        <nav aria-label={locale === "zh" ? "参与入口" : "Participation links"}>
+        <nav aria-label={pick({ zh: "参与入口", en: "Participation links" })}>
           <a href={siteConfig.oxygenUrl} target="_blank" rel="noopener noreferrer">Oxygen AI</a>
-          <a href="https://oxygenai.top/progress/" target="_blank" rel="noopener noreferrer">{locale === "zh" ? "模型研究" : "Model research"}</a>
-          <a href={siteConfig.surveyUrl} target="_blank" rel="noopener noreferrer">{locale === "zh" ? "立即参与调研" : "Join research"}</a>
+          <a href="https://oxygenai.top/progress/" target="_blank" rel="noopener noreferrer">{pick({ zh: "模型研究", en: "Model research" })}</a>
+          <a href={siteConfig.surveyUrl} target="_blank" rel="noopener noreferrer">{pick({ zh: "立即参与调研", en: "Join research" })}</a>
           <a href="mailto:prima@oxygenai.top">prima@oxygenai.top</a>
         </nav>
       </div>
       <div className="container footer-bottom">
         <p>&copy; 2026 Oxygen AI</p>
-        <p>{locale === "zh" ? "产品仍在打磨，能力描述不代表已经可用；反馈仅用于产品研究与 Beta 招募。" : "The product is still being refined; descriptions do not imply availability. Feedback is used only for product research and Beta recruitment."}</p>
+        <p>{pick({ zh: "产品仍在打磨，能力描述不代表已经可用；反馈仅用于产品研究与 Beta 招募。", en: "The product is still being refined; descriptions do not imply availability. Feedback is used only for product research and Beta recruitment." })}</p>
       </div>
     </footer>
   );

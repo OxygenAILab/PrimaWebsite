@@ -1,3 +1,4 @@
+import BetaCta from "./BetaCta";
 import { useI18n } from "../i18n";
 import type { Localized } from "../data/content";
 
@@ -66,17 +67,15 @@ const scenarios: Scenario[] = [
 ];
 
 export default function Scenarios() {
-  const { locale } = useI18n();
+  const { locale, pick } = useI18n();
 
   return (
     <main id="main" className="about-page">
       <section className="container about-hero" aria-labelledby="scenarios-hero-title">
-        <p className="eyebrow">{locale === "zh" ? "使用场景" : "Scenarios"}</p>
-        <h1 id="scenarios-hero-title">{locale === "zh" ? "先服务长任务，而不是所有任务。" : "Serve long tasks first, not every task."}</h1>
+        <p className="eyebrow">{pick({ zh: "使用场景", en: "Scenarios" })}</p>
+        <h1 id="scenarios-hero-title">{pick({ zh: "先服务长任务，而不是所有任务。", en: "Serve long tasks first, not every task." })}</h1>
         <p className="lead lead-tight">
-          {locale === "zh"
-            ? "Prima 首发聚焦三类最常见的连续性断裂：多文件工程、长数据链路和长文档协作。这些不是行业口号，而是我们调研里反复出现的痛点。"
-            : "Prima's first release focuses on three common breaks in continuity: multi-file engineering, long data pipelines, and long-document collaboration."}
+          {pick({ zh: "Prima 首发聚焦三类最常见的连续性断裂：多文件工程、长数据链路和长文档协作。这些不是行业口号，而是我们调研里反复出现的痛点。", en: "Prima's first release focuses on three common breaks in continuity: multi-file engineering, long data pipelines, and long-document collaboration." })}
         </p>
       </section>
 
@@ -89,13 +88,13 @@ export default function Scenarios() {
                 <h3>{item.title[locale]}</h3>
               </div>
               <div>
-                <p className="scenario-label">{locale === "zh" ? "今天的断裂" : "Where it breaks today"}</p>
+                <p className="scenario-label">{pick({ zh: "今天的断裂", en: "Where it breaks today" })}</p>
                 <ul className="scenario-list">
                   {item.problems.map((problem) => <li key={problem.en}>{problem[locale]}</li>)}
                 </ul>
               </div>
               <div>
-                <p className="scenario-label scenario-label-brand">{locale === "zh" ? "Prima 想做的事" : "What Prima aims to do"}</p>
+                <p className="scenario-label scenario-label-brand">{pick({ zh: "Prima 想做的事", en: "What Prima aims to do" })}</p>
                 <p>{item.prima[locale]}</p>
               </div>
             </article>
@@ -103,15 +102,12 @@ export default function Scenarios() {
         </div>
       </section>
 
-      <section className="container about-section" aria-labelledby="scenario-cta-title">
-        <div className="contact-panel">
-          <div>
-            <h2 id="scenario-cta-title">{locale === "zh" ? "你的场景没有被覆盖？" : "Scenario not covered?"}</h2>
-            <p>{locale === "zh" ? "告诉我们你工作中最容易返工的环节。你的反馈会直接影响我们下一轮打磨的重点。" : "Tell us where your work is easiest to redo. Your feedback directly sets the next refinement focus."}</p>
-          </div>
-          <a className="button primary" href="../beta/">{locale === "zh" ? "参与 Beta 调研" : "Join Beta research"}</a>
-        </div>
-      </section>
+      <BetaCta
+        id="scenario-cta-title"
+        title={{ zh: "你的场景没有被覆盖？", en: "Scenario not covered?" }}
+        copy={{ zh: "告诉我们你工作中最容易返工的环节。你的反馈会直接影响我们下一轮打磨的重点。", en: "Tell us where your work is easiest to redo. Your feedback directly sets the next refinement focus." }}
+        action={{ zh: "参与 Beta 调研", en: "Join Beta research" }}
+      />
     </main>
   );
 }

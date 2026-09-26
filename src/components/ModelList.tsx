@@ -81,7 +81,7 @@ function vendorClass(vendor: string) {
 }
 
 export default function ModelList() {
-  const { locale } = useI18n();
+  const { locale, pick } = useI18n();
   const [activeRegion, setActiveRegion] = useState<RegionKey>("china");
   const models = modelMatrix.filter((item) => item.regions.includes(activeRegion as ModelRegion));
   const groups = groupByVendor(models);
@@ -103,7 +103,7 @@ export default function ModelList() {
           <p className="eyebrow">{localText("model-list.supported", locale)}</p>
           <h2 id="supported-models-title">{localText("model-list.grouped", locale)}</h2>
         </div>
-        <div className="pricing-tabs" role="tablist" aria-label={locale === "zh" ? "选择服务区域" : "Service region"}>
+        <div className="pricing-tabs" role="tablist" aria-label={pick({ zh: "选择服务区域", en: "Service region" })}>
           {regions.map((region) => (
             <button
               key={region.id}
@@ -204,7 +204,7 @@ export default function ModelList() {
         </div>
       </section>
 
-      <section className="container about-section" aria-label={locale === "zh" ? "名单说明" : "List notes"}>
+      <section className="container about-section" aria-label={pick({ zh: "名单说明", en: "List notes" })}>
         <div className="card-grid">
           <article className="card">
             <h3>{localText("model-list.faqBetaTitle", locale)}</h3>

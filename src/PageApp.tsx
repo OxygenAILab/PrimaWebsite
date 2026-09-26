@@ -27,11 +27,11 @@ export default function PageApp({
   rail?: boolean;
   children: ReactNode;
 }) {
-  const { locale } = useI18n();
+  const { pick } = useI18n();
 
   return (
     <>
-      <a className="skip-link" href="#main">{locale === "zh" ? "跳到主要内容" : "Skip to content"}</a>
+      <a className="skip-link" href="#main">{pick({ zh: "跳到主要内容", en: "Skip to content" })}</a>
       <RegionBanner />
       <PageMotion />
       <Header active={active} />

@@ -1,4 +1,5 @@
 import { siteConfig } from "../config";
+import BetaCta from "./BetaCta";
 import { useI18n } from "../i18n";
 import type { Localized } from "../data/content";
 
@@ -51,26 +52,24 @@ const boundaries: Array<{ title: Localized; copy: Localized }> = [
 ];
 
 export default function About() {
-  const { locale } = useI18n();
+  const { locale, pick } = useI18n();
 
   return (
     <main id="main" className="about-page">
       <section className="container about-hero" aria-labelledby="about-page-title">
-        <p className="eyebrow">{locale === "zh" ? "关于项目" : "About the project"}</p>
-        <h1 id="about-page-title">{locale === "zh" ? "Prima 是一个正在与用户共同定义的产品。" : "Prima is being defined with its users."}</h1>
+        <p className="eyebrow">{pick({ zh: "关于项目", en: "About the project" })}</p>
+        <h1 id="about-page-title">{pick({ zh: "Prima 是一个正在与用户共同定义的产品。", en: "Prima is being defined with its users." })}</h1>
         <p className="section-copy">
-          {locale === "zh"
-            ? "Prima 面向真实长任务，探索自适应推理、分层长期记忆和更可靠的执行一致性。当前项目由 Oxygen AI 支持，仍处于早期共创阶段。"
-            : "Prima targets real long tasks and explores adaptive reasoning, layered long-term memory, and reliable execution consistency. Oxygen AI supports the project, which remains in early co-creation."}
+          {pick({ zh: "Prima 面向真实长任务，探索自适应推理、分层长期记忆和更可靠的执行一致性。当前项目由 Oxygen AI 支持，仍处于早期共创阶段。", en: "Prima targets real long tasks and explores adaptive reasoning, layered long-term memory, and reliable execution consistency. Oxygen AI supports the project, which remains in early co-creation." })}
         </p>
         <div className="hero-actions">
-          <a className="button primary" href="../beta/">{locale === "zh" ? "参与 Beta 调研" : "Join Beta research"}</a>
-          <a className="button ghost" href={siteConfig.oxygenUrl} target="_blank" rel="noopener noreferrer">{locale === "zh" ? "了解 Oxygen AI" : "Explore Oxygen AI"}</a>
+          <a className="button primary" href="../beta/">{pick({ zh: "参与 Beta 调研", en: "Join Beta research" })}</a>
+          <a className="button ghost" href={siteConfig.oxygenUrl} target="_blank" rel="noopener noreferrer">{pick({ zh: "了解 Oxygen AI", en: "Explore Oxygen AI" })}</a>
         </div>
       </section>
 
       <section className="container about-section" aria-labelledby="principles-title">
-        <h2 id="principles-title">{locale === "zh" ? "我们关心的三件事" : "Three things we care about"}</h2>
+        <h2 id="principles-title">{pick({ zh: "我们关心的三件事", en: "Three things we care about" })}</h2>
         <div className="three-grid">
           {principles.map((item) => (
             <article className="feature-tile" key={item.title.en}>
@@ -83,8 +82,8 @@ export default function About() {
 
       <section className="container about-section" aria-labelledby="boundary-title">
         <div className="section-head">
-          <p className="eyebrow">{locale === "zh" ? "研究边界" : "Research boundaries"}</p>
-          <h2 id="boundary-title">{locale === "zh" ? "诚实标注阶段，不夸大能力。" : "Label stages honestly; do not overstate capability."}</h2>
+          <p className="eyebrow">{pick({ zh: "研究边界", en: "Research boundaries" })}</p>
+          <h2 id="boundary-title">{pick({ zh: "诚实标注阶段，不夸大能力。", en: "Label stages honestly; do not overstate capability." })}</h2>
         </div>
         <div className="three-grid">
           {boundaries.map((item) => (
@@ -96,15 +95,12 @@ export default function About() {
         </div>
       </section>
 
-      <section className="container about-section" aria-labelledby="contact-title">
-        <div className="contact-panel">
-          <div>
-            <h2 id="contact-title">{locale === "zh" ? "想影响产品方向？" : "Want to influence the product?"}</h2>
-            <p>{locale === "zh" ? "填写约 5 分钟的问卷，告诉我们你的真实场景、痛点和部署期待。入选用户有机会进入 Beta。" : "Complete a five-minute survey to share your real scenarios, pain points, and deployment expectations. Selected users may enter Beta."}</p>
-          </div>
-          <a className="button primary" href="../beta/">{locale === "zh" ? "立即参与调研" : "Join research"}</a>
-        </div>
-      </section>
+      <BetaCta
+        id="contact-title"
+        title={{ zh: "想影响产品方向？", en: "Want to influence the product?" }}
+        copy={{ zh: "填写约 5 分钟的问卷，告诉我们你的真实场景、痛点和部署期待。入选用户有机会进入 Beta。", en: "Complete a five-minute survey to share your real scenarios, pain points, and deployment expectations. Selected users may enter Beta." }}
+        action={{ zh: "立即参与调研", en: "Join research" }}
+      />
     </main>
   );
 }

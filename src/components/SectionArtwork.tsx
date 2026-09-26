@@ -1,13 +1,13 @@
 import { useI18n } from "../i18n";
 
 export function ContinuityArtwork() {
-  const { locale } = useI18n();
+  const { pick } = useI18n();
 
   return (
     <figure className="split-visual artwork-shell" aria-labelledby="continuity-art-caption">
       <svg className="section-art" viewBox="0 0 720 450" role="img">
         <title id="continuity-art-caption">
-          {locale === "zh" ? "长任务在多次修正后仍保持目标一致" : "Long tasks keep goals aligned through repeated revisions"}
+          {pick({ zh: "长任务在多次修正后仍保持目标一致", en: "Long tasks keep goals aligned through repeated revisions" })}
         </title>
         <defs>
           <pattern id="prima-dot-grid" width="24" height="24" patternUnits="userSpaceOnUse">
@@ -29,12 +29,12 @@ export function ContinuityArtwork() {
         </g>
 
         <g fontFamily="var(--font-sans)" fill="var(--ink)">
-          <text x="78" y="90" fontSize="15" fontWeight="650">{locale === "zh" ? "输入约束" : "Input constraints"}</text>
-          <text x="78" y="118" fontSize="12" fill="var(--ink-2)">{locale === "zh" ? "目标 · 文件 · 边界" : "Goals · files · boundaries"}</text>
-          <text x="295" y="204" fontSize="15" fontWeight="650">{locale === "zh" ? "状态回看" : "State review"}</text>
-          <text x="295" y="232" fontSize="12" fill="var(--ink-2)">{locale === "zh" ? "已确认事实" : "Confirmed facts"}</text>
-          <text x="512" y="90" fontSize="15" fontWeight="650">{locale === "zh" ? "交付结果" : "Deliverable"}</text>
-          <text x="512" y="118" fontSize="12" fill="var(--ink-2)">{locale === "zh" ? "可复核输出" : "Reviewable output"}</text>
+          <text x="78" y="90" fontSize="15" fontWeight="650">{pick({ zh: "输入约束", en: "Input constraints" })}</text>
+          <text x="78" y="118" fontSize="12" fill="var(--ink-2)">{pick({ zh: "目标 · 文件 · 边界", en: "Goals · files · boundaries" })}</text>
+          <text x="295" y="204" fontSize="15" fontWeight="650">{pick({ zh: "状态回看", en: "State review" })}</text>
+          <text x="295" y="232" fontSize="12" fill="var(--ink-2)">{pick({ zh: "已确认事实", en: "Confirmed facts" })}</text>
+          <text x="512" y="90" fontSize="15" fontWeight="650">{pick({ zh: "交付结果", en: "Deliverable" })}</text>
+          <text x="512" y="118" fontSize="12" fill="var(--ink-2)">{pick({ zh: "可复核输出", en: "Reviewable output" })}</text>
         </g>
 
         <path
@@ -60,10 +60,10 @@ export function ContinuityArtwork() {
         <circle cx="636" cy="366" r="9" fill="var(--brand)" />
 
         <g fontFamily="var(--font-sans)" fontSize="12" fill="var(--ink-3)" textAnchor="middle">
-          <text x="92" y="402">{locale === "zh" ? "开始" : "Start"}</text>
-          <text x="258" y="402">{locale === "zh" ? "中途修正" : "Mid-course correction"}</text>
-          <text x="424" y="402">{locale === "zh" ? "验证" : "Verify"}</text>
-          <text x="636" y="402">{locale === "zh" ? "交付" : "Deliver"}</text>
+          <text x="92" y="402">{pick({ zh: "开始", en: "Start" })}</text>
+          <text x="258" y="402">{pick({ zh: "中途修正", en: "Mid-course correction" })}</text>
+          <text x="424" y="402">{pick({ zh: "验证", en: "Verify" })}</text>
+          <text x="636" y="402">{pick({ zh: "交付", en: "Deliver" })}</text>
         </g>
       </svg>
     </figure>
@@ -71,13 +71,13 @@ export function ContinuityArtwork() {
 }
 
 export function ResearchArtwork() {
-  const { locale } = useI18n();
+  const { pick } = useI18n();
 
   return (
     <figure className="split-visual artwork-shell" aria-labelledby="research-art-caption">
       <svg className="section-art" viewBox="0 0 720 450" role="img">
         <title id="research-art-caption">
-          {locale === "zh" ? "产品验证形成研究证据，再进入模型研究" : "Product validation creates research evidence before model research"}
+          {pick({ zh: "产品验证形成研究证据，再进入模型研究", en: "Product validation creates research evidence before model research" })}
         </title>
         <defs>
           <pattern id="research-dot-grid" width="24" height="24" patternUnits="userSpaceOnUse">
@@ -98,12 +98,12 @@ export function ResearchArtwork() {
         </g>
 
         <g fontFamily="var(--font-sans)" fill="var(--ink)">
-          <text x="82" y="98" fontSize="15" fontWeight="650">{locale === "zh" ? "产品验证" : "Product validation"}</text>
-          <text x="82" y="128" fontSize="12" fill="var(--ink-2)">{locale === "zh" ? "真实长任务" : "Real long tasks"}</text>
-          <text x="82" y="154" fontSize="12" fill="var(--ink-2)">{locale === "zh" ? "用户反馈" : "User feedback"}</text>
-          <text x="428" y="98" fontSize="15" fontWeight="650">{locale === "zh" ? "公开边界" : "Public boundary"}</text>
-          <text x="428" y="128" fontSize="12" fill="var(--ink-2)">{locale === "zh" ? "方向级描述" : "Direction-level description"}</text>
-          <text x="428" y="154" fontSize="12" fill="var(--ink-2)">{locale === "zh" ? "阶段标注" : "Stage labels"}</text>
+          <text x="82" y="98" fontSize="15" fontWeight="650">{pick({ zh: "产品验证", en: "Product validation" })}</text>
+          <text x="82" y="128" fontSize="12" fill="var(--ink-2)">{pick({ zh: "真实长任务", en: "Real long tasks" })}</text>
+          <text x="82" y="154" fontSize="12" fill="var(--ink-2)">{pick({ zh: "用户反馈", en: "User feedback" })}</text>
+          <text x="428" y="98" fontSize="15" fontWeight="650">{pick({ zh: "公开边界", en: "Public boundary" })}</text>
+          <text x="428" y="128" fontSize="12" fill="var(--ink-2)">{pick({ zh: "方向级描述", en: "Direction-level description" })}</text>
+          <text x="428" y="154" fontSize="12" fill="var(--ink-2)">{pick({ zh: "阶段标注", en: "Stage labels" })}</text>
         </g>
 
         <g>
@@ -119,7 +119,7 @@ export function ResearchArtwork() {
             strokeLinejoin="round"
           />
           <text x="516" y="306" fontFamily="var(--font-sans)" fontSize="14" fontWeight="650" fill="var(--ink)">
-            {locale === "zh" ? "架构研究" : "Architecture research"}
+            {pick({ zh: "架构研究", en: "Architecture research" })}
           </text>
         </g>
       </svg>
@@ -128,13 +128,13 @@ export function ResearchArtwork() {
 }
 
 export function LayeredArtwork() {
-  const { locale } = useI18n();
+  const { pick } = useI18n();
 
   return (
     <figure className="split-visual artwork-shell" aria-labelledby="layered-art-caption">
       <svg className="section-art" viewBox="0 0 720 450" role="img">
         <title id="layered-art-caption">
-          {locale === "zh" ? "快答、深想和记忆按任务复杂度分层调度" : "Quick answers, deep reasoning, and memory are scheduled by task complexity"}
+          {pick({ zh: "快答、深想和记忆按任务复杂度分层调度", en: "Quick answers, deep reasoning, and memory are scheduled by task complexity" })}
         </title>
         <defs>
           <pattern id="layered-dot-grid" width="24" height="24" patternUnits="userSpaceOnUse">
@@ -177,12 +177,12 @@ export function LayeredArtwork() {
         </g>
 
         <g fontFamily="var(--font-sans)" fill="var(--ink)">
-          <text x="174" y="98" fontSize="14" fontWeight="650">{locale === "zh" ? "快答层" : "Quick answer"}</text>
-          <text x="174" y="122" fontSize="12" fill="var(--ink-2)">{locale === "zh" ? "低复杂度" : "Low complexity"}</text>
-          <text x="250" y="222" fontSize="14" fontWeight="650">{locale === "zh" ? "深想层" : "Deep reasoning"}</text>
-          <text x="250" y="246" fontSize="12" fill="var(--ink-2)">{locale === "zh" ? "多步验证" : "Multi-step verification"}</text>
-          <text x="220" y="322" fontSize="14" fontWeight="650">{locale === "zh" ? "记忆层" : "Memory"}</text>
-          <text x="220" y="346" fontSize="12" fill="var(--ink-2)">{locale === "zh" ? "长期上下文" : "Long-term context"}</text>
+          <text x="174" y="98" fontSize="14" fontWeight="650">{pick({ zh: "快答层", en: "Quick answer" })}</text>
+          <text x="174" y="122" fontSize="12" fill="var(--ink-2)">{pick({ zh: "低复杂度", en: "Low complexity" })}</text>
+          <text x="250" y="222" fontSize="14" fontWeight="650">{pick({ zh: "深想层", en: "Deep reasoning" })}</text>
+          <text x="250" y="246" fontSize="12" fill="var(--ink-2)">{pick({ zh: "多步验证", en: "Multi-step verification" })}</text>
+          <text x="220" y="322" fontSize="14" fontWeight="650">{pick({ zh: "记忆层", en: "Memory" })}</text>
+          <text x="220" y="346" fontSize="12" fill="var(--ink-2)">{pick({ zh: "长期上下文", en: "Long-term context" })}</text>
         </g>
       </svg>
     </figure>

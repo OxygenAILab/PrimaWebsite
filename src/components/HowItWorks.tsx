@@ -1,4 +1,5 @@
 import { LayeredArtwork } from "./SectionArtwork";
+import BetaCta from "./BetaCta";
 import { useI18n } from "../i18n";
 import type { Localized } from "../data/content";
 
@@ -58,29 +59,25 @@ const steps: Array<{ title: Localized; copy: Localized }> = [
 ];
 
 export default function HowItWorks() {
-  const { locale } = useI18n();
+  const { locale, pick } = useI18n();
 
   return (
     <main id="main" className="about-page">
       <section className="container about-hero" aria-labelledby="how-hero-title">
-        <p className="eyebrow">{locale === "zh" ? "工作方式" : "How it works"}</p>
-        <h1 id="how-hero-title">{locale === "zh" ? "想多深，由任务说了算。" : "The task decides how deeply to think."}</h1>
+        <p className="eyebrow">{pick({ zh: "工作方式", en: "How it works" })}</p>
+        <h1 id="how-hero-title">{pick({ zh: "想多深，由任务说了算。", en: "The task decides how deeply to think." })}</h1>
         <p className="lead lead-tight">
-          {locale === "zh"
-            ? "Prima 不是把“多想几步”当作一个开关，而是在每次任务里判断：此刻需要多深的推理、多少上下文，以及哪些记忆值得被调用。"
-            : "Prima does not treat more thinking as a switch. Each task is judged for reasoning depth, context, and which memories are worth recalling."}
+          {pick({ zh: "Prima 不是把“多想几步”当作一个开关，而是在每次任务里判断：此刻需要多深的推理、多少上下文，以及哪些记忆值得被调用。", en: "Prima does not treat more thinking as a switch. Each task is judged for reasoning depth, context, and which memories are worth recalling." })}
         </p>
       </section>
 
       <section className="container about-section" aria-labelledby="layer-title">
         <div className="split">
           <div className="split-copy">
-            <p className="eyebrow">{locale === "zh" ? "推理分层" : "Layered reasoning"}</p>
-            <h2 id="layer-title">{locale === "zh" ? "三种思考方式，而不是一个固定速度。" : "Three ways to think, not one fixed speed."}</h2>
+            <p className="eyebrow">{pick({ zh: "推理分层", en: "Layered reasoning" })}</p>
+            <h2 id="layer-title">{pick({ zh: "三种思考方式，而不是一个固定速度。", en: "Three ways to think, not one fixed speed." })}</h2>
             <p>
-              {locale === "zh"
-                ? "我们不想让简单问题被拖慢，也不想复杂问题被草率对待。Prima 的核心假设是：推理深度应该跟任务复杂度匹配，而不是跟着对话轮数增长。"
-                : "Simple work should not wait and complex work should not be rushed. Prima assumes reasoning depth should match task complexity, not conversation length."}
+              {pick({ zh: "我们不想让简单问题被拖慢，也不想复杂问题被草率对待。Prima 的核心假设是：推理深度应该跟任务复杂度匹配，而不是跟着对话轮数增长。", en: "Simple work should not wait and complex work should not be rushed. Prima assumes reasoning depth should match task complexity, not conversation length." })}
             </p>
           </div>
           <LayeredArtwork />
@@ -97,8 +94,8 @@ export default function HowItWorks() {
 
       <section className="container about-section" aria-labelledby="process-title">
         <div className="section-head">
-          <p className="eyebrow">{locale === "zh" ? "执行流程" : "Execution loop"}</p>
-          <h2 id="process-title">{locale === "zh" ? "长任务的四步循环。" : "A four-step loop for long tasks."}</h2>
+          <p className="eyebrow">{pick({ zh: "执行流程", en: "Execution loop" })}</p>
+          <h2 id="process-title">{pick({ zh: "长任务的四步循环。", en: "A four-step loop for long tasks." })}</h2>
         </div>
         <div className="timeline">
           {steps.map((step) => (
@@ -110,15 +107,12 @@ export default function HowItWorks() {
         </div>
       </section>
 
-      <section className="container about-section" aria-labelledby="how-cta-title">
-        <div className="contact-panel">
-          <div>
-            <h2 id="how-cta-title">{locale === "zh" ? "想试试这套工作方式？" : "Want to try this workflow?"}</h2>
-            <p>{locale === "zh" ? "我们正在邀请真实用户参与 Beta，验证这套设计是否真的能减少返工。" : "We are inviting real users into Beta to test whether this design actually reduces rework."}</p>
-          </div>
-          <a className="button primary" href="../beta/">{locale === "zh" ? "立即参与调研" : "Join research"}</a>
-        </div>
-      </section>
+      <BetaCta
+        id="how-cta-title"
+        title={{ zh: "想试试这套工作方式？", en: "Want to try this workflow?" }}
+        copy={{ zh: "我们正在邀请真实用户参与 Beta，验证这套设计是否真的能减少返工。", en: "We are inviting real users into Beta to test whether this design actually reduces rework." }}
+        action={{ zh: "立即参与调研", en: "Join research" }}
+      />
     </main>
   );
 }

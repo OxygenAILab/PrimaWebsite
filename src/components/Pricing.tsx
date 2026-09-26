@@ -6,6 +6,7 @@ import {
   pricingRules,
   type PlanFamily,
 } from "../data/pricing";
+import BetaCta from "./BetaCta";
 import { useI18n } from "../i18n";
 import type { Localized } from "../data/content";
 
@@ -42,7 +43,7 @@ function gridModifier(family: PlanFamily, count: number) {
 }
 
 export default function Pricing() {
-  const { locale } = useI18n();
+  const { locale, pick } = useI18n();
   const [activeFamily, setActiveFamily] = useState<PlanFamily>("SparkPlan");
   const [variantIndex, setVariantIndex] = useState<Record<string, number>>({});
   const groups = pricingGroups.filter((group) => group.family === activeFamily);
@@ -54,24 +55,22 @@ export default function Pricing() {
   return (
     <main id="main" className="about-page">
       <section className="container about-hero" aria-labelledby="pricing-hero-title">
-        <p className="eyebrow">{locale === "zh" ? "定价" : "Pricing"}</p>
-        <h1 id="pricing-hero-title">{locale === "zh" ? "按验证阶段选择额度。" : "Choose allocation by validation stage."}</h1>
+        <p className="eyebrow">{pick({ zh: "定价", en: "Pricing" })}</p>
+        <h1 id="pricing-hero-title">{pick({ zh: "按验证阶段选择额度。", en: "Choose allocation by validation stage." })}</h1>
         <p className="lead">
-          {locale === "zh"
-            ? "SparkPlan 覆盖个人从免费验证到高频使用的进阶路径；PrimaPlan 面向团队长任务；Credit+ 给现有 Plan 补充额度。"
-            : "SparkPlan covers individual progression from free validation to high-frequency use; PrimaPlan targets team long tasks; Credit+ tops up an existing Plan."}
+          {pick({ zh: "SparkPlan 覆盖个人从免费验证到高频使用的进阶路径；PrimaPlan 面向团队长任务；Credit+ 给现有 Plan 补充额度。", en: "SparkPlan covers individual progression from free validation to high-frequency use; PrimaPlan targets team long tasks; Credit+ tops up an existing Plan." })}
         </p>
         <p className="pricing-note-line">
-          {locale === "zh" ? "以下为当前定价方案，发布细节和可用范围以正式开通说明为准。" : "This is the current pricing proposal; final release details and availability govern activation."}
+          {pick({ zh: "以下为当前定价方案，发布细节和可用范围以正式开通说明为准。", en: "This is the current pricing proposal; final release details and availability govern activation." })}
         </p>
       </section>
 
       <section className="container about-section" aria-labelledby="plans-title">
         <div className="section-head">
-          <p className="eyebrow">{locale === "zh" ? "订阅方案" : "Subscriptions"}</p>
-          <h2 id="plans-title">{locale === "zh" ? "三条产品线，从免费验证到团队生产。" : "Three product lines, from free validation to team production."}</h2>
+          <p className="eyebrow">{pick({ zh: "订阅方案", en: "Subscriptions" })}</p>
+          <h2 id="plans-title">{pick({ zh: "三条产品线，从免费验证到团队生产。", en: "Three product lines, from free validation to team production." })}</h2>
         </div>
-        <div className="pricing-tabs" role="tablist" aria-label={locale === "zh" ? "定价分组" : "Plan groups"}>
+        <div className="pricing-tabs" role="tablist" aria-label={pick({ zh: "定价分组", en: "Plan groups" })}>
           {pricingFamilies.map((family) => (
             <button
               key={family.id}
@@ -109,7 +108,7 @@ export default function Pricing() {
                     <div className="pricing-card-name">
                       <h3>{group.name}</h3>
                       {group.variants.length > 1 && (
-                        <div className="pricing-variants" role="radiogroup" aria-label={locale === "zh" ? `${group.name} 档位` : `${group.name} tiers`}>
+                        <div className="pricing-variants" role="radiogroup" aria-label={pick({ zh: `${group.name} 档位`, en: `${group.name} tiers` })}>
                           {group.variants.map((option, index) => {
                             const selected = index === activeIndex;
                             return (
@@ -137,7 +136,7 @@ export default function Pricing() {
                 <div className="pricing-swap" key={variant.tier}>
                   <p className="pricing-credits">
                     <strong>{variant.credits}</strong>
-                    <span>{locale === "zh" ? "积分" : "credits"}</span>
+                    <span>{pick({ zh: "积分", en: "credits" })}</span>
                   </p>
                   <dl className="pricing-specs">
                     {specFields.map((field) => (
@@ -157,8 +156,8 @@ export default function Pricing() {
 
       <section className="container about-section" aria-labelledby="rules-title">
         <div className="section-head">
-          <p className="eyebrow">{locale === "zh" ? "计费规则" : "Billing rules"}</p>
-          <h2 id="rules-title">{locale === "zh" ? "额度、倍率和购买条件。" : "Allocation, multipliers, and purchase conditions."}</h2>
+          <p className="eyebrow">{pick({ zh: "计费规则", en: "Billing rules" })}</p>
+          <h2 id="rules-title">{pick({ zh: "额度、倍率和购买条件。", en: "Allocation, multipliers, and purchase conditions." })}</h2>
         </div>
         <div className="card-grid">
           {pricingRules.map((item) => (
@@ -172,8 +171,8 @@ export default function Pricing() {
 
       <section className="container about-section" aria-labelledby="compare-title">
         <div className="section-head">
-          <p className="eyebrow">{locale === "zh" ? "完整对照" : "Full comparison"}</p>
-          <h2 id="compare-title">{locale === "zh" ? "所有档位放在一张表里。" : "All tiers in one table."}</h2>
+          <p className="eyebrow">{pick({ zh: "完整对照", en: "Full comparison" })}</p>
+          <h2 id="compare-title">{pick({ zh: "所有档位放在一张表里。", en: "All tiers in one table." })}</h2>
         </div>
         <div className="pricing-table-scroll" tabIndex={0} aria-label="定价对照表">
           <table className="pricing-table">
@@ -203,15 +202,12 @@ export default function Pricing() {
         </div>
       </section>
 
-      <section className="container about-section" aria-labelledby="pricing-cta-title">
-        <div className="contact-panel">
-          <div>
-            <h2 id="pricing-cta-title">{locale === "zh" ? "还没确定选哪一档？" : "Unsure which tier fits?"}</h2>
-            <p>{locale === "zh" ? "参加 Beta 调研，告诉我们任务规模、并发需求和媒体用量，我们会帮你判断合适档位。" : "Join Beta research and tell us task scale, concurrency, and media use; we can help you choose a tier."}</p>
-          </div>
-          <a className="button primary" href="../beta/">{locale === "zh" ? "参与调研" : "Join research"}</a>
-        </div>
-      </section>
+      <BetaCta
+        id="pricing-cta-title"
+        title={{ zh: "还没确定选哪一档？", en: "Unsure which tier fits?" }}
+        copy={{ zh: "参加 Beta 调研，告诉我们任务规模、并发需求和媒体用量，我们会帮你判断合适档位。", en: "Join Beta research and tell us task scale, concurrency, and media use; we can help you choose a tier." }}
+        action={{ zh: "参与调研", en: "Join research" }}
+      />
     </main>
   );
 }
