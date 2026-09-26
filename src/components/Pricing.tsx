@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {
   pricingFamilies,
+  pricingGroups,
   pricingPlans,
   pricingRules,
   type PlanFamily,
@@ -23,9 +24,21 @@ function familyTone(family: PlanFamily) {
   return "gray";
 }
 
+/* SparkPlan 的免费档做成通栏，其余四档并作一行 */
+function gridModifier(family: PlanFamily, count: number) {
+  if (family === "SparkPlan") return " pricing-grid-spark";
+  if (count === 2) return " pricing-grid-pair";
+  return "";
+}
+
 export default function Pricing() {
   const [activeFamily, setActiveFamily] = useState<PlanFamily>("SparkPlan");
-  const plans = pricingPlans.filter((item) => item.family === activeFamily);
+  const [variantIndex, setVariantIndex] = useState<Record<string, number>>({});
+  const groups = pricingGroups.filter((group) => group.family === activeFamily);
+
+  const selectVariant = (key: string, index: number) => {
+    setVariantIndex((prev) => ({ ...prev, [key]: index }));
+  };
 
   return (
     <main id="main" className="about-page pricing-page">
@@ -41,7 +54,7 @@ export default function Pricing() {
       <section className="container about-section" aria-labelledby="plans-title">
         <div className="section-head">
           <p className="eyebrow">订阅方案</p>
-          <h2 id="plans-title">三条产品线，十四个档位。</h2>
+          <h2 id="plans-title">三条产品线，从免费验证到团队生产。</h2>
         </div>
         <div className="pricing-tabs" role="tablist" aria-label="定价分组">
           {pricingFamilies.map((family) => (
@@ -62,44 +75,78 @@ export default function Pricing() {
         <p className="pricing-family-copy" aria-live="polite">
           {pricingFamilies.find((family) => family.id === activeFamily)?.description}
         </p>
-        <div className="pricing-grid" id="pricing-plan-grid" role="tabpanel" aria-labelledby={`pricing-tab-${activeFamily}`}>
-          {plans.map((item, index) => (
-            <article className={`pricing-card ${index === 0 ? "featured" : ""}`} key={`${item.family}-${item.tier}`}>
-              <div className="pricing-card-head">
-                <div>
-                  <p className={`tag ${familyTone(item.family)}`}>{item.family}</p>
-                  <h3>{item.tier}</h3>
+        <div
+          className={`pricing-grid${gridModifier(activeFamily, groups.length)}`}
+          id="pricing-plan-grid"
+          role="tabpanel"
+          aria-labelledby={`pricing-tab-${activeFamily}`}
+        >
+          {groups.map((group, groupIndex) => {
+            const key = `${group.family}-${group.name}`;
+            const activeIndex = variantIndex[key] ?? 0;
+            const variant = group.variants[activeIndex];
+
+            return (
+              <article className={`pricing-card ${groupIndex === 0 ? "featured" : ""}`} key={key}>
+                <div className="pricing-card-head">
+                  <div className="pricing-card-title">
+                    <p className={`tag ${familyTone(group.family)}`}>{group.family}</p>
+                    <div className="pricing-card-name">
+                      <h3>{group.name}</h3>
+                      {group.variants.length > 1 && (
+                        <div className="pricing-variants" role="radiogroup" aria-label={`${group.name} 档位`}>
+                          {group.variants.map((option, index) => {
+                            const selected = index === activeIndex;
+                            return (
+                              <button
+                                key={option.tier}
+                                type="button"
+                                role="radio"
+                                aria-checked={selected}
+                                className={selected ? "active" : ""}
+                                onClick={() => selectVariant(key, index)}
+                              >
+                                {option.label}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="pricing-price" aria-live="polite">
+                    <strong>¥{variant.price}</strong>
+                    <span>/{variant.period}</span>
+                  </div>
                 </div>
-                <div className="pricing-price">
-                  <strong>¥{item.price}</strong>
-                  <span>/{item.period}</span>
+                <div className="pricing-swap" key={variant.tier}>
+                  <p className="pricing-credits">
+                    <strong>{variant.credits}</strong>
+                    <span>积分</span>
+                  </p>
+                  <dl className="pricing-specs">
+                    <div>
+                      <dt>模型权益</dt>
+                      <dd>{variant.models}</dd>
+                    </div>
+                    <div>
+                      <dt>限速</dt>
+                      <dd>{variant.rateLimit}</dd>
+                    </div>
+                    <div>
+                      <dt>并行限制</dt>
+                      <dd>{variant.parallelLimit}</dd>
+                    </div>
+                    <div>
+                      <dt>媒体生成倍率</dt>
+                      <dd>{variant.mediaRate}</dd>
+                    </div>
+                  </dl>
+                  <p className="pricing-card-note">{variant.note}</p>
                 </div>
-              </div>
-              <p className="pricing-credits">
-                <strong>{item.credits}</strong>
-                <span>积分</span>
-              </p>
-              <dl className="pricing-specs">
-                <div>
-                  <dt>模型权益</dt>
-                  <dd>{item.models}</dd>
-                </div>
-                <div>
-                  <dt>限速</dt>
-                  <dd>{item.rateLimit}</dd>
-                </div>
-                <div>
-                  <dt>并行限制</dt>
-                  <dd>{item.parallelLimit}</dd>
-                </div>
-                <div>
-                  <dt>媒体生成倍率</dt>
-                  <dd>{item.mediaRate}</dd>
-                </div>
-              </dl>
-              <p className="pricing-card-note">{item.note}</p>
-            </article>
-          ))}
+              </article>
+            );
+          })}
         </div>
       </section>
 
