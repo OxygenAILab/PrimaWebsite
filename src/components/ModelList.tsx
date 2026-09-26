@@ -96,8 +96,8 @@ export default function ModelList() {
   const [betaOnly, setBetaOnly] = useState(false);
 
   const models = modelMatrix.filter((item) => item.regions.includes(activeRegion));
-  /* 厂商与它的 logo 一起取，区域级列表，不随筛选变化 */
-  const vendors = Array.from(new Map(models.map((item) => [item.vendor, item.icon])).entries());
+  /* 厂商轨用区域级分组：顺序即展示顺序，和下面的模型表同一套排法 */
+  const vendors = groupByVendor(models);
   const needle = query.trim().toLowerCase();
   const filtering = vendor !== "all" || betaOnly || needle !== "";
   const shown = models.filter((item) => {
@@ -207,16 +207,16 @@ export default function ModelList() {
             >
               {localText("model-list.allVendors", locale)}
             </button>
-            {vendors.map(([name, icon]) => (
+            {vendors.map((item) => (
               <button
-                key={name}
+                key={item.vendor}
                 type="button"
                 className="model-chip"
-                aria-pressed={vendor === name}
-                onClick={() => setVendor(name)}
+                aria-pressed={vendor === item.vendor}
+                onClick={() => setVendor(item.vendor)}
               >
-                {icon ? <img src={icon} alt="" width={14} height={14} loading="lazy" /> : null}
-                <span>{name}</span>
+                {item.icon ? <img src={item.icon} alt="" width={14} height={14} loading="lazy" /> : null}
+                <span>{item.vendor}</span>
               </button>
             ))}
           </div>

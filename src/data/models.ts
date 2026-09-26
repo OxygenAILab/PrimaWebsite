@@ -25,7 +25,7 @@ export function groupByVendor(entries: ModelEntry[]): VendorGroup[] {
     group.models.push(entry);
     groups.set(entry.vendor, group);
   }
-  return [...groups.values()];
+  return [...groups.values()].sort((a, b) => compareVendor(a.vendor, b.vendor));
 }
 
 export function isOverseasOnly(entry: ModelEntry) {
@@ -44,7 +44,8 @@ export function productLineOf(name: string) {
 }
 
 function generationKey(name: string) {
-  return (name.match(/\d+(?:\.\d+)*/g) ?? []).join(".");
+  /* 独立的四位数字是发布日期（DeepSeek V4 Pro 0813），不参与代际比较，否则 0813 会大过 4.1 */
+  return (name.match(/\d+(?:\.\d+)*/g) ?? []).filter((part) => !/^\d{4}$/.test(part)).join(".");
 }
 
 function compareGenerationDesc(a: string, b: string) {
@@ -192,6 +193,7 @@ const vendorCatalog: VendorSeed[] = [
   },
   {
     vendor: "Yosee",
+    icon: "/vendors/yosee.png",
     models: [
       {
         name: "Xiaobai 5 Pro",
@@ -216,3 +218,14 @@ export const modelMatrix: ModelEntry[] = vendorCatalog.flatMap((vendor) =>
     ...(model.note ? { note: model.note } : {}),
   })),
 );
+
+/* 厂商排序：在中国大陆有可用模型的算国产厂商。国产先 A→Z，海外再 A→Z，
+   判据用区域而不是手写名单，和页面上「其他地区独有」的口径是同一件事 */
+const mainlandVendors = new Set(
+  modelMatrix.filter((entry) => entry.regions.includes("china")).map((entry) => entry.vendor),
+);
+
+function compareVendor(a: string, b: string) {
+  const rank = (vendor: string) => (mainlandVendors.has(vendor) ? 0 : 1);
+  return rank(a) - rank(b) || a.localeCompare(b, "en");
+}
