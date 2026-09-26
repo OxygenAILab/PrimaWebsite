@@ -19,6 +19,8 @@ export default defineConfig({
         faq: resolve(__dirname, "faq/index.html"),
         security: resolve(__dirname, "security/index.html"),
         download: resolve(__dirname, "download/index.html"),
+        privacy: resolve(__dirname, "privacy/index.html"),
+        terms: resolve(__dirname, "terms/index.html"),
       },
     },
   },

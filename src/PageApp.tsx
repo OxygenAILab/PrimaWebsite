@@ -15,7 +15,9 @@ export type PrimaPage =
   | "model-list"
   | "faq"
   | "security"
-  | "download";
+  | "download"
+  | "privacy"
+  | "terms";
 
 export default function PageApp({ active, children }: { active: PrimaPage; children: ReactNode }) {
   const { locale } = useI18n();

@@ -54,6 +54,17 @@ const copy = {
     zh: "会。模型进入或离开支持范围时，这里会同步调整；不确定时请以最新页面为准。",
     en: "Yes. It updates as models enter or leave support; when uncertain, defer to the latest page.",
   },
+  "model-list.searchLabel": { zh: "搜索模型", en: "Search models" },
+  "model-list.searchPlaceholder": { zh: "搜索模型或供应商", en: "Search models or vendors" },
+  "model-list.filters": { zh: "筛选模型", en: "Filter models" },
+  "model-list.allVendors": { zh: "全部供应商", en: "All vendors" },
+  "model-list.betaOnly": { zh: "仅第一批内测", en: "Early Beta only" },
+  "model-list.filteredCount": { zh: "当前筛选显示 {count} / {total} 个模型。", en: "Showing {count} of {total} models." },
+  "model-list.emptyTitle": { zh: "没有匹配的模型", en: "No matching models" },
+  "model-list.emptyCopy": {
+    zh: "试试更换关键词或清空筛选条件；名单会随阶段更新。",
+    en: "Try a different keyword or clear filters; this list updates with each stage.",
+  },
 } satisfies Record<string, { zh: string; en: string }>;
 
 function localText(key: keyof typeof copy, locale: "zh" | "en", values?: Record<string, string | number>) {
@@ -77,7 +88,19 @@ function vendorClass(vendor: string) {
 export default function ModelList() {
   const { locale } = useI18n();
   const [activeRegion, setActiveRegion] = useState<RegionKey>("china");
-  const models = modelMatrix.filter((item) => item.regions.includes(activeRegion as ModelRegion));
+  const [query, setQuery] = useState("");
+  const [activeVendor, setActiveVendor] = useState<string | "all">("all");
+  const [betaOnly, setBetaOnly] = useState(false);
+
+  const regionModels = modelMatrix.filter((item) => item.regions.includes(activeRegion as ModelRegion));
+  const vendors = Array.from(new Set(regionModels.map((item) => item.vendor)));
+  const models = regionModels.filter((item) => {
+    const matchesVendor = activeVendor === "all" || item.vendor === activeVendor;
+    const matchesBeta = !betaOnly || item.beta;
+    const needle = query.trim().toLowerCase();
+    const matchesQuery = !needle || item.name.toLowerCase().includes(needle) || item.vendor.toLowerCase().includes(needle);
+    return matchesVendor && matchesBeta && matchesQuery;
+  });
 
   return (
     <main id="main" className="about-page model-list-page">
@@ -92,7 +115,7 @@ export default function ModelList() {
       <section className="container about-section" aria-labelledby="supported-models-title">
         <div className="section-head">
           <p className="eyebrow">{localText("model-list.supported", locale)}</p>
-          <h2 id="supported-models-title">{localText("model-list.count", locale, { count: models.length })}</h2>
+          <h2 id="supported-models-title">{localText("model-list.count", locale, { count: regionModels.length })}</h2>
         </div>
         <div className="pricing-tabs" role="tablist" aria-label="选择服务区域">
           {regions.map((region) => (
@@ -113,7 +136,57 @@ export default function ModelList() {
         <p className="model-region-copy" aria-live="polite">
           {regions.find((region) => region.id === activeRegion)?.description[locale]}
         </p>
+        <div className="model-toolbar">
+          <label className="search-shell" htmlFor="model-search">
+            <span className="visually-hidden">{localText("model-list.searchLabel", locale)}</span>
+            <input
+              id="model-search"
+              type="search"
+              value={query}
+              placeholder={localText("model-list.searchPlaceholder", locale)}
+              onChange={(event) => setQuery(event.target.value)}
+            />
+          </label>
+          <div className="filter-rail" role="group" aria-label={localText("model-list.filters", locale)}>
+            <button
+              type="button"
+              className={activeVendor === "all" ? "filter-chip active" : "filter-chip"}
+              aria-pressed={activeVendor === "all"}
+              onClick={() => setActiveVendor("all")}
+            >
+              {localText("model-list.allVendors", locale)}
+            </button>
+            {vendors.map((vendor) => (
+              <button
+                key={vendor}
+                type="button"
+                className={activeVendor === vendor ? "filter-chip active" : "filter-chip"}
+                aria-pressed={activeVendor === vendor}
+                onClick={() => setActiveVendor(vendor)}
+              >
+                {vendor}
+              </button>
+            ))}
+            <button
+              type="button"
+              className={betaOnly ? "filter-chip active" : "filter-chip"}
+              aria-pressed={betaOnly}
+              onClick={() => setBetaOnly((value) => !value)}
+            >
+              {localText("model-list.betaOnly", locale)}
+            </button>
+          </div>
+          <p className="model-filter-status" aria-live="polite">
+            {localText("model-list.filteredCount", locale, { count: models.length, total: regionModels.length })}
+          </p>
+        </div>
         <div className="model-grid" id="model-grid" role="tabpanel" aria-labelledby={`model-region-${activeRegion}`}>
+          {models.length === 0 && (
+            <article className="card model-empty">
+              <h3>{localText("model-list.emptyTitle", locale)}</h3>
+              <p>{localText("model-list.emptyCopy", locale)}</p>
+            </article>
+          )}
           {models.map((item) => (
             <article className="model-card" key={item.name}>
               <div className="model-head">

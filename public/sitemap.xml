@@ -11,4 +11,6 @@
   <url><loc>https://prima.oxygenai.top/beta/</loc><priority>0.8</priority></url>
   <url><loc>https://prima.oxygenai.top/about/</loc><priority>0.7</priority></url>
   <url><loc>https://prima.oxygenai.top/download/</loc><priority>0.6</priority></url>
+  <url><loc>https://prima.oxygenai.top/privacy/</loc><priority>0.5</priority></url>
+  <url><loc>https://prima.oxygenai.top/terms/</loc><priority>0.5</priority></url>
 </urlset>

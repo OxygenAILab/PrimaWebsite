@@ -16,6 +16,8 @@ import ModelList from "./components/ModelList";
 import Faq from "./components/Faq";
 import Security from "./components/Security";
 import Download from "./components/Download";
+import Privacy from "./components/Privacy";
+import Terms from "./components/Terms";
 import { I18nProvider } from "./i18n";
 import "./site.css";
 
@@ -38,6 +40,8 @@ const pageMap: Partial<Record<PrimaPage, React.ReactNode>> = {
   faq: <Faq />,
   security: <Security />,
   download: <Download />,
+  privacy: <Privacy />,
+  terms: <Terms />,
 };
 
 createRoot(rootElement).render(

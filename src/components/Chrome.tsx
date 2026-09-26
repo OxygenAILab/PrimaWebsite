@@ -14,7 +14,9 @@ type PageId =
   | "model-list"
   | "faq"
   | "security"
-  | "download";
+  | "download"
+  | "privacy"
+  | "terms";
 
 function Announce() {
   const { locale, t } = useI18n();
@@ -65,6 +67,8 @@ export function Header({ active = "home" }: { active?: PageId }) {
     faq: { zh: "常见问题", en: "FAQ" },
     security: { zh: "数据边界", en: "Data boundaries" },
     download: { zh: "下载", en: "Download" },
+    privacy: { zh: "隐私", en: "Privacy" },
+    terms: { zh: "条款", en: "Terms" },
   };
 
   useEffect(() => {
@@ -91,7 +95,13 @@ export function Header({ active = "home" }: { active?: PageId }) {
           </a>
           <nav className="site-nav" aria-label={locale === "zh" ? "主导航" : "Main navigation"}>
             {navItems.map((item) => (
-              <a key={item.id} href={navHref(item.id, active)}>{navLabels[item.id][locale]}</a>
+              <a
+                key={item.id}
+                href={navHref(item.id, active)}
+                aria-current={item.id === active ? "page" : undefined}
+              >
+                {navLabels[item.id][locale]}
+              </a>
             ))}
           </nav>
           <a
@@ -143,6 +153,11 @@ export function Header({ active = "home" }: { active?: PageId }) {
 export function Footer({ active = "home" }: { active?: PageId }) {
   const { locale, t } = useI18n();
 
+  const scrollToTop = () => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
+  };
+
   return (
     <footer className="site-footer">
       <div className="container footer-grid">
@@ -164,6 +179,8 @@ export function Footer({ active = "home" }: { active?: PageId }) {
           <a href={active === "home" ? "./security/" : "../security/"}>{locale === "zh" ? "数据边界" : "Data boundaries"}</a>
           <a href={active === "home" ? "./beta/" : "../beta/"}>{locale === "zh" ? "Beta 调研" : "Beta research"}</a>
           <a href={active === "home" ? "./download/" : "../download/"}>{locale === "zh" ? "下载" : "Download"}</a>
+          <a href={active === "home" ? "./privacy/" : "../privacy/"}>{locale === "zh" ? "隐私" : "Privacy"}</a>
+          <a href={active === "home" ? "./terms/" : "../terms/"}>{locale === "zh" ? "条款" : "Terms"}</a>
         </nav>
         <nav aria-label={locale === "zh" ? "参与入口" : "Participation links"}>
           <a href={siteConfig.oxygenUrl} target="_blank" rel="noopener noreferrer">Oxygen AI</a>
@@ -175,6 +192,14 @@ export function Footer({ active = "home" }: { active?: PageId }) {
       <div className="container footer-bottom">
         <p>&copy; 2026 Oxygen AI</p>
         <p>{locale === "zh" ? "产品仍在打磨，能力描述不代表已经可用；反馈仅用于产品研究与 Beta 招募。" : "The product is still being refined; descriptions do not imply availability. Feedback is used only for product research and Beta recruitment."}</p>
+        <button
+          type="button"
+          className="back-to-top"
+          onClick={scrollToTop}
+          aria-label={locale === "zh" ? "返回顶部" : "Back to top"}
+        >
+          ↑
+        </button>
       </div>
     </footer>
   );
