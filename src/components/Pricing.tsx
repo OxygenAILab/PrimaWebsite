@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   pricingFamilies,
   pricingGroups,
@@ -12,6 +12,24 @@ import { useI18n } from "../i18n";
 import type { Localized } from "../data/content";
 
 /* 卡片与对照表共用同一份规格字段，避免两处各写一遍标签 */
+const RATE_CACHE_KEY = "prima-usd-rate";
+const RATE_CACHE_TTL_MS = 60 * 60 * 1000;
+
+type RateCache = { rate: number; timestamp: number };
+
+function readCachedRate(): number | null {
+  try {
+    const raw = window.sessionStorage.getItem(RATE_CACHE_KEY);
+    if (!raw) return null;
+    const cache = JSON.parse(raw) as RateCache;
+    if (typeof cache.rate !== "number" || cache.rate <= 0) return null;
+    if (!Number.isFinite(cache.timestamp) || Date.now() - cache.timestamp > RATE_CACHE_TTL_MS) return null;
+    return cache.rate;
+  } catch {
+    return null;
+  }
+}
+
 const specFields: Array<{
   key: "models" | "rateLimit" | "parallelLimit" | "mediaRate";
   label: Localized;
@@ -43,19 +61,54 @@ function gridModifier(family: PlanFamily, count: number) {
   return "";
 }
 
-function currency(variant: { price: string; usdPrice: string }, locale: "zh" | "en") {
-  return locale === "en" ? `$${variant.usdPrice}` : `¥${variant.price}`;
+function currency(variant: { price: string; usdPrice: string }, locale: "zh" | "en", rate: number | null) {
+  if (locale !== "en") return `¥${variant.price}`;
+  if (rate && rate > 0) {
+    const cny = parseFloat(variant.price.replace(/,/g, ""));
+    if (Number.isFinite(cny) && cny > 0) {
+      const usd = cny * rate;
+      const whole = Math.floor(usd);
+      return whole >= 1 ? `$${whole}.99` : "$0.99";
+    }
+    return "$0";
+  }
+  return `$${variant.usdPrice}`;
 }
 
 export default function Pricing() {
   const { locale, pick } = useI18n();
   const [activeFamily, setActiveFamily] = useState<PlanFamily>("SparkPlan");
   const [variantIndex, setVariantIndex] = useState<Record<string, number>>({});
+  const [usdRate, setUsdRate] = useState<number | null>(() => readCachedRate());
   const groups = pricingGroups.filter((group) => group.family === activeFamily);
 
   const selectVariant = (key: string, index: number) => {
     setVariantIndex((prev) => ({ ...prev, [key]: index }));
   };
+
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      try {
+        const response = await fetch("https://open.er-api.com/v6/latest/CNY", {
+          signal: AbortSignal.timeout(5000),
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const data = (await response.json()) as { result?: string; rates?: { USD?: number } };
+        if (data.result !== "success" || !data.rates?.USD || data.rates.USD <= 0) {
+          throw new Error("rate unavailable");
+        }
+        const rate = data.rates.USD;
+        if (!active) return;
+        window.sessionStorage.setItem(RATE_CACHE_KEY, JSON.stringify({ rate, timestamp: Date.now() }));
+        setUsdRate(rate);
+      } catch {
+        if (active) setUsdRate(null);
+      }
+    })();
+
+    return () => { active = false; };
+  }, []);
 
   return (
     <main id="main" className="about-page">
@@ -138,7 +191,7 @@ export default function Pricing() {
                     </div>
                   </div>
                   <div className="pricing-price" aria-live="polite">
-                    <strong>{currency(variant, locale)}</strong>
+                    <strong>{currency(variant, locale, usdRate)}</strong>
                     <span>/{variant.period[locale]}</span>
                   </div>
                 </div>
@@ -197,7 +250,7 @@ export default function Pricing() {
                 <tr key={`${item.family}-${item.tier}`}>
                   <th scope="row">{item.family}</th>
                   <td>{item.tier}</td>
-                  <td>{currency(item, locale)}<span> / {item.period[locale]}</span></td>
+                  <td>{currency(item, locale, usdRate)}<span> / {item.period[locale]}</span></td>
                   <td>{item.credits}</td>
                   <td>{item.models[locale]}</td>
                   <td>{item.rateLimit[locale]}</td>
