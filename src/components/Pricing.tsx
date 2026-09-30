@@ -43,6 +43,10 @@ function gridModifier(family: PlanFamily, count: number) {
   return "";
 }
 
+function currency(variant: { price: string; usdPrice: string }, locale: "zh" | "en") {
+  return locale === "en" ? `$${variant.usdPrice}` : `¥${variant.price}`;
+}
+
 export default function Pricing() {
   const { locale, pick } = useI18n();
   const [activeFamily, setActiveFamily] = useState<PlanFamily>("SparkPlan");
@@ -134,7 +138,7 @@ export default function Pricing() {
                     </div>
                   </div>
                   <div className="pricing-price" aria-live="polite">
-                    <strong>¥{variant.price}</strong>
+                    <strong>{currency(variant, locale)}</strong>
                     <span>/{variant.period[locale]}</span>
                   </div>
                 </div>
@@ -193,7 +197,7 @@ export default function Pricing() {
                 <tr key={`${item.family}-${item.tier}`}>
                   <th scope="row">{item.family}</th>
                   <td>{item.tier}</td>
-                  <td>¥{item.price}<span> / {item.period[locale]}</span></td>
+                  <td>{currency(item, locale)}<span> / {item.period[locale]}</span></td>
                   <td>{item.credits}</td>
                   <td>{item.models[locale]}</td>
                   <td>{item.rateLimit[locale]}</td>
