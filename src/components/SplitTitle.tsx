@@ -22,12 +22,14 @@ export default function SplitTitle({ id, lead, stress, as: Tag = "h1" }: SplitTi
 
 /* 中文可以任意字间断行，整句标题会被拦腰截断。
    按逗号切成语义块，块内禁止换行，换行只发生在停顿处；
-   西文本就按词断行，交给 text-wrap 处理。 */
+   西文本就按词断行，不套 .phrase —— 整句被 nowrap 会在中等宽度下溢出被裁 */
 export function PhraseTitle({ id, title }: { id?: string; title: Localized }) {
   const { locale, pick } = useI18n();
   const text = pick(title);
-  const clauses = locale === "zh" ? text.split("，") : [text];
 
+  if (locale !== "zh") return <h2 id={id}>{text}</h2>;
+
+  const clauses = text.split("，");
   return (
     <h2 id={id}>
       {clauses.map((clause, i) => (

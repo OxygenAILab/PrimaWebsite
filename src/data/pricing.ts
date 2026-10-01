@@ -2,7 +2,7 @@ import type { Localized } from "./content";
 
 export type PlanFamily = "SparkPlan" | "PrimaPlan" | "Credit+";
 
-export type PricingVariant = {
+type PricingVariant = {
   tier: string;
   label: string;
   price: string;
@@ -16,13 +16,13 @@ export type PricingVariant = {
   note: Localized;
 };
 
-export type PricingGroup = {
+type PricingGroup = {
   family: PlanFamily;
   name: string;
   variants: PricingVariant[];
 };
 
-export type PricingPlan = PricingVariant & { family: PlanFamily };
+type PricingPlan = PricingVariant & { family: PlanFamily };
 
 /* 多档共用的取值集中一处，避免同一段文案在表里抄十遍 */
 const uni = (value: string): Localized => ({ zh: value, en: value });

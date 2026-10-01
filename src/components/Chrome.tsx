@@ -191,14 +191,16 @@ export function Header({ active = "home" }: { active?: PrimaPage }) {
   );
 }
 
-const footerPages: Array<{ path: string; label: Localized }> = [
+/* 页脚链接分三列：项目 / 产品 / 参与。分组只为三列高度齐平，条目本身不增不减 */
+const footerProject: Array<{ path: string; label: Localized }> = [
   { path: "how-it-works/", label: { zh: "工作方式", en: "How it works" } },
   { path: "scenarios/", label: { zh: "使用场景", en: "Scenarios" } },
   { path: "roadmap/", label: { zh: "路线图", en: "Roadmap" } },
+];
+const footerProduct: Array<{ path: string; label: Localized }> = [
   { path: "pricing/", label: { zh: "定价", en: "Pricing" } },
   { path: "model-list/", label: { zh: "模型列表", en: "Model list" } },
   { path: "security/", label: { zh: "数据边界", en: "Data boundaries" } },
-  { path: "beta/", label: { zh: "Beta 调研", en: "Beta research" } },
   { path: "download/", label: { zh: "下载", en: "Download" } },
 ];
 
@@ -219,16 +221,24 @@ export function Footer({ active = "home" }: { active?: PrimaPage }) {
         <nav aria-label={pick({ zh: "项目导航", en: "Project navigation" })}>
           {active === "home" ? <a href="./about/">{pick({ zh: "关于项目", en: "About" })}</a> : <a href="../">{pick({ zh: "返回首页", en: "Back home" })}</a>}
           <a href={active === "home" ? "#capabilities" : "../#capabilities"}>{pick({ zh: "核心能力", en: "Capabilities" })}</a>
-          {footerPages.map((item) => (
+          {footerProject.map((item) => (
+            <a key={item.path} href={fromPage(active, item.path)}>
+              {item.label[locale]}
+            </a>
+          ))}
+        </nav>
+        <nav aria-label={pick({ zh: "产品导航", en: "Product navigation" })}>
+          {footerProduct.map((item) => (
             <a key={item.path} href={fromPage(active, item.path)}>
               {item.label[locale]}
             </a>
           ))}
         </nav>
         <nav aria-label={pick({ zh: "参与入口", en: "Participation links" })}>
+          <a href={fromPage(active, "beta/")}>{pick({ zh: "Beta 调研", en: "Beta research" })}</a>
+          <a href={siteConfig.surveyUrl} target="_blank" rel="noopener noreferrer">{t("cta.joinBeta")}</a>
           <a href={siteConfig.oxygenUrl} target="_blank" rel="noopener noreferrer">Oxygen AI</a>
           <a href="https://oxygenai.top/progress/" target="_blank" rel="noopener noreferrer">{pick({ zh: "模型研究", en: "Model research" })}</a>
-          <a href={siteConfig.surveyUrl} target="_blank" rel="noopener noreferrer">{t("cta.joinBeta")}</a>
           <a href="mailto:prima@oxygenai.top">prima@oxygenai.top</a>
         </nav>
       </div>

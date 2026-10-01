@@ -146,7 +146,8 @@ h2 {
   letter-spacing: 0;
   text-wrap: balance;
 }
-/* 中文标题的换行只落在逗号处；窄屏一行装不下时退回自然换行 */
+/* 中文标题的换行只落在逗号处；窄屏一行装不下时退回自然换行。
+   .phrase 只由 PhraseTitle 在中英两路里给中文加，西文不套这层 */
 .phrase { white-space: nowrap; }
 h3 {
   font-family: var(--font-sans);
@@ -832,6 +833,8 @@ main,
   margin-bottom: 40px;
 }
 .cta-section .hero-actions { justify-content: center; }
+/* 说明行左对齐：三条共用一条左边线，折行也落在同一条竖线上；
+   整块用 margin auto 居中，与上面居中排的标题、正文同轴 */
 .benefit-list {
   list-style: none;
   padding: 0;
@@ -1063,7 +1066,7 @@ main,
 }
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.6fr 1fr 1fr;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
   gap: 48px;
   padding-bottom: 48px;
   border-bottom: 1px solid var(--hairline-light);
@@ -1083,10 +1086,12 @@ main,
   color: rgba(255, 255, 255, .55);
   line-height: 1.7;
 }
+/* align-content:start：链接少的列不再被网格拉伸行高，否则 4 条链接会散成 80px 间距 */
 .site-footer nav {
   display: grid;
   gap: 10px;
   justify-items: start;
+  align-content: start;
 }
 .site-footer nav a { color: rgba(255, 255, 255, .6); font-size: .88rem; }
 .site-footer nav a:hover { color: var(--white); }
@@ -1101,7 +1106,8 @@ main,
   color: rgba(255, 255, 255, .58);
 }
 .footer-bottom p { margin: 0; }
-.footer-legal {
+/* 选择器带上 .site-footer：否则被上面的 .site-footer nav{display:grid} 盖掉，法务链接会竖成一列 */
+.site-footer .footer-legal {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -1752,9 +1758,8 @@ button.model-chip[aria-pressed="true"] {
   color: rgba(255, 255, 255, .92);
   margin-bottom: 8px;
 }
-.update-card {
-  transition-delay: var(--reveal-delay, 0ms);
-}
+/* 更新卡不单独做 reveal（.reveal 在 .card-grid 上），
+   这里再继承 --reveal-delay 只会把 hover 的位移一起拖慢 */
 .update-card .news-meta {
   margin-bottom: 12px;
 }

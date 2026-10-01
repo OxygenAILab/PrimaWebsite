@@ -1,18 +1,17 @@
 import type { Localized } from "./content";
 
 export type ModelRegion = "china" | "global";
-export type ModelNote = Localized;
 
-export type ModelEntry = {
+type ModelEntry = {
   name: string;
   vendor: string;
   regions: ModelRegion[];
   beta: boolean;
   icon?: string;
-  note?: ModelNote;
+  note?: Localized;
 };
 
-export type VendorGroup = {
+type VendorGroup = {
   vendor: string;
   icon?: string;
   models: ModelEntry[];
@@ -36,7 +35,7 @@ export function isOverseasOnly(entry: ModelEntry) {
 const variantSuffixes = ["preview", "turbo", "flash", "max", "pro", "sol", "terra", "astra"];
 
 /* 产品线：去掉版本号与变体后缀。Qwen 3.8 Max → Qwen；Claude Opus 4.7 → Claude Opus */
-export function productLineOf(name: string) {
+function productLineOf(name: string) {
   return name
     .split(" ")
     .filter((word) => !/\d/.test(word) && !variantSuffixes.includes(word.toLowerCase()))
@@ -58,8 +57,8 @@ function compareGenerationDesc(a: string, b: string) {
   return 0;
 }
 
-export type ModelGeneration = { key: string; models: ModelEntry[] };
-export type ModelLine = { line: string; generations: ModelGeneration[] };
+type ModelGeneration = { key: string; models: ModelEntry[] };
+type ModelLine = { line: string; generations: ModelGeneration[] };
 
 /* 产品线成列、代际成行，代际内从新到旧 */
 export function groupByLine(entries: ModelEntry[]): ModelLine[] {
@@ -79,7 +78,7 @@ export function groupByLine(entries: ModelEntry[]): ModelLine[] {
   return [...lines.values()];
 }
 
-type ModelSeed = { name: string; beta: boolean; regions?: ModelRegion[]; note?: ModelNote };
+type ModelSeed = { name: string; beta: boolean; regions?: ModelRegion[]; note?: Localized };
 type VendorSeed = { vendor: string; icon?: string; models: ModelSeed[] };
 
 const mainlandAndGlobal: ModelRegion[] = ["china", "global"];
