@@ -16,7 +16,12 @@ import Security from "./components/Security";
 import Download from "./components/Download";
 import { Privacy, Terms } from "./components/Legal";
 import { I18nProvider } from "./i18n";
+import OfflineBanner from "./components/OfflineBanner";
 import "./site.css";
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/sw.js").catch(() => {});
+}
 
 const rootElement = document.getElementById("root");
 
@@ -46,6 +51,7 @@ const page = pageMap[pageId];
 createRoot(rootElement).render(
   <StrictMode>
     <I18nProvider>
+      <OfflineBanner />
       {page ? <PageApp active={pageId}>{page}</PageApp> : <App />}
     </I18nProvider>
   </StrictMode>,
