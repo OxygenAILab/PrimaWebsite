@@ -244,6 +244,21 @@ h3 {
   overflow: hidden;
   border: 0;
 }
+.offline-banner {
+  position: sticky;
+  top: 0;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 36px;
+  padding: 8px 16px;
+  background: var(--brand-dark);
+  color: var(--white);
+  font-size: .82rem;
+  text-align: center;
+}
 .language-switch {
   display: inline-flex;
   align-items: center;
