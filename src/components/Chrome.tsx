@@ -80,7 +80,7 @@ export function Header({ active = "home" }: { active?: PrimaPage }) {
       <Announce />
       <header className="site-header" id="top">
         <div className="container header-inner">
-          <a className="brand" href={active === "beta" ? "../" : "#top"} aria-label={pick({ zh: `${siteConfig.brandShortName} 首页`, en: `${siteConfig.brandShortName} home` })}>
+          <a className="brand" href="/" aria-label={pick({ zh: `${siteConfig.brandShortName} 首页`, en: `${siteConfig.brandShortName} home` })}>
             <img className="brand-mark" src={logoImage} alt="" width={30} height={30} />
             <span>{siteConfig.brandShortName}</span>
           </a>
@@ -211,10 +211,10 @@ export function Footer({ active = "home" }: { active?: PrimaPage }) {
     <footer className="site-footer">
       <div className="container footer-grid">
         <div>
-          <p className="footer-brand">
+          <a className="footer-brand" href="/" aria-label={pick({ zh: `${siteConfig.brandShortName} 首页`, en: `${siteConfig.brandShortName} home` })}>
             <img className="footer-logo" src={logoImage} alt="" width={28} height={28} />
             {siteConfig.brandShortName}
-          </p>
+          </a>
           <p>{pick({ zh: "面向真实长任务的 AI Agent，现在处于早期共创阶段。", en: "An AI Agent for real long tasks, currently in early co-creation." })}</p>
           <p className="footer-slogan">{t("prima.slogan")}</p>
         </div>
@@ -238,6 +238,7 @@ export function Footer({ active = "home" }: { active?: PrimaPage }) {
           <a href={fromPage(active, "beta/")}>{pick({ zh: "Beta 调研", en: "Beta research" })}</a>
           <a href={siteConfig.surveyUrl} target="_blank" rel="noopener noreferrer">{t("cta.joinBeta")}</a>
           <a href={siteConfig.oxygenUrl} target="_blank" rel="noopener noreferrer">Oxygen AI</a>
+          <a href={siteConfig.labUrl} target="_blank" rel="noopener noreferrer">OxygenAI Lab</a>
           <a href="https://oxygenai.top/progress/" target="_blank" rel="noopener noreferrer">{pick({ zh: "模型研究", en: "Model research" })}</a>
           <a href="mailto:prima@oxygenai.top">prima@oxygenai.top</a>
         </nav>
