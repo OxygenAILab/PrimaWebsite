@@ -4,6 +4,7 @@ export const siteConfig = {
   brandShortName: "Prima",
   oxygenUrl: "https://oxygenai.top/",
   labUrl: "https://lab.oxygenai.top/",
+  primaHubUrl: "https://hub.primaai.top/",
   surveyUrl: "https://v.wjx.cn/vm/miVoicp.aspx#",
   betaStatus: {
     zh: "早期共创 · Beta 调研中",
