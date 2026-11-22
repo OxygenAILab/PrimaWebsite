@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import SplitTitle from "./SplitTitle";
+import { siteConfig } from "../config";
 import { useI18n } from "../i18n";
 
 type Release = {
@@ -163,7 +164,10 @@ export default function Download() {
                 ? { zh: "已经准备好。", en: "are ready." }
                 : open
                   ? { zh: "使用 OxygenAccount 验证资格。", en: "Verify with OxygenAccount." }
-                  : { zh: "将于今日 17:00 开放。", en: "opens today at 17:00." }
+                  : {
+                      zh: `将于${siteConfig.alphaOpenLabel.zh} 开放。`,
+                      en: `opens ${siteConfig.alphaOpenLabel.en}.`,
+                    }
             }
           />
           <p className="lead">
@@ -186,7 +190,7 @@ export default function Download() {
                 dateStyle: "medium",
                 timeStyle: "short",
                 timeZone: "Asia/Shanghai",
-              }).format(new Date(status?.open_at ?? "2026-11-22T09:00:00.000Z"))}
+              }).format(new Date(status?.open_at ?? siteConfig.alphaOpenAt))}
               {" · UTC+8"}
             </span>
           </div>

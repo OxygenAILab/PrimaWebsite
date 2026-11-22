@@ -33,15 +33,15 @@ const navEntries: NavEntry[] = [
   { id: "beta", page: "beta", label: { zh: "Beta 调研", en: "Beta research" } },
 ];
 
+const alphaOpenAt = Date.parse(siteConfig.alphaOpenAt);
+
 function Announce() {
   const { locale } = useI18n();
-  const [opened, setOpened] = useState(
-    () => Date.now() >= Date.parse("2026-11-22T17:00:00+08:00"),
-  );
+  const [opened, setOpened] = useState(() => Date.now() >= alphaOpenAt);
 
   useEffect(() => {
     const tick = window.setInterval(
-      () => setOpened(Date.now() >= Date.parse("2026-11-22T17:00:00+08:00")),
+      () => setOpened(Date.now() >= alphaOpenAt),
       30_000,
     );
     return () => window.clearInterval(tick);
@@ -55,8 +55,8 @@ function Announce() {
             ? "Prima Alpha Test 已开放，查看下载与内测资格 →"
             : "Prima Alpha Test is open. View downloads and eligibility →"
           : locale === "zh"
-            ? "Prima Alpha Test 今日 17:00 开放，查看下载页 →"
-            : "Prima Alpha Test opens today at 17:00. View downloads →"}
+            ? `Prima Alpha Test ${siteConfig.alphaOpenLabel.zh} 开放，查看下载页 →`
+            : `Prima Alpha Test opens ${siteConfig.alphaOpenLabel.en}. View downloads →`}
       </a>
     </div>
   );

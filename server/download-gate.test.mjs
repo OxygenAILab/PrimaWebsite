@@ -43,7 +43,7 @@ test("signed cookies reject tampering and expiry", () => {
 });
 
 test("opening time is inclusive and based on the supplied clock", () => {
-  const openAt = Date.parse("2026-11-22T17:00:00+08:00");
+  const openAt = Date.parse("2026-11-22T20:00:00+08:00");
   assert.equal(isOpenAt(openAt, openAt - 1), false);
   assert.equal(isOpenAt(openAt, openAt), true);
 });
@@ -116,10 +116,10 @@ test("OAuth callback issues a scoped session and streams whitelisted bytes", asy
   });
   const issuerPort = await listen(account);
   issuer = `http://127.0.0.1:${issuerPort}`;
-  const now = Date.parse("2026-11-22T17:00:01+08:00");
+  const now = Date.parse("2026-11-22T20:00:01+08:00");
   const secret = "s".repeat(48);
   const config = {
-    openAt: Date.parse("2026-11-22T17:00:00+08:00"),
+    openAt: Date.parse("2026-11-22T20:00:00+08:00"),
     publicUrl: "http://127.0.0.1:1",
     issuer,
     clientId: "oa_test",
@@ -177,7 +177,7 @@ test("OAuth callback issues a scoped session and streams whitelisted bytes", asy
 
 test("closed gate does not start a login flow", async () => {
   const config = {
-    openAt: Date.parse("2026-11-22T17:00:00+08:00"),
+    openAt: Date.parse("2026-11-22T20:00:00+08:00"),
     publicUrl: "http://127.0.0.1:1",
     issuer: "http://127.0.0.1:2",
     clientId: "oa_test",
@@ -193,7 +193,7 @@ test("closed gate does not start a login flow", async () => {
   };
   const gate = createDownloadGate({
     config,
-    now: () => Date.parse("2026-11-22T16:59:59+08:00"),
+    now: () => Date.parse("2026-11-22T19:59:59+08:00"),
   });
   const port = await listen(gate);
   try {
