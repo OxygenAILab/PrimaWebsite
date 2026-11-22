@@ -2248,3 +2248,275 @@ h3 {
   .about-page { padding: 72px 0 96px; }
   .about-section { margin-bottom: 80px; }
 }
+
+/* ---------- Alpha download gate ---------- */
+/* GitH ub@OxygenAI Lab | Oxyg enAILab@Starsails Clover */
+.download-hero {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  align-items: end;
+  min-height: 56svh;
+  padding-bottom: 64px;
+  margin-bottom: 64px;
+}
+.download-hero-copy { grid-column: 1 / span 7; align-self: end; }
+.download-hero-copy .lead { max-width: 56ch; margin-bottom: 0; }
+.download-gate-panel {
+  grid-column: 9 / -1;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 28px;
+  min-height: 300px;
+  padding: 20px 0 4px;
+  border-top: 1px solid var(--border);
+}
+.download-gate-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.download-gate-head .tag { margin: 0; }
+.download-gate-time {
+  color: var(--ink-3);
+  font-size: .78rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.download-countdown {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 18px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  font-variant-numeric: tabular-nums;
+}
+.download-countdown span {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  color: var(--ink-3);
+  font-size: .78rem;
+}
+.download-countdown strong {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4.5vw, 62px);
+  font-weight: 500;
+  line-height: 1;
+}
+.download-countdown i {
+  color: var(--ink-3);
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-style: normal;
+}
+.download-gate-loading {
+  min-height: 120px;
+  display: grid;
+  align-content: center;
+  gap: 12px;
+}
+.download-gate-loading span {
+  display: block;
+  width: 100%;
+  height: 10px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, rgba(var(--brand-rgb), .07), rgba(var(--brand-rgb), .16), rgba(var(--brand-rgb), .07));
+  background-size: 220% 100%;
+  animation: download-loading 1.5s linear infinite;
+}
+.download-gate-loading span:nth-child(2) { width: 72%; }
+.download-gate-loading span:nth-child(3) { width: 48%; }
+@keyframes download-loading {
+  from { background-position: 100% 0; }
+  to { background-position: -100% 0; }
+}
+.download-gate-message,
+.download-signin,
+.download-account {
+  display: grid;
+  gap: 20px;
+  align-content: end;
+  min-height: 160px;
+}
+.download-gate-message p,
+.download-signin p {
+  color: var(--ink-2);
+  font-size: .94rem;
+  line-height: 1.72;
+}
+.download-signin .button,
+.download-gate-message .button {
+  width: fit-content;
+  min-height: 44px;
+}
+.download-account {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+}
+.download-account strong {
+  display: block;
+  overflow-wrap: anywhere;
+  font-size: .93rem;
+}
+.download-account-label {
+  margin-bottom: 6px;
+  color: var(--brand-dark);
+  font-size: .76rem;
+  font-weight: 600;
+}
+.download-auth-error {
+  padding-top: 14px;
+  border-top: 1px solid rgba(145, 41, 63, .22);
+  color: #81243a;
+  font-size: .82rem;
+  line-height: 1.55;
+}
+.download-files { padding-top: 8px; }
+.download-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  border-top: 1px solid var(--border);
+}
+.download-item {
+  grid-column: span 6;
+  display: grid;
+  align-content: start;
+  gap: 18px;
+  min-width: 0;
+  padding: 28px 32px 32px 0;
+  border-bottom: 1px solid var(--border);
+}
+.download-item:nth-child(even) {
+  padding-right: 0;
+  padding-left: 32px;
+  border-left: 1px solid var(--border);
+}
+.download-item-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+.download-item-head .tag { margin: 0; }
+.download-platform {
+  margin-bottom: 5px;
+  color: var(--ink-3);
+  font-size: .78rem;
+  font-weight: 600;
+}
+.download-item h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 500;
+}
+.download-filename {
+  min-height: 2.8em;
+  overflow-wrap: anywhere;
+  color: var(--ink-2);
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  line-height: 1.55;
+}
+.download-specs {
+  display: grid;
+  grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr);
+  gap: 16px;
+  margin: 0;
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.download-specs div { min-width: 0; }
+.download-specs dt {
+  margin-bottom: 4px;
+  color: var(--ink-3);
+  font-size: .72rem;
+}
+.download-specs dd {
+  margin: 0;
+  overflow: hidden;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.download-button {
+  width: 100%;
+  min-height: 44px;
+}
+.download-button:disabled {
+  cursor: not-allowed;
+  opacity: .55;
+}
+.download-preview {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.download-preview span {
+  min-height: 132px;
+  display: flex;
+  align-items: flex-end;
+  padding: 20px 24px 24px 0;
+  color: var(--ink-3);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+}
+.download-preview span + span {
+  padding-left: 24px;
+  border-left: 1px solid var(--border);
+}
+
+@media (max-width: 960px) {
+  .download-hero-copy,
+  .download-gate-panel { grid-column: 1 / -1; }
+  .download-gate-panel {
+    min-height: 0;
+    margin-top: 24px;
+  }
+  .download-countdown strong { font-size: clamp(38px, 9vw, 58px); }
+  .download-item { grid-column: span 6; }
+}
+
+@media (max-width: 720px) {
+  .download-hero { min-height: 0; padding-bottom: 48px; margin-bottom: 48px; }
+  .download-gate-head { align-items: flex-start; }
+  .download-gate-time { max-width: 16ch; }
+  .download-countdown { justify-content: flex-start; gap: 10px; }
+  .download-countdown strong { font-size: clamp(30px, 12vw, 48px); }
+  .download-countdown i { font-size: 24px; }
+  .download-account {
+    grid-template-columns: 1fr;
+  }
+  .download-account form .button { width: 100%; }
+  .download-item,
+  .download-item:nth-child(even) {
+    grid-column: 1 / -1;
+    padding: 24px 0 28px;
+    border-left: 0;
+  }
+  .download-preview { grid-template-columns: 1fr; }
+  .download-preview span {
+    min-height: 76px;
+    padding: 18px 0;
+  }
+  .download-preview span + span {
+    padding-left: 0;
+    border-top: 1px solid var(--border);
+    border-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .download-gate-loading span { animation: none; }
+}

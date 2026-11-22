@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "test:gate": "node --test server/download-gate.test.mjs",
+    "start:gate": "node server/download-gate.mjs"
   },
   "dependencies": {
     "@fontsource/lora": "^5.3.0",

@@ -34,12 +34,29 @@ const navEntries: NavEntry[] = [
 ];
 
 function Announce() {
-  const { t } = useI18n();
+  const { locale } = useI18n();
+  const [opened, setOpened] = useState(
+    () => Date.now() >= Date.parse("2026-11-22T17:00:00+08:00"),
+  );
+
+  useEffect(() => {
+    const tick = window.setInterval(
+      () => setOpened(Date.now() >= Date.parse("2026-11-22T17:00:00+08:00")),
+      30_000,
+    );
+    return () => window.clearInterval(tick);
+  }, []);
 
   return (
     <div className="announce">
-      <a href={siteConfig.surveyUrl} target="_blank" rel="noopener noreferrer">
-        {t("announce.beta")}
+      <a href="/download/">
+        {opened
+          ? locale === "zh"
+            ? "Prima Alpha Test 已开放，查看下载与内测资格 →"
+            : "Prima Alpha Test is open. View downloads and eligibility →"
+          : locale === "zh"
+            ? "Prima Alpha Test 今日 17:00 开放，查看下载页 →"
+            : "Prima Alpha Test opens today at 17:00. View downloads →"}
       </a>
     </div>
   );

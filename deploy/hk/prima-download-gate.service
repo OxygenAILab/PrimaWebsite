@@ -1,0 +1,20 @@
+[Unit]
+Description=Prima alpha download gate
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/prima-download-gate
+EnvironmentFile=/opt/prima-download-gate/prima-download-gate.env
+ExecStart=/usr/local/bin/node /opt/prima-download-gate/download-gate.mjs
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadOnlyPaths=/opt/1panel/www/sites/lab.oxygenai.top/index/releases
+
+[Install]
+WantedBy=multi-user.target
