@@ -16,7 +16,7 @@ const SESSION_COOKIE = "prima_download_session";
 const FLOW_COOKIE = "prima_download_flow";
 const SESSION_TTL_SECONDS = 60 * 60;
 const FLOW_TTL_SECONDS = 10 * 60;
-const DEFAULT_OPEN_AT = "2026-11-22T20:00:00+08:00";
+const DEFAULT_OPEN_AT = "2026-11-22T20:45:00+08:00";
 const DEFAULT_ALPHA_ACCOUNTS = [
   ["01ae2e62-92c8-42c5-a09b-1aabfe5b5d8a", "alphatest1@oxygenai.top"],
   ["c2853c9c-844c-4a9e-9e10-3e8fde9003ba", "alphatest2@oxygenai.top"],

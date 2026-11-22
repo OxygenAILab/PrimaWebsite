@@ -1,4 +1,4 @@
-const CACHE_NAME = "prima-site-v4";
+const CACHE_NAME = "prima-site-v5";
 // 页面直接读这条缓存记录，判断「上一次导航到底走没走通网络」
 const OFFLINE_FLAG = "/__offline-state";
 const PRECACHE = [
