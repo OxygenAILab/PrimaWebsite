@@ -36,11 +36,11 @@ test("range parsing accepts bounded, open, and suffix ranges", () => {
 
 test("the Windows download is the published PrimaLauncher alpha", () => {
   const windows = RELEASES.find((release) => release.id === "windows");
-  assert.equal(windows.filename, "PrimaLauncher-26.1.0-alpha.2-x64.exe");
-  assert.equal(windows.bytes, 114_262_729);
+  assert.equal(windows.filename, "PrimaLauncher-26.1.0-alpha.3-x64.exe");
+  assert.equal(windows.bytes, 114_251_972);
   assert.equal(
     windows.sha256,
-    "6ac9480fd8da496df6c1585b3ebe1bd25b8c3309a9ae0c42793a12a7a51a3d95",
+    "eda0b25b451b47dd06988496341ec549c9cb087b214e0e85aba15a52600fc568",
   );
 });
 
