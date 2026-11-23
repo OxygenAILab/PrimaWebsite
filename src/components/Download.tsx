@@ -172,8 +172,8 @@ export default function Download() {
           />
           <p className="lead">
             {pick({
-              zh: "本轮仅向 AlphaTest1@oxygenai.top 至 AlphaTest7@oxygenai.top 开放。登录后只能看到与当前账号资格匹配的安装包。",
-              en: "This round is limited to AlphaTest1@oxygenai.top through AlphaTest7@oxygenai.top. After sign-in, only packages available to the signed-in account are shown.",
+              zh: "Windows 用户先下载 PrimaLauncher 并登录 OxygenAccount。Launcher 会识别地区与资格，再拉取 Prima 本体和已选择的组件。",
+              en: "Windows users start with PrimaLauncher and an OxygenAccount sign-in. The Launcher resolves region and eligibility, then pulls Prima and the selected components.",
             })}
           </p>
         </div>
@@ -277,8 +277,8 @@ export default function Download() {
             </h2>
             <p className="section-copy">
               {pick({
-                zh: "所有文件都由 Prima 下载网关校验会话后提供，不提供公开直链。安装前请核对 SHA-256。",
-                en: "Every file is served through the Prima download gate after session validation. There are no public direct links. Verify SHA-256 before installing.",
+                zh: "Windows 安装包为 PrimaLauncher Alpha。所有文件都由 Prima 下载网关校验会话后提供，不提供公开直链；安装前请核对 SHA-256。",
+                en: "The Windows package is the PrimaLauncher Alpha. Every file is served through the Prima download gate after session validation; there are no public direct links. Verify SHA-256 before installing.",
               })}
             </p>
           </div>

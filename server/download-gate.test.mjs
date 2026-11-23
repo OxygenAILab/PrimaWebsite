@@ -34,6 +34,16 @@ test("range parsing accepts bounded, open, and suffix ranges", () => {
   assert.equal(parseRange("items=0-1", 100), false);
 });
 
+test("the Windows download is the published PrimaLauncher alpha", () => {
+  const windows = RELEASES.find((release) => release.id === "windows");
+  assert.equal(windows.filename, "PrimaLauncher-26.1.0-alpha.1-x64.exe");
+  assert.equal(windows.bytes, 114_262_896);
+  assert.equal(
+    windows.sha256,
+    "2613a09d0f1619f9fede22d25aba45245377663e0361d8f8d507f9f537f13a72",
+  );
+});
+
 test("signed cookies reject tampering and expiry", () => {
   const secret = "x".repeat(48);
   const token = signPayload({ email: "alphatest1@oxygenai.top", exp: 2_000 }, secret);
