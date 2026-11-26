@@ -33,9 +33,9 @@ export const RELEASES = [
     id: "windows",
     platform: "windows",
     format: "Launcher EXE",
-    filename: "PrimaLauncher-26.1.0-alpha.3-x64.exe",
-    bytes: 114_251_972,
-    sha256: "eda0b25b451b47dd06988496341ec549c9cb087b214e0e85aba15a52600fc568",
+    filename: "PrimaLauncher-26.1.0-alpha.4-x64.exe",
+    bytes: 114_252_692,
+    sha256: "c838aabcc99797f97c2caac065d5e1072cdbfcc2bf60989e81b4e2a249638b72",
     contentType: "application/vnd.microsoft.portable-executable",
   },
   {
