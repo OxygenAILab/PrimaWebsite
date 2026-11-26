@@ -38,33 +38,6 @@ export const RELEASES = [
     sha256: "c838aabcc99797f97c2caac065d5e1072cdbfcc2bf60989e81b4e2a249638b72",
     contentType: "application/vnd.microsoft.portable-executable",
   },
-  {
-    id: "linux-appimage",
-    platform: "linux",
-    format: "AppImage",
-    filename: "PrimaApp-0.1.0.AppImage",
-    bytes: 555_615_541,
-    sha256: "c40129709a487aa1d11beda8374d926f36b177f2dc870076ef10f97e4f6cc090",
-    contentType: "application/octet-stream",
-  },
-  {
-    id: "linux-deb",
-    platform: "linux",
-    format: "DEB",
-    filename: "primaapp_0.1.0_amd64.deb",
-    bytes: 469_462_332,
-    sha256: "7c8dd4ceb510a068547607f3f2c23dc9450d33a5550c8f79ca289e6c5b8059e1",
-    contentType: "application/vnd.debian.binary-package",
-  },
-  {
-    id: "android",
-    platform: "android",
-    format: "APK",
-    filename: "primaapp-0.1.0-release.apk",
-    bytes: 4_714_041,
-    sha256: "26a0db31e785791d1ce9802e541495011f57de26d8090ca3521b5648b93cd730",
-    contentType: "application/vnd.android.package-archive",
-  },
 ];
 
 const STATIC_TYPES = new Map([
